@@ -1,10 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Dropdown, Form } from 'react-bootstrap';
 
-export default function AutoComplete({ id, label, placeholder, options, value, valueReturn, checkValue }) {
-  const [filteredData, setFilteredData] = useState([]);
-  const [showData, setShowData] = useState(false);
-  const [selectValue, setSelectValue] = useState('');
+interface Option {
+  id: number;
+  team: string;
+}
+
+interface Props {
+  id: string;
+  label: string;
+  placeholder: string;
+  options: Option[];
+  value: string;
+  valueReturn: (value: string) => void;
+  checkValue: boolean;
+}
+
+export default function AutoComplete({ id, label, placeholder, options, value, valueReturn, checkValue }: Props) {
+  const [filteredData, setFilteredData] = useState<Option[]>([]);
+  const [showData, setShowData] = useState<boolean>(false);
+  const [selectValue, setSelectValue] = useState<string>('');
+
   const handleClose = () => setShowData(false);
   const handleShow = () => setShowData(true);
 
@@ -12,24 +28,26 @@ export default function AutoComplete({ id, label, placeholder, options, value, v
     if (value !== '') {
       setSelectValue(value);
     }
-  }, []);
+  }, [value]);
+
   useEffect(() => {
-    filterData(options, value)
+    filterData(options, selectValue);
     valueReturn(selectValue);
   }, [selectValue]);
 
-  function filterData(data, selectValue) {
+  function filterData(data: Option[], selectValue: string) {
     setFilteredData(data?.filter(item => item?.team.includes(selectValue)).slice(0, 6));
   }
 
-  function handleInputChange(event) {
-    handleShow(),
-      setSelectValue(event.target.value);
+  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    handleShow();
+    setSelectValue(event.target.value);
   }
+
   return (
     <>
       <Form.Label>{label}</Form.Label>
-      <Dropdown >
+      <Dropdown>
         <Dropdown.Toggle id="dropdown-custom-components" bsPrefix='p-0' className="w-100" >
           <Form.Control
             autoFocus
