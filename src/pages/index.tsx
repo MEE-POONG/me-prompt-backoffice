@@ -1,11 +1,8 @@
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
 import Warn from '@/container/Home/Warn';
-// import the interfaces from type.tsx
 
-
-
-export default function HomePage() {
+const HomePage: React.FC = () => {
   return (
     <LayOut>
       <Head>
@@ -22,3 +19,5 @@ export default function HomePage() {
     </LayOut>
   );
 }
+
+export default HomePage;
