@@ -15,6 +15,7 @@
 .paper {
     transition: transform 0.3s ease-in-out;
     padding: 1rem;
+    height: calc(100vh - 55px);
 }
 .active {
     background: linear-gradient(90deg, #16474d 0%, #12323d 50%, #133041 100%);
@@ -233,53 +234,6 @@ button.bar-slide {
     height: 300px;
 }
 
-.alert {
-    margin-bottom: 0.5rem;
-    display: block;
-    font-size: var(--bs-nav-link-font-size);
-    font-weight: bold;
-    padding: 0px 20px;
-    border-color: var(--primary);
-    border-left: 8px solid #bababa;
-    background: #ededed;
-    color: #a1a1a1;
-    border-radius: 0 30px 30px 0;
-    outline: none;
-    visibility: visible;
-    opacity: 1;
-    overflow: hidden;
-    animation-name: showAlert;
-    animation-duration: 0.5s;
-    animation-fill-mode: both;
-}
-.alert_success {
-    border-color: var(--primary);
-    color: var(--primary);
-    background: var(--success);
-}
-.alert_warning {
-    border-color: #ffa502;
-    background: #ffdb9b;
-    color: #ce8500;
-}
-.alert_dark {
-    border-color: #333;
-    background: #4d4d4d;
-    color: #ccc;
-}
-
-.alert_danger {
-    border-color: #ff4757;
-    background: #ffe0e3;
-    color: #ff4757;
-}
-
-.alert_info {
-    border-color: #71c9ff;
-    background: #d7f0ff;
-    color: #3eb6ff;
-}
-
 @keyframes showAlert {
     from {
         opacity: 0;
@@ -344,4 +298,7 @@ button.bar-slide {
         background-color: var(--primary);
         border-color: var(--primary);
     }
+}
+.card.title {
+    margin-bottom: 1rem;
 }
