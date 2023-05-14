@@ -28,24 +28,6 @@ type Data = {
     newsId: string;
     aboutID: string;
 }
-type DataTwo = {
-    id: string;
-    title: string;
-    tagLink: string;
-    detail: string;
-    firstname: string;
-    lastname: string;
-    memberId: string;
-    workingsId: string;
-    packagePriceId: string;
-    newsId: string;
-    aboutID: string;
-}
-type DataThree = {
-    id: string;
-    title: string;
-    detail: string;
-}
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data[] | Error>) {
     const { method } = req
@@ -53,16 +35,15 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data[]
         case 'GET':
             try {
 
-                // Someting function
                 const data = [
-                    { id: '1', title: 'c', detail: 'แก้ฟิล facebookแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipa จาก facebook.com/api เป็น facebook.com/ipa', firstname: 'งง', lastname: 'งง', memberId: '1', workingsId: '', packagePriceId: '', newsId: '', aboutID: '1' },
-                    { id: '1', title: 'c', detail: 'แก้ฟิล facebookแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipa จาก facebook.com/api เป็น facebook.com/ipa', firstname: 'งง', lastname: 'งง', memberId: '1', workingsId: '', packagePriceId: '', newsId: '', aboutID: '1' },
-                    { id: '1', title: 'c', detail: 'แก้ฟิล facebookแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipa จาก facebook.com/api เป็น facebook.com/ipa', firstname: 'งง', lastname: 'งง', memberId: '1', workingsId: '', packagePriceId: '', newsId: '', aboutID: '1' },
-                    { id: '1', title: 'c', detail: 'แก้ฟิล facebookแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipa จาก facebook.com/api เป็น facebook.com/ipa', firstname: 'งง', lastname: 'งง', memberId: '1', workingsId: '', packagePriceId: '', newsId: '', aboutID: '1' },
-                    { id: '1', title: 'c', detail: 'แก้ฟิล facebookแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipa จาก facebook.com/api เป็น facebook.com/ipa', firstname: 'งง', lastname: 'งง', memberId: '1', workingsId: '', packagePriceId: '', newsId: '', aboutID: '1' },
-                    { id: '1', title: 'c', detail: 'แก้ฟิล facebookแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipa จาก facebook.com/api เป็น facebook.com/ipa', firstname: 'งง', lastname: 'งง', memberId: '1', workingsId: '', packagePriceId: '', newsId: '', aboutID: '1' },
-                    { id: '1', title: 'c', detail: 'แก้ฟิล facebookแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipa จาก facebook.com/api เป็น facebook.com/ipa', firstname: 'งง', lastname: 'งง', memberId: '1', workingsId: '', packagePriceId: '', newsId: '', aboutID: '1' },
-                    { id: '1', title: 'c', detail: 'แก้ฟิล facebookแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipaแก้ฟิล facebook จาก facebook.com/api เป็น facebook.com/ipa จาก facebook.com/api เป็น facebook.com/ipa', firstname: 'งง', lastname: 'งง', memberId: '1', workingsId: '', packagePriceId: '', newsId: '', aboutID: '1' },
+                    { id: '1', title: 'c', detail: 'แก้ฟิล facebookแก้ฟิล ', firstname: 'งง', lastname: 'งง', memberId: '1', workingsId: '', packagePriceId: '', newsId: '', aboutID: '1' },
+                    { id: '1', title: 'c', detail: 'แก้ฟิล facebookแก้ฟิล ', firstname: 'งง', lastname: 'งง', memberId: '1', workingsId: '', packagePriceId: '', newsId: '', aboutID: '1' },
+                    { id: '1', title: 'c', detail: 'แก้ฟิล facebookแก้ฟิล ', firstname: 'งง', lastname: 'งง', memberId: '1', workingsId: '', packagePriceId: '', newsId: '', aboutID: '1' },
+                    { id: '1', title: 'c', detail: 'แก้ฟิล facebookแก้ฟิล ', firstname: 'งง', lastname: 'งง', memberId: '1', workingsId: '', packagePriceId: '', newsId: '', aboutID: '1' },
+                    { id: '1', title: 'c', detail: 'แก้ฟิล facebookแก้ฟิล ', firstname: 'งง', lastname: 'งง', memberId: '1', workingsId: '', packagePriceId: '', newsId: '', aboutID: '1' },
+                    { id: '1', title: 'c', detail: 'แก้ฟิล facebookแก้ฟิล ', firstname: 'งง', lastname: 'งง', memberId: '1', workingsId: '', packagePriceId: '', newsId: '', aboutID: '1' },
+                    { id: '1', title: 'c', detail: 'แก้ฟิล facebookแก้ฟิล ', firstname: 'งง', lastname: 'งง', memberId: '1', workingsId: '', packagePriceId: '', newsId: '', aboutID: '1' },
+                    { id: '1', title: 'c', detail: 'แก้ฟิล facebookแก้ฟิล ', firstname: 'งง', lastname: 'งง', memberId: '1', workingsId: '', packagePriceId: '', newsId: '', aboutID: '1' },
                 ];
                 
                 res.status(200).json(data)

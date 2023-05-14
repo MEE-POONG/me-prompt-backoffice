@@ -1,0 +1,17 @@
+.gallery-show {
+    .show {
+        img {
+            height: 450px;
+        }
+    }
+    .select {
+        img {
+            height: 150px;
+        }
+    }
+    @media screen and (max-width: 480px) {
+        .select {
+            display: none;
+        }
+    }
+}

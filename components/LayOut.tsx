@@ -1,24 +1,33 @@
-import IndexNavbar from "./IndexNavbar";
-import Footer from "./Footer";
-import { FaArrowUp } from "react-icons/fa";
-import TheSlideNav from "./SlideNav";
+// Layout.tsx
+import React, { useState } from 'react';
+import TheNavBar from './TheNavBar';
+import Footer from './Footer';
+import TheSlidebar from './TheSlidebar';
+import TheOffcanvas from './TheOffcanvas';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function LayOut({ children }: LayoutProps): JSX.Element {
+const LayOut: React.FC<LayoutProps> = ({ children }) => {
+  const [show, setShow] = useState(true);
+
+  const handleToggleShow = () => setShow(!show);
+
+  const mainStyle = show
+    ? { width: 'calc(100% - 175px)', marginLeft: '175px' }
+    : { width: 'calc(100% - 0px)', marginLeft: '0px' };
+
   return (
-    <>
-      <TheSlideNav />
-      <div className="content ">
-        <IndexNavbar />
+    <main >
+      <TheNavBar onToggleShow={handleToggleShow} show={show} />
+      <TheOffcanvas show={show} onToggleShow={handleToggleShow} />
+      <div className='bg-whilt paper' style={mainStyle} >
         {children}
-        <Footer />
       </div>
-      <a href="#" className="btn btn-lg btn-primary btn-lg-square back-to-top">
-        <FaArrowUp />
-      </a>
-    </>
+      <div />
+    </main>
   );
-}
+};
+
+export default LayOut;

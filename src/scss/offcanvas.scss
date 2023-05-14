@@ -1,0 +1,70 @@
+.offcanvas {
+    padding-top: 50px;
+    &.offcanvas-start {
+        width: 175px;
+    }
+    .nav-link {
+        font-size: 15px;
+        margin-top: 0.75rem;
+        font-weight: bold;
+        color: var(--light);
+        padding: 4px 10px;
+        border-left: 3px solid var(--light);
+        border-radius: 0 30px 30px 0;
+        outline: none;
+        background: var(--dark);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+        display: flex;
+        align-items: center;
+        i {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        &:hover,
+        &.active {
+            color: var(--primary);
+            background: var(--bg-active);
+            border-color: var(--primary);
+        }
+    }
+    .dropdown-toggle {
+        width: 100%;
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+        display: flex;
+        align-items: center;
+        border: 0px;
+        border-left: 3px solid var(--light);
+        &::after {
+            margin-left: auto;
+        }
+    }
+    .dropdown-menu {
+        padding: 0;
+        .nav-link {
+            margin-right: 25px;
+            margin-top: .25rem;
+        }
+    }
+}
+
+button.slide-toggle-icon {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dark);
+    border-radius: 40px;
+    color: var(--light);
+    border: 5px var(--light);
+    &:hover,
+    .active {
+        color: var(--primary);
+        background: var(--bg-active);
+        border-color: var(--primary);
+    }
+}
