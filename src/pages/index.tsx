@@ -67,7 +67,8 @@ const HomePage: React.FC = () => {
               <Card.Body className="y-scroll">
                 {Array.from({ length: 15 }, (_, index) => (
                   <Alert key={index} variant='info'>
-                    This is a primary alert—check it out!
+                    <b>ufh27oa14</b>
+                    <b>14.00</b>
                   </Alert>
                 ))}
               </Card.Body>
