@@ -13,7 +13,7 @@
 }
 
 .paper {
-    transition: 0.5s;
+    transition: transform 0.3s ease-in-out;
     padding: 1rem;
 }
 .active {
@@ -31,23 +31,6 @@
 .table-responsive > table > thead > tr > th {
     color: var(--primary);
     font-weight: 1000;
-}
-
-#spinner {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-    z-index: 99999;
-}
-
-#spinner.show {
-    transition: opacity 0.5s ease-out, visibility 0s linear 0s;
-    visibility: visible;
-    opacity: 1;
-}
-
-.btn {
-    transition: 0.5s;
 }
 
 .btn-square {
@@ -353,7 +336,7 @@ button.bar-slide {
     }
 }
 .form-check-input {
-    &:focus{
+    &:focus {
         border-color: var(--primary);
         box-shadow: 0 0 0 0.25rem var(--shadow-primary);
     }

@@ -6,7 +6,7 @@ import RequestSection from "@/container/Home/RequestSection";
 import WhySection from "@/container/Home/WhySection";
 import ServicesSection from "@/container/Home/ServicesSection";
 import GalleryList from "@/container/GalleryList";
-import { Card } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 
 
 const HomePage: React.FC = () => {
@@ -25,7 +25,7 @@ const HomePage: React.FC = () => {
   return (
     <LayOut>
       <Head>
-        <title>Wellcome | Belletti-Niresidence</title>
+        <title>Wellcome | MePrompt-BackOffice</title>
         <meta
           name="description"
           content="T ACTIVE"
@@ -33,10 +33,28 @@ const HomePage: React.FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className='home-page'>
-
-        <Card>
-          a
-        </Card>
+        {/* <Card>
+          <Card.Header>
+            <h2 className="display-6 text-center">Welcome</h2>
+          </Card.Header>
+        </Card> */}
+        <Row>
+          <Col lg="4">
+            <Card>
+              aa
+            </Card>
+          </Col>
+          <Col lg="4">
+            <Card>
+              aa
+            </Card>
+          </Col>
+          <Col lg="4">
+            <Card>
+              aa
+            </Card>
+          </Col>
+        </Row>
       </div>
     </LayOut>
   );

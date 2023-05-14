@@ -23,7 +23,7 @@ const LayOut: React.FC<LayoutProps> = ({ children }) => {
       <TheOffcanvas show={show} onToggleShow={handleToggleShow} />
       <div className='bg-whilt paper' style={mainStyle} >
         {children}
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </main>
   );
