@@ -1,5 +1,6 @@
 .offcanvas {
     padding-top: 50px;
+    transition: transform 0.5s ease-in-out;
     &.offcanvas-start {
         width: 175px;
     }
