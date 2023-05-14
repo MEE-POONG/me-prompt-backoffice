@@ -44,6 +44,7 @@
         }
     }
     .dropdown-menu {
+        position: inherit;
         padding: 0;
         .nav-link {
             margin-right: 25px;
@@ -63,7 +64,7 @@ button.slide-toggle-icon {
     color: var(--light);
     border: 5px var(--light);
     &:hover,
-    .active {
+    &.active {
         color: var(--primary);
         background: var(--bg-active);
         border-color: var(--primary);

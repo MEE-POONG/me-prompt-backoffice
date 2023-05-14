@@ -101,7 +101,7 @@ const TheNavBar: React.FC<TheNavBarProps> = ({ show, onToggleShow }) => {
           <NavDropdown
             id="nav-dropdown-dark-example"
             title={<>
-              <Image className="rounded-circle me-lg-2" src={'./images/user.jpg'} alt="" style={{ width: "30px", height: "30px" }} />
+              <Image className="rounded-circle me-lg-2" src={'./images/user/1.jpg'} alt="" style={{ width: "30px", height: "30px" }} />
               <span className="d-none d-lg-inline-flex">มอง มอง</span>
             </>}
             menuVariant="dark"

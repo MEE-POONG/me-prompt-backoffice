@@ -26,9 +26,6 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
     return (
         <>
             <Offcanvas show={show} onHide={handleClose} placement="start" backdrop={false} scroll={true}>
-                {/* <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>Offcanvas</Offcanvas.Title>
-                </Offcanvas.Header> */}
                 <Offcanvas.Body className='ps-0'>
                     <Link href="/" className={asPath === "/" ? "nav-link active" : "nav-link"}>
                         <i >
@@ -36,6 +33,21 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                         </i>
                         <span className="ms-2">Home</span>
                     </Link>
+
+                    <Dropdown.Toggle onClick={() => handlePath('/partner')} className={checkClickPath === "/partner" || checkClickPath === "/partner/position" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
+                        <i >
+                            <FaTachometerAlt />
+                        </i>
+                        <span className="ms-2">Partner</span>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu className="bg-transparent border-0 me-4" show={checkClickPath === "/partner" || checkClickPath === "/partner/information"} >
+                        <Link href="/partner" className={asPath === "/partner" ? "nav-link active" : "nav-link"}>
+                            <span>ข้อมูลกิจการ</span>
+                        </Link>
+                        <Link href="/partner" className={asPath === "/partner" ? "nav-link active" : "nav-link"}>
+                            <span>ยังไม่มี</span>
+                        </Link>
+                    </Dropdown.Menu>
 
                     <Dropdown.Toggle onClick={() => handlePath('/setting')} className={checkClickPath === "/setting" || checkClickPath === "/setting/position" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
                         <i >
@@ -60,7 +72,7 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
 const TheButtonOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
     const handleShow = () => onToggleShow();
     return (
-        <Button onClick={handleShow} bsPrefix="slide-toggle-icon">
+        <Button onClick={handleShow} bsPrefix={`slide-toggle-icon ${show ? 'active' : ''}`}>
             <FaBars />
         </Button>
     );

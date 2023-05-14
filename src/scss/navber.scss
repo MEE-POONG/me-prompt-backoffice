@@ -29,10 +29,14 @@
                 justify-content: center;
                 background: var(--dark);
                 border-radius: 40px;
+                transition: background-color 0.5s;
             }
             &:hover,
             &.active {
                 color: var(--primary);
+                i {
+                    background-color: #16474d;
+                }
             }
         }
         .dropdown-item {
