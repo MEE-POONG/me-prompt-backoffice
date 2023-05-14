@@ -58,7 +58,7 @@ const HomePage: React.FC = () => {
               </Card.Header>
               <Card.Body className="y-scroll">
                 {Array.from({ length: 15 }, (_, index) => (
-                  <Alert key={index} variant='info'>
+                  <Alert key={index} variant='warning'>
                     <b>แก้ข้อมูล ufrcbaaa</b>
                     <b>โดย Est</b>
                     <b>14.00</b>
