@@ -60,5 +60,13 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
         </>
     );
 };
-
+const TheButtonOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
+    const handleShow = () => onToggleShow();
+    return (
+        <Button onClick={handleShow} bsPrefix="slide-toggle-icon">
+            <FaBars />
+        </Button>
+    );
+}
+export { TheButtonOffcanvas };
 export default TheOffcanvas;

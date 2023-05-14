@@ -3,7 +3,7 @@ import React from 'react';
 import { Navbar, Container, Nav, NavDropdown, Image, Button } from 'react-bootstrap';
 import Link from 'next/link';
 import { FaBars, FaBell, FaRegEnvelope, FaUserEdit } from 'react-icons/fa';
-import { TheButtonSlide } from './TheSlidebar';
+import { TheButtonOffcanvas } from './TheOffcanvas';
 
 interface TheNavBarProps {
   show: boolean;
@@ -22,7 +22,7 @@ const TheNavBar: React.FC<TheNavBarProps> = ({ show, onToggleShow }) => {
           MeePrompt
         </h3>
       </Link>
-      <TheButtonSlide show={show} onToggleShow={onToggleShow} />
+      <TheButtonOffcanvas show={show} onToggleShow={onToggleShow} />
       <Container>
         <div className="navbar-nav align-items-center ms-auto">
           <NavDropdown

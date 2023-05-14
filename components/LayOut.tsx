@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import TheNavBar from './TheNavBar';
 import Footer from './Footer';
-import TheSlidebar from './TheSlidebar';
 import TheOffcanvas from './TheOffcanvas';
 
 interface LayoutProps {
@@ -24,8 +23,8 @@ const LayOut: React.FC<LayoutProps> = ({ children }) => {
       <TheOffcanvas show={show} onToggleShow={handleToggleShow} />
       <div className='bg-whilt paper' style={mainStyle} >
         {children}
+        <Footer />
       </div>
-      <div />
     </main>
   );
 };
