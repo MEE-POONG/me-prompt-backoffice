@@ -26,7 +26,7 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
     return (
         <>
             <Offcanvas show={show} onHide={handleClose} placement="start" backdrop={false} scroll={true}>
-                <Offcanvas.Body className='ps-0'>
+                <Offcanvas.Body className='ps-0 pe-2'>
                     <Link href="/" className={asPath === "/" ? "nav-link active" : "nav-link"}>
                         <i >
                             <FaTachometerAlt />
@@ -34,15 +34,15 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                         <span className="ms-2">Home</span>
                     </Link>
 
-                    <Dropdown.Toggle onClick={() => handlePath('/partner')} className={checkClickPath === "/partner" || checkClickPath === "/partner/position" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
+                    <Dropdown.Toggle onClick={() => handlePath('/partner')} className={checkClickPath === "/partner" || checkClickPath === "/partner/agent" || checkClickPath === "/partner/position" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
                         <i >
                             <FaTachometerAlt />
                         </i>
                         <span className="ms-2">Partner</span>
                     </Dropdown.Toggle>
-                    <Dropdown.Menu className="bg-transparent border-0 me-4" show={checkClickPath === "/partner" || checkClickPath === "/partner/information"} >
-                        <Link href="/partner" className={asPath === "/partner" ? "nav-link active" : "nav-link"}>
-                            <span>ข้อมูลกิจการ</span>
+                    <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/partner" || checkClickPath === "/partner/agent"} >
+                        <Link href="/partner" className={asPath === "/partner" || asPath === "/partner/agent" ? "nav-link active" : "nav-link"}>
+                            <span>Master</span>
                         </Link>
                         <Link href="/partner" className={asPath === "/partner" ? "nav-link active" : "nav-link"}>
                             <span>ยังไม่มี</span>
@@ -55,7 +55,7 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                         </i>
                         <span className="ms-2">Setting</span>
                     </Dropdown.Toggle>
-                    <Dropdown.Menu className="bg-transparent border-0 me-4" show={checkClickPath === "/setting" || checkClickPath === "/setting/information"} >
+                    <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/setting" || checkClickPath === "/setting/information"} >
                         <Link href="/" className={asPath === "/" ? "nav-link active" : "nav-link"}>
                             <span>ข้อมูลกิจการ</span>
                         </Link>
@@ -72,7 +72,7 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
 const TheButtonOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
     const handleShow = () => onToggleShow();
     return (
-        <Button onClick={handleShow} bsPrefix={`slide-toggle-icon ${show ? 'active' : ''}`}>
+        <Button onClick={handleShow} bsPrefix={`slide-toggle-icon ${show ? 'active' : ''} me-auto`}>
             <FaBars />
         </Button>
     );

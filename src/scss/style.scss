@@ -4,6 +4,28 @@
 .x-scroll {
     overflow-x: scroll;
 }
-.position-inherit{
+.position-inherit {
     position: inherit;
 }
+.space-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.space-around {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+// .scrollable-body {
+//     display: block;
+//     max-height: 300px;
+//     overflow-y: auto;
+// }
+
+
+// table,
+// tr td {
+//     border: 1px solid red;
+// }

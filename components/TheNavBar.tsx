@@ -1,9 +1,10 @@
 // Navbar.tsx
 import React from 'react';
-import { Navbar, Container, Nav, NavDropdown, Image, Button } from 'react-bootstrap';
+import { Navbar, Container, Nav, NavDropdown, Image, Button, Breadcrumb } from 'react-bootstrap';
 import Link from 'next/link';
 import { FaBars, FaBell, FaRegEnvelope, FaUserEdit } from 'react-icons/fa';
 import { TheButtonOffcanvas } from './TheOffcanvas';
+import TheBreadcrumb from './TheBreadcrumb';
 
 interface TheNavBarProps {
   show: boolean;
@@ -11,21 +12,21 @@ interface TheNavBarProps {
 }
 
 const TheNavBar: React.FC<TheNavBarProps> = ({ show, onToggleShow }) => {
-  const { IMG_URL } = process.env;
-  const handleShow = () => onToggleShow();
 
   return (
     <Navbar className="navbar-expand navbar-head sticky-top px-4 py-0">
-      <Link href="/" className="navbar-brand mx-4">
-        <h3 className="text-primary">
-          <FaUserEdit className="fa me-2" />
-          MeePrompt
-        </h3>
-      </Link>
-      <TheButtonOffcanvas show={show} onToggleShow={onToggleShow} />
-      <Container>
+
+      <Container fluid>
+        <Link href="/" className="navbar-brand mx-4">
+          <h3 className="text-primary">
+            <FaUserEdit className="fa me-2" />
+            MeePrompt
+          </h3>
+        </Link>
+        <TheButtonOffcanvas show={show} onToggleShow={onToggleShow} />
+        <TheBreadcrumb />
         <div className="navbar-nav align-items-center ms-auto">
-          <NavDropdown
+          {/* <NavDropdown
             id="nav-dropdown-dark-example"
             title={<>
               <i className="me-lg-2">
@@ -97,7 +98,7 @@ const TheNavBar: React.FC<TheNavBarProps> = ({ show, onToggleShow }) => {
             <NavDropdown.Item href="#action/3.4" className="text-center">
               See all notifications
             </NavDropdown.Item>
-          </NavDropdown>
+          </NavDropdown> */}
           <NavDropdown
             id="nav-dropdown-dark-example"
             title={<>
