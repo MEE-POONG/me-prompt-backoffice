@@ -13,7 +13,7 @@ const TheBreadcrumb: React.FC = () => {
         <Breadcrumb className='mx-auto'>
             {isActiveHome ?
                 <span className='breadcrumb-item active'>Home</span>
-                : <Link href="/" className={`breadcrumb-item ${isActiveHome ? 'active' : ''}`}>
+                : <Link href="/" className='breadcrumb-item text-primary'>
                     Home
                 </Link>
             }
@@ -27,7 +27,7 @@ const TheBreadcrumb: React.FC = () => {
                     );
                 } else {
                     return (
-                        <Link href={pathToPart} className='breadcrumb-item' key={pathToPart}>
+                        <Link href={pathToPart} className='breadcrumb-item text-primary' key={pathToPart}>
                             {part}
                         </Link>
                     );

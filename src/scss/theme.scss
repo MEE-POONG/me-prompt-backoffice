@@ -319,3 +319,9 @@ button,
     margin-bottom: 0;
     font-size: 18px;
 }
+a.text-primary {
+    text-decoration: none;
+    &:hover {
+        color: #855b00 !important;
+    }
+}

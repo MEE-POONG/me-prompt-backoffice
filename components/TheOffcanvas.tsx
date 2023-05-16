@@ -18,6 +18,7 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
         console.log(show);
 
     }, [show])
+
     useEffect(() => {
         setCheckClickPath(asPath);
     }, [asPath])
@@ -33,36 +34,42 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                         </i>
                         <span className="ms-2">Home</span>
                     </Link>
+                    <div id="partner" className='partner'>
+                        <Dropdown.Toggle onClick={() => handlePath('/partner')} className={asPath === "/partner" || asPath === "/partner/agent" || asPath === "/partner/position" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
+                            <i >
+                                <FaTachometerAlt />
+                            </i>
+                            <span className="ms-2">Partner</span>
+                        </Dropdown.Toggle>
 
-                    <Dropdown.Toggle onClick={() => handlePath('/partner')} className={checkClickPath === "/partner" || checkClickPath === "/partner/agent" || checkClickPath === "/partner/position" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
-                        <i >
-                            <FaTachometerAlt />
-                        </i>
-                        <span className="ms-2">Partner</span>
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/partner" || checkClickPath === "/partner/agent"} >
-                        <Link href="/partner" className={asPath === "/partner" || asPath === "/partner/agent" ? "nav-link active" : "nav-link"}>
-                            <span>Master</span>
-                        </Link>
-                        <Link href="/partner" className={asPath === "/partner" ? "nav-link active" : "nav-link"}>
-                            <span>ยังไม่มี</span>
-                        </Link>
-                    </Dropdown.Menu>
-
-                    <Dropdown.Toggle onClick={() => handlePath('/setting')} className={checkClickPath === "/setting" || checkClickPath === "/setting/position" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
-                        <i >
-                            <FaTachometerAlt />
-                        </i>
-                        <span className="ms-2">Setting</span>
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/setting" || checkClickPath === "/setting/information"} >
-                        <Link href="/" className={asPath === "/" ? "nav-link active" : "nav-link"}>
-                            <span>ข้อมูลกิจการ</span>
-                        </Link>
-                        <Link href="/" className={asPath === "/" ? "nav-link active" : "nav-link"}>
-                            <span>ยังไม่มี</span>
-                        </Link>
-                    </Dropdown.Menu>
+                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/partner" || checkClickPath === "/partner/agent"} >
+                            <Link href="/partner" className={asPath === "/partner" || asPath === "/partner/agent" ? "nav-link active" : "nav-link"}>
+                                <span>Master</span>
+                            </Link>
+                            <Link href="/partner/member" className={asPath === "/partner/member" ? "nav-link active" : "nav-link"}>
+                                <span>สมาชิก</span>
+                            </Link>
+                            <Link href="/partner/" className={asPath === "/partner" ? "nav-link active" : "nav-link"}>
+                                <span>วิธีใช้หน้า partner</span>
+                            </Link>
+                        </Dropdown.Menu>
+                    </div>
+                    <div id="setting" className='setting'>
+                        <Dropdown.Toggle onClick={() => handlePath('/setting')} className={asPath === "/setting" || asPath === "/setting/position" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
+                            <i >
+                                <FaTachometerAlt />
+                            </i>
+                            <span className="ms-2">Setting</span>
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/setting" || checkClickPath === "/setting/information"} >
+                            <Link href="/" className={asPath === "/" ? "nav-link active" : "nav-link"}>
+                                <span>ข้อมูลกิจการ</span>
+                            </Link>
+                            <Link href="/" className={asPath === "/" ? "nav-link active" : "nav-link"}>
+                                <span>ยังไม่มี</span>
+                            </Link>
+                        </Dropdown.Menu>
+                    </div>
                 </Offcanvas.Body>
             </Offcanvas>
 
