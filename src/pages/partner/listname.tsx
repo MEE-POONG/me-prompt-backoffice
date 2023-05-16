@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
 import HeroSection from '@/container/Home/HeroSection';
-import { Alert, Button, Card, Col, Form, InputGroup, Row, Table } from "react-bootstrap";
-import { FaPen, FaPowerOff, FaRegEye, FaSearch } from "react-icons/fa";
+import { Alert, Badge, Button, Card, Col, Form, InputGroup, Row, Table } from "react-bootstrap";
+import { FaPen, FaPowerOff, FaRegEye, FaSearch, FaTrashAlt } from "react-icons/fa";
 import Link from "next/link";
+import AddListName from "@/container/Partner/AddListName";
 
 
 const ListNamePage: React.FC = () => {
@@ -47,56 +48,92 @@ const ListNamePage: React.FC = () => {
                 aria-describedby="basic-addon1"
               />
             </InputGroup>
-            <span>
-              <Button className="ms-2 btn" bsPrefix="icon">
-                เพิ่ม Senior
-              </Button>
-              <Button className="ms-2 btn" bsPrefix="icon">
-                เพิ่ม Master
-              </Button>
-              <Button className="ms-2 btn" bsPrefix="icon">
-                สร้าง Master
-              </Button>
-            </span>
+            <AddListName />
           </Card.Header>
           <Card.Body>
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
-                  <th>ยูสเซอร์</th>
+                  <th className="first">ลำดับ</th>
                   <th>ชื่อ-สกุล</th>
-                  <th>สิทธิรายได้</th>
+                  <th>ธนาคาร</th>
+                  <th>ติดต่อ</th>
+                  <th>ทำงาน</th>
                   <th>จัดการ</th>
                 </tr>
               </thead>
               <tbody className="text-center">
                 {data.map((row, index) => (
                   <tr key={index}>
+                    <td className="first">
+                      {index}
+                    </td>
                     <td>
                       <div className="space-around ">
-                        <b>ufruu01</b>
-                        <Link href="/partner/agent" className="ms-2 btn icon">Agent</Link>
+                        <b>รนง งงอยู่</b>
                       </div>
                     </td>
                     <td>
-                      <b>นรากร ปากา</b>
+                      061-123-4567
                     </td>
                     <td>
-                      <Button className="ms-2 btn" bsPrefix="icon">
-                        ค่าคอม
-                      </Button>
-                      <Button className="ms-2 btn" bsPrefix="icon">
-                        ค้างบวก
-                      </Button>
-                      <Button className="ms-2 btn" bsPrefix="icon">
-                        ปรับสู้ฟรี
-                      </Button>
-                      <Button className="ms-2 btn" bsPrefix="icon">
-                        จ่าย
-                      </Button>
-                      <Button className="ms-2 btn" bsPrefix="icon">
-                        คืนลูกค้า
-                      </Button>
+                      <Row >
+                        <Col xs={3} className="text-end">
+                          <strong>Tel.</strong>
+                        </Col>
+                        <Col xs={9} className="text-start">
+                          0821522818
+                        </Col>
+                        <Col xs={3} className="text-end">
+                          <strong>Line</strong>
+                        </Col>
+                        <Col xs={9} className="text-start">
+                          devilzeros
+                        </Col>
+                        <Col xs={3} className="text-end">
+                          <strong>E-Mail</strong>
+                        </Col>
+                        <Col xs={9} className="text-start">
+                          devilzeros@outlook.co.th
+                        </Col>
+                      </Row>
+                    </td>
+                    <td>
+                      <Badge className="mx-1" bg="success">
+                        Success
+                      </Badge>
+                      <Badge className="mx-1" bg="success">
+                        Success
+                      </Badge>
+                      <Badge className="mx-1" bg="success">
+                        Success
+                      </Badge>
+                      <Badge className="mx-1" bg="success">
+                        Success
+                      </Badge>
+                      <Badge className="mx-1" bg="success">
+                        Success
+                      </Badge>
+                      <Badge className="mx-1" bg="success">
+                        Success
+                      </Badge>
+                      <Badge className="mx-1" bg="success">
+                        Success
+                      </Badge>
+                      <br />
+                      <Badge className="mx-1" bg="info">
+                        Info
+                      </Badge>
+                      <Badge className="mx-1" bg="info">
+                        Info
+                      </Badge>
+                      <Badge className="mx-1" bg="info">
+                        Info
+                      </Badge>
+
+                      <Badge className="mx-1" bg="info">
+                        Info
+                      </Badge>
                     </td>
                     <td>
                       <Button className="ms-2 btn" bsPrefix="icon">
@@ -105,7 +142,9 @@ const ListNamePage: React.FC = () => {
                       <Button className="ms-2 btn" bsPrefix="icon">
                         <FaPen />
                       </Button>
-
+                      <Button className="ms-2 btn" bsPrefix="icon">
+                        <FaTrashAlt />
+                      </Button>
                     </td>
                   </tr>
                 ))}

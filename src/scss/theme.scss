@@ -24,14 +24,6 @@ button,
     }
 }
 
-.back-to-top {
-    position: fixed;
-    display: none;
-    right: 45px;
-    bottom: 45px;
-    z-index: 99;
-}
-
 .table-responsive > table > thead > tr > th {
     color: var(--primary);
     font-weight: 1000;
@@ -293,11 +285,22 @@ button,
         display: table;
         width: 100%;
         table-layout: fixed;
+        td.first {
+            text-align: right;
+        }
     }
     thead {
         width: calc(100% - 1em);
         th {
             text-align: center;
+        }
+    }
+    th,
+    td {
+        vertical-align: middle;
+
+        &.first {
+            width: 5rem;
         }
     }
 }
@@ -323,4 +326,7 @@ a.text-primary {
     &:hover {
         color: #855b00 !important;
     }
+}
+.sticky-top {
+    z-index: 1050;
 }
