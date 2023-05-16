@@ -7,18 +7,8 @@ import { FaPen, FaPowerOff, FaRegEye, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 
 
-const HomePage: React.FC = () => {
+const PartnerPage: React.FC = () => {
 
-  const [srcollBG, setSrcollBG] = useState<number>(0);
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const handleScroll = () => {
-    setSrcollBG(0 - (document.documentElement.scrollTop / 10));
-
-  };
   const data = Array.from({ length: 50 }, (_, i) => ({ col1: `Row ${i + 1} - Column 1`, col2: `Row ${i + 1} - Column 2` })); // Updated this line
 
   return (
@@ -118,4 +108,4 @@ const HomePage: React.FC = () => {
     </LayOut>
   );
 }
-export default HomePage;
+export default PartnerPage;

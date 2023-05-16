@@ -4,10 +4,21 @@ import LayOut from "@/components/LayOut";
 import HeroSection from '@/container/Home/HeroSection';
 import { Alert, Button, Card, Col, Form, InputGroup, Row, Table } from "react-bootstrap";
 import { FaPen, FaPowerOff, FaRegEye, FaSearch } from "react-icons/fa";
+import Link from "next/link";
 
 
-const AgentPage: React.FC = () => {
+const ListNamePage: React.FC = () => {
 
+  const [srcollBG, setSrcollBG] = useState<number>(0);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleScroll = () => {
+    setSrcollBG(0 - (document.documentElement.scrollTop / 10));
+
+  };
   const data = Array.from({ length: 50 }, (_, i) => ({ col1: `Row ${i + 1} - Column 1`, col2: `Row ${i + 1} - Column 2` })); // Updated this line
 
   return (
@@ -24,7 +35,7 @@ const AgentPage: React.FC = () => {
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0">
-              {'ufruu01'} - Agent
+              Partner - Master
             </h4>
             <InputGroup className="w-auto" bsPrefix="input-icon">
               <InputGroup.Text id="basic-addon1">
@@ -38,10 +49,13 @@ const AgentPage: React.FC = () => {
             </InputGroup>
             <span>
               <Button className="ms-2 btn" bsPrefix="icon">
-                เพิ่ม Agent
+                เพิ่ม Senior
               </Button>
               <Button className="ms-2 btn" bsPrefix="icon">
-                สร้าง Agent
+                เพิ่ม Master
+              </Button>
+              <Button className="ms-2 btn" bsPrefix="icon">
+                สร้าง Master
               </Button>
             </span>
           </Card.Header>
@@ -61,6 +75,7 @@ const AgentPage: React.FC = () => {
                     <td>
                       <div className="space-around ">
                         <b>ufruu01</b>
+                        <Link href="/partner/agent" className="ms-2 btn icon">Agent</Link>
                       </div>
                     </td>
                     <td>
@@ -103,4 +118,4 @@ const AgentPage: React.FC = () => {
     </LayOut>
   );
 }
-export default AgentPage;
+export default ListNamePage;

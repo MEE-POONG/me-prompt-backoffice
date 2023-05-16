@@ -8,17 +8,6 @@ import { FaRegEye } from "react-icons/fa";
 
 const HomePage: React.FC = () => {
 
-  const [srcollBG, setSrcollBG] = useState<number>(0);
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const handleScroll = () => {
-    setSrcollBG(0 - (document.documentElement.scrollTop / 10));
-
-  };
-
   return (
     <LayOut>
       <Head>
