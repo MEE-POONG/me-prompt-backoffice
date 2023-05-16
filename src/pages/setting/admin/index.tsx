@@ -4,6 +4,7 @@ import LayOut from "@/components/LayOut";
 import HeroSection from '@/container/Home/HeroSection';
 import { Alert, Button, Card, Col, Form, InputGroup, Row, Table } from "react-bootstrap";
 import { FaKey, FaPen, FaPowerOff, FaRegEye, FaSearch, FaTrashAlt } from "react-icons/fa";
+import Link from "next/link";
 
 
 const AdminPage: React.FC = () => {
@@ -40,9 +41,9 @@ const AdminPage: React.FC = () => {
               <Button className="ms-2 btn" bsPrefix="icon">
                 เพิ่ม Admin
               </Button>
-              <Button className="ms-2 btn" bsPrefix="icon">
-                สร้าง Admin
-              </Button>
+              <Link href="/setting/admin/team" className="ms-2 btn icon">
+                จัดการ Team
+              </Link>
             </span>
           </Card.Header>
           <Card.Body>
