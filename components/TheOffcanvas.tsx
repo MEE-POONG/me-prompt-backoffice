@@ -98,7 +98,7 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                             </i>
                             <span className="ms-2">Setting</span>
                         </Dropdown.Toggle>
-                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/setting" || checkClickPath === "/setting/admin" || checkClickPath === "/setting/admin/team"} >
+                        <Dropdown.Menu className="bg-transparent border-0" show={asPath === "/setting" || asPath === "/setting/admin" || asPath === "/setting/admin/team"} >
                             <Link href="/setting" className={asPath === "/setting" ? "nav-link active" : "nav-link"}>
                                 <span>ติดต่อเรา</span>
                             </Link>
