@@ -33,18 +33,26 @@ const HomePage: React.FC = () => {
       <div className='partner-page h-100'>
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
-            <h4>
+            <h4 className="mb-0">
               {'ufruu01'} - Agent
             </h4>
-            <InputGroup className="icon">
-              <InputGroup.Text>
+            <InputGroup className="w-auto" bsPrefix="input-icon">
+              <InputGroup.Text id="basic-addon1">
                 <FaSearch />
               </InputGroup.Text>
-              <Form.Control aria-label="Dollar amount (with dot and two decimal places)" />
+              <Form.Control
+                placeholder="Username"
+                aria-label="Username"
+                aria-describedby="basic-addon1"
+              />
             </InputGroup>
             <span>
-              <Button className="ms-2">เพิ่ม Agent</Button>
-              <Button className="ms-2">สร้าง Agent</Button>
+              <Button className="ms-2 btn" bsPrefix="icon">
+                เพิ่ม Agent
+              </Button>
+              <Button className="ms-2 btn" bsPrefix="icon">
+                สร้าง Agent
+              </Button>
             </span>
           </Card.Header>
           <Card.Body>
