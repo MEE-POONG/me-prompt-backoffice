@@ -6,6 +6,7 @@ import { Alert, Badge, Button, Card, Col, Form, InputGroup, Row, Table } from "r
 import { FaPen, FaPowerOff, FaRegEye, FaSearch, FaTrashAlt } from "react-icons/fa";
 import Link from "next/link";
 import AddListName from "@/container/Partner/AddListName";
+import EditListName from "@/container/Partner/EditListName";
 
 
 const ListNamePage: React.FC = () => {
@@ -139,9 +140,7 @@ const ListNamePage: React.FC = () => {
                       <Button className="ms-2 btn" bsPrefix="icon">
                         <FaRegEye />
                       </Button>
-                      <Button className="ms-2 btn" bsPrefix="icon">
-                        <FaPen />
-                      </Button>
+                      <EditListName />
                       <Button className="ms-2 btn" bsPrefix="icon">
                         <FaTrashAlt />
                       </Button>
