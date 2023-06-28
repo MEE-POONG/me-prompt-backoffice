@@ -70,7 +70,7 @@ const EditMemberModal: React.FC<EditModalProps> = ({ data, apiEdit }) => {
                     </Button>
                     <Button variant="primary" className={checkEdit === 'not' || checkEdit === 'danger' ? "my-2" : "d-none"} onClick={handleEdit}>
                         {/* <Button variant="primary" className={checkEdit === 'not' || checkEdit === 'danger' ? "my-2" : "d-none"} onClick={() => setCheckEdit("primary")}> */}
-                        ยืนยันการลบ
+                        ยืนยันการแก้ไข
                     </Button>
                 </Modal.Footer>
 

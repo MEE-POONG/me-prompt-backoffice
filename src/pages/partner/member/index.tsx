@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
 import { Badge, Button, Card, Col, Form, InputGroup, Row, Table } from "react-bootstrap";
-import { FaAppStoreIos, FaPen, FaRegEye, FaSearch, FaTrashAlt } from "react-icons/fa";
+import { FaAppStoreIos, FaPen, FaRegEye, FaSearch, FaTrashAlt, FaUserNinja } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
@@ -36,22 +36,10 @@ const MemberPage: React.FC = () => {
 
   const [filteredMembersData, setFilteredMembersData] = useState<Member[]>([]);
 
-  // When membersData changes, set the filteredMembersData state
   useEffect(() => {
     setFilteredMembersData(membersData?.data ?? []);
   }, [membersData]);
 
-  // editMember function
-  const editMember = (id: string): Promise<any> => {
-    return executeMemberPut({
-      url: "/api/member/" + id,
-      method: "PUT",
-    }).then(() => {
-      setFilteredMembersData(prevMembers => prevMembers.filter(member => member.id !== id));
-    });
-  };
-
-  // deleteMember function
   const deleteMember = (id: string): Promise<any> => {
     return executeMemberDelete({
       url: "/api/member/" + id,
@@ -174,16 +162,20 @@ const MemberPage: React.FC = () => {
                         <Badge className="mx-1" bg="info">
                           Info
                         </Badge>
-
                         <Badge className="mx-1" bg="info">
                           Info
                         </Badge>
                       </td>
                       <td>
                         <PartnerViewMemberModal data={member} />
+                        <Button className="mx-1 btn gold" bsPrefix="icon">
+                          <FaUserNinja />
+                          <span className="h-tooltiptext">เพิ่มพาร์ทเนอร์</span>
+                        </Button>
                         {/* <EditMemberModal data={member} apiEdit={() => editMember(editList)} /> */}
-                        <Link href={`/partner/member/edit/${member.id}`} className="mx-2 btn icon icon-primary">
+                        <Link href={`/partner/member/edit/${member.id}`} className="mx-1 btn info icon icon-primary">
                           <FaPen />
+                          <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                         </Link>
                         <DeleteModal data={member} apiDelete={() => deleteMember(member.id)} />
                       </td>

@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FaRegEye } from 'react-icons/fa';
-interface PartnerViewMemberModalProps {
+interface PartnerAddPartnerModalProps {
     data: Member; // replace this with the actual type of your data
 }
-const PartnerViewMemberModal: React.FC<PartnerViewMemberModalProps> = ({ data }) => {
+const PartnerAddPartnerModal: React.FC<PartnerAddPartnerModalProps> = ({ data }) => {
     const [show, setShow] = useState<boolean>(false);
 
     const handleClose = () => setShow(false);
@@ -14,9 +14,9 @@ const PartnerViewMemberModal: React.FC<PartnerViewMemberModalProps> = ({ data })
 
     return (
         <>
-            <Button className="mx-1 btn success" bsPrefix="icon" onClick={handleShow}>
+            <Button className="mx-1 btn" bsPrefix="icon" onClick={handleShow}>
                 <FaRegEye />
-                <span className="h-tooltiptext">ดูข้อมูล</span>
+                <span className="h-tooltiptext">ปิดใช้งาน</span>
             </Button>
 
             <Modal show={show} onHide={handleClose}>
@@ -39,4 +39,4 @@ const PartnerViewMemberModal: React.FC<PartnerViewMemberModalProps> = ({ data })
     );
 }
 
-export default PartnerViewMemberModal;
+export default PartnerAddPartnerModal;

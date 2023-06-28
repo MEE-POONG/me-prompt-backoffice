@@ -51,8 +51,9 @@ const DeleteMemberModal: React.FC<DeleteModalProps> = ({ data, apiDelete }) => {
 
     return (
         <>
-            <Button className="mx-2 btn" bsPrefix="icon" onClick={handleShow}>
+            <Button className="mx-1 btn danger" bsPrefix="icon" onClick={handleShow}>
                 <FaTrashAlt />
+                <span className="h-tooltiptext">ปิดใช้งาน</span>
             </Button>
             <Modal show={show} onHide={handleCloseAndReset}>
                 <Modal.Header  >
@@ -68,7 +69,7 @@ const DeleteMemberModal: React.FC<DeleteModalProps> = ({ data, apiDelete }) => {
                     <Button variant="secondary" className={checkDelete === 'not' || checkDelete === 'danger' ? "my-2" : "d-none"} onClick={handleCloseAndReset}>
                         Close
                     </Button>
-                    <Button variant="primary" className={checkDelete === 'not' || checkDelete === 'danger' ? "my-2" : "d-none"} onClick={handleDelete}>
+                    <Button variant="danger " className={checkDelete === 'not' || checkDelete === 'danger' ? "my-2" : "d-none"} onClick={handleDelete}>
                         {/* <Button variant="primary" className={checkDelete === 'not' || checkDelete === 'danger' ? "my-2" : "d-none"} onClick={() => setCheckDelete("primary")}> */}
                         ยืนยันการลบ
                     </Button>
