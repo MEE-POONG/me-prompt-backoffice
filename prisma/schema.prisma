@@ -9,6 +9,7 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
 model Admin {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   username    String?
@@ -24,6 +25,7 @@ model Admin {
   updatedAt   DateTime? @updatedAt
   deleted_at  DateTime? @map("deleted_at")
 }
+
 model AgentIncomeSystem {
   id              String    @id @default(auto()) @map("_id") @db.ObjectId
   comSum          Int?
@@ -37,6 +39,7 @@ model AgentIncomeSystem {
   updatedAt       DateTime? @updatedAt
   deleted_at      DateTime? @map("deleted_at")
 }
+
 model InvestmentUser {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   username   String?
@@ -45,6 +48,7 @@ model InvestmentUser {
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")
 }
+
 model MastertIncomeSystem {
   id                      String    @id @default(auto()) @map("_id") @db.ObjectId
   comSum                  Int?
@@ -63,6 +67,7 @@ model MastertIncomeSystem {
   updatedAt               DateTime? @updatedAt
   deleted_at              DateTime? @map("deleted_at")
 }
+
 model Member {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   username      String?
@@ -78,7 +83,10 @@ model Member {
   createdAt     DateTime? @default(now())
   updatedAt     DateTime? @updatedAt
   deleted_at    DateTime? @map("deleted_at")
+
+  Partner Partner[]
 }
+
 model MinusIncome {
   id              String    @id @default(auto()) @map("_id") @db.ObjectId
   negativeBalance Int?
@@ -89,6 +97,7 @@ model MinusIncome {
   updatedAt       DateTime? @updatedAt
   deleted_at      DateTime? @map("deleted_at")
 }
+
 model Partner {
   id                 String    @id @default(auto()) @map("_id") @db.ObjectId
   userAG             String?
@@ -103,7 +112,10 @@ model Partner {
   createdAt          DateTime? @default(now())
   updatedAt          DateTime? @updatedAt
   deleted_at         DateTime? @map("deleted_at")
+  memberId           String?   @db.ObjectId
+  member             Member?   @relation(fields: [memberId], references: [id])
 }
+
 model PastAG {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   online     Int?
@@ -126,6 +138,7 @@ model PastBETFLIX {
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")
 }
+
 model RightsManagement {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   page        String?
@@ -134,6 +147,7 @@ model RightsManagement {
   updatedAt   DateTime? @updatedAt
   deleted_at  DateTime? @map("deleted_at")
 }
+
 model TransferSummary {
   id               String    @id @default(auto()) @map("_id") @db.ObjectId
   recommendedValue Int?

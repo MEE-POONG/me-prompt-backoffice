@@ -48,6 +48,7 @@ const AgentPage: React.FC = () => {
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
+                  <th>No.</th>
                   <th>ยูสเซอร์</th>
                   <th>ชื่อ-สกุล</th>
                   <th>สิทธิรายได้</th>
@@ -57,6 +58,9 @@ const AgentPage: React.FC = () => {
               <tbody className="text-center">
                 {data.map((row, index) => (
                   <tr key={index}>
+                    <td>
+                      {index + 1}
+                    </td>
                     <td>
                       <div className="space-around ">
                         <b>ufruu01</b>

@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
                 const totalAdmins = await prisma.admin.count();
                 const totalPage: number = Math.ceil(totalAdmins / pageSize);
-                res.status(200).json({ data: admins, page, pageSize, totalPage });
+                res.status(200).json({ admins, page, pageSize, totalPage });
             } catch (error) {
                 res.status(500).json({ error: "An error occurred while fetching the admins" });
             }

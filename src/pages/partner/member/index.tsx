@@ -27,10 +27,6 @@ const MemberPage: React.FC = () => {
     url: `/api/member?page=${params.page}&pageSize=${params.pageSize}`,
     method: "GET",
   });
-  const [
-    { loading: updateContactLoading, error: updateContactError },
-    executeMemberPut,
-  ] = useAxios({}, { manual: true });
 
   const [{ loading: deleteMemberLoading, error: deleteMemberError }, executeMemberDelete,] = useAxios({}, { manual: true });
 

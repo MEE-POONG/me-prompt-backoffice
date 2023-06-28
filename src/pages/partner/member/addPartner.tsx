@@ -1,25 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import React, { useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
 import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
-// import BankSelect from "@/components/Input/Bankselect";
-import EditModal from "@/components/modal/EditModal";
+import AddModal from "@/components/modal/AddModal";
 import useAxios from "axios-hooks";
 import BankAccount from "@/components/Input/BankAccount";
 import Link from "next/link";
 import { bankMap } from '@/test';
-import { Member } from "@prisma/client";
-
-
 
 const MemberAdd: React.FC = () => {
-  const router = useRouter();
-  const { id } = router.query;
-  const [
-    { loading: updateMemberLoading, error: updateMemberError },
-    executeMemberPut,
-  ] = useAxios({}, { manual: true });
+  const [{ error: errorMessage, loading: memberLoading }, executeMember] = useAxios({ url: '/api/member', method: 'POST' }, { manual: true });
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [firstname, setFirstname] = useState<string>("");
@@ -39,49 +29,24 @@ const MemberAdd: React.FC = () => {
       setter(newValue);
     }
   };
-
-  const [
-    { data: memberID, loading: memberIDLoading, error: memberIDError },
-    executeMemberID,
-  ] = useAxios<{ data: Member; success: boolean }, any>({
-    url: `/api/member/${id}`,
-    method: "GET",
-  }, { autoCancel: false, manual: true });
-
-  useEffect(() => {
-    if (id) {
-      executeMemberID().then(({ data }) => {
-        if (data?.data) {
-          setUsername(data?.data?.username || "");
-          setPassword(data?.data?.password || "")
-          setFirstname(data?.data?.firstname || "")
-          setLastname(data?.data?.lastname || "")
-          setBank(data?.data?.bank || "")
-          setBankAccount(data?.data?.bankAccount || "")
-          setPhone(data?.data?.phone || "")
-          setLine(data?.data?.line || "")
-          setEmail(data?.data?.email || "")
-        }
-      });
-    }
-  }, [id]);
-
   const reloadPage = () => {
-    executeMemberID().then(({ data }) => {
-      if (data?.data) {
-        setUsername(data?.data?.username || "");
-        setPassword(data?.data?.password || "")
-        setFirstname(data?.data?.firstname || "")
-        setLastname(data?.data?.lastname || "")
-        setBank(data?.data?.bank || "")
-        setBankAccount(data?.data?.bankAccount || "")
-        setPhone(data?.data?.phone || "")
-        setLine(data?.data?.line || "")
-        setEmail(data?.data?.email || "")
-      }
-    });
+    clear();
   };
 
+  const clear = () => {
+    setUsername("");
+    setPassword("");
+    setFirstname("");
+    setLastname("");
+    setBank("");
+    setBankAccount("");
+    setPhone("");
+    setLine("");
+    setEmail("");
+    setAlertForm("not");
+    setInputForm(false);
+    setCheckBody("");
+  }
 
   const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
@@ -102,8 +67,9 @@ const MemberAdd: React.FC = () => {
       setCheckBody(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
     } else {
       try {
-        setAlertForm("primary");
+        setAlertForm("primary"); // set to loading
 
+        // Prepare the data to send
         const data = {
           username,
           password,
@@ -116,21 +82,15 @@ const MemberAdd: React.FC = () => {
           email,
         };
 
-
-        // Execute the update
-        const response = await executeMemberPut({
-          url: "/api/member/" + id,
-          method: "PUT",
-          data
-        });
-        if (response && response.status === 200) {
+        const response = await executeMember({ data });
+        if (response && response.status === 201) {
           setAlertForm("success");
           setTimeout(() => {
-            reloadPage();
+            clear();
           }, 5000);
         } else {
           setAlertForm("danger");
-          throw new Error('Failed to update data');
+          throw new Error('Failed to send data');
         }
       } catch (error) {
         setAlertForm("danger");
@@ -150,10 +110,10 @@ const MemberAdd: React.FC = () => {
       </Head>
       <div className='member-page'>
         <Card>
-          <EditModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
+          <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              Member - แก้ไขข้อมูล
+              Member - เพิ่มข้อมูล
             </h4>
           </Card.Header>
           <Card.Body>
@@ -214,7 +174,6 @@ const MemberAdd: React.FC = () => {
                         <Image src={bankObj.image} alt={bankObj.value} style={{ width: '20px', marginRight: '10px' }} />
                       }
                       {bank}
-
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       {bankMap.map((option) => (
