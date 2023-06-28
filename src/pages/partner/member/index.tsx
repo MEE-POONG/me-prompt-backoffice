@@ -10,7 +10,6 @@ import { bankMap } from "@/test";
 import PartnerViewMemberModal from "@/container/Partner/ViewModal";
 import DeleteModal from "@/components/modal/DeleteModal";
 import { Member } from "@prisma/client";
-import EditMemberModal from "@/container/Partner/EditModal";
 
 interface Params {
   page: number;
@@ -90,7 +89,7 @@ const MemberPage: React.FC = () => {
               />
             </InputGroup>
             {/* <AddListName /> */}
-            <Link href="/partner/member/add" className="ms-2 btn icon icon-primary">
+            <Link href="/partner/member/add" className="ms-2 btn icon icofn-primary">
               เพิ่มพาร์ทเนอร์
             </Link>
           </Card.Header>
