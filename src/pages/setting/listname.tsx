@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
-import HeroSection from '@/container/Home/HeroSection';
-import { Alert, Badge, Button, Card, Col, Form, InputGroup, Row, Table } from "react-bootstrap";
-import { FaPen, FaPowerOff, FaRegEye, FaSearch, FaTrashAlt } from "react-icons/fa";
+import { Badge, Button, Card, Col, Form, InputGroup, Row, Table } from "react-bootstrap";
+import { FaRegEye, FaSearch, FaTrashAlt } from "react-icons/fa";
 import Link from "next/link";
 import AddListName from "@/container/Partner/AddListName";
 import EditListName from "@/container/Partner/EditListName";
@@ -36,7 +35,7 @@ const ListNamePage: React.FC = () => {
       <div className='partner-page h-100'>
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
-            <h4 className="mb-0">
+            <h4 className="mb-0 py-1">
               Partner - Master
             </h4>
             <InputGroup className="w-auto" bsPrefix="input-icon">
@@ -55,7 +54,7 @@ const ListNamePage: React.FC = () => {
             <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
-                  <th className="first">ลำดับ</th>
+                  <th className="first">No.</th>
                   <th>ชื่อ-สกุล</th>
                   <th>ธนาคาร</th>
                   <th>ติดต่อ</th>

@@ -17,15 +17,6 @@
     align-items: center;
     justify-content: space-around;
 }
-
-// .scrollable-body {
-//     display: block;
-//     max-height: 300px;
-//     overflow-y: auto;
-// }
-
-
-// table,
-// tr td {
-//     border: 1px solid red;
-// }
+.object-fit-contain{
+    object-fit: contain;
+}

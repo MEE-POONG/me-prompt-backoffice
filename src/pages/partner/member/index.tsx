@@ -1,0 +1,205 @@
+import React, { useEffect, useState } from "react";
+import Head from 'next/head';
+import LayOut from "@/components/LayOut";
+import { Badge, Button, Card, Col, Form, InputGroup, Row, Table } from "react-bootstrap";
+import { FaAppStoreIos, FaPen, FaRegEye, FaSearch, FaTrashAlt } from "react-icons/fa";
+import Link from "next/link";
+import useAxios from "axios-hooks";
+import PageSelect from "@/components/PageSelect";
+import { bankMap } from "@/test";
+import PartnerViewMemberModal from "@/container/Partner/ViewModal";
+import DeleteModal from "@/components/modal/DeleteModal";
+import { Member } from "@prisma/client";
+import EditMemberModal from "@/container/Partner/EditModal";
+
+interface Params {
+  page: number;
+  pageSize: number;
+  totalPages: number;
+}
+const MemberPage: React.FC = () => {
+  const [params, setParams] = useState<Params>({
+    page: 1,
+    pageSize: 10,
+    totalPages: 1,
+  });
+  const [{ data: membersData }, getMember,] = useAxios({
+    url: `/api/member?page=${params.page}&pageSize=${params.pageSize}`,
+    method: "GET",
+  });
+  const [
+    { loading: updateContactLoading, error: updateContactError },
+    executeMemberPut,
+  ] = useAxios({}, { manual: true });
+
+  const [{ loading: deleteMemberLoading, error: deleteMemberError }, executeMemberDelete,] = useAxios({}, { manual: true });
+
+  const [filteredMembersData, setFilteredMembersData] = useState<Member[]>([]);
+
+  // When membersData changes, set the filteredMembersData state
+  useEffect(() => {
+    setFilteredMembersData(membersData?.data ?? []);
+  }, [membersData]);
+
+  // editMember function
+  const editMember = (id: string): Promise<any> => {
+    return executeMemberPut({
+      url: "/api/member/" + id,
+      method: "PUT",
+    }).then(() => {
+      setFilteredMembersData(prevMembers => prevMembers.filter(member => member.id !== id));
+    });
+  };
+
+  // deleteMember function
+  const deleteMember = (id: string): Promise<any> => {
+    return executeMemberDelete({
+      url: "/api/member/" + id,
+      method: "DELETE",
+    }).then(() => {
+      setFilteredMembersData(prevMembers => prevMembers.filter(member => member.id !== id));
+    });
+  };
+
+
+  const handleChangePage = (page: number) => {
+    setParams(prevParams => ({
+      ...prevParams,
+      page: page,
+    }));
+  };
+  const handleChangePageSize = (size: number) => {
+    setParams(prevParams => ({
+      ...prevParams,
+      page: 1,
+      pageSize: size,
+    }));
+  };
+  return (
+    <LayOut>
+      <Head>
+        <title>Wellcome | MePrompt-BackOffice</title>
+        <meta
+          name="description"
+          content="T ACTIVE"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className='partner-page h-100'>
+        <Card className="h-100">
+          <Card.Header className="d-flex space-between">
+            <h4 className="mb-0 py-1">
+              Partner - Member
+            </h4>
+            <InputGroup className="w-auto" bsPrefix="input-icon">
+              <InputGroup.Text id="basic-addon1">
+                <FaSearch />
+              </InputGroup.Text>
+              <Form.Control
+                placeholder="Username"
+                aria-label="Username"
+                aria-describedby="basic-addon1"
+              />
+            </InputGroup>
+            {/* <AddListName /> */}
+            <Link href="/partner/member/add" className="ms-2 btn icon icon-primary">
+              เพิ่มพาร์ทเนอร์
+            </Link>
+          </Card.Header>
+          <Card.Body className="p-0">
+            <Table striped bordered hover className="scroll">
+              <thead>
+                <tr>
+                  <th className="first">No.</th>
+                  <th className="name">ชื่อ-สกุล</th>
+                  <th className="bank">ธนาคาร</th>
+                  <th>
+                    AG User
+                  </th>
+                  <th>จัดการ</th>
+                </tr>
+              </thead>
+              <tbody className="text-center">
+                {filteredMembersData?.map((member: Member, index: number) => {
+                  const bankObj = bankMap.find(bank => bank.value === member?.bank);
+                  return (
+                    <tr key={member.id}>
+                      <td className="first">
+                        {((params.page * 10) - 10) + index + 1}
+                      </td>
+                      <td className="name">
+                        <div className="space-around ">
+                          <b>{member?.firstname}</b>
+                          <b>{member?.lastname}</b>
+                        </div>
+                      </td>
+                      <td className="bank">
+                        {bankObj &&
+                          <div>
+                            <img src={bankObj.image} alt={bankObj.value} style={{ width: '30px', marginRight: '10px' }} />
+                          </div>
+                        }
+
+                        <div>{member.bankAccount} </div>
+                      </td>
+                      <td>
+                        <Badge className="mx-1" bg="success">
+                          Success
+                        </Badge>
+                        <Badge className="mx-1" bg="success">
+                          Success
+                        </Badge>
+                        <Badge className="mx-1" bg="success">
+                          Success
+                        </Badge>
+                        <Badge className="mx-1" bg="success">
+                          Success
+                        </Badge>
+                        <Badge className="mx-1" bg="success">
+                          Success
+                        </Badge>
+                        <Badge className="mx-1" bg="success">
+                          Success
+                        </Badge>
+                        <Badge className="mx-1" bg="success">
+                          Success
+                        </Badge>
+                        <br />
+                        <Badge className="mx-1" bg="info">
+                          Info
+                        </Badge>
+                        <Badge className="mx-1" bg="info">
+                          Info
+                        </Badge>
+                        <Badge className="mx-1" bg="info">
+                          Info
+                        </Badge>
+
+                        <Badge className="mx-1" bg="info">
+                          Info
+                        </Badge>
+                      </td>
+                      <td>
+                        <PartnerViewMemberModal data={member} />
+                        {/* <EditMemberModal data={member} apiEdit={() => editMember(editList)} /> */}
+                        <Link href={`/partner/member/edit/${member.id}`} className="mx-2 btn icon icon-primary">
+                          <FaPen />
+                        </Link>
+                        <DeleteModal data={member} apiDelete={() => deleteMember(member.id)} />
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          </Card.Body>
+          <Card.Footer>
+            <PageSelect page={params.page} totalPages={membersData?.pagination?.total} onChangePage={handleChangePage} onChangePageSize={handleChangePageSize} />
+          </Card.Footer>
+        </Card>
+
+      </div>
+    </LayOut>
+  );
+}
+export default MemberPage;

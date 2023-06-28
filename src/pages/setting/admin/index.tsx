@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
-import HeroSection from '@/container/Home/HeroSection';
-import { Alert, Button, Card, Col, Form, InputGroup, Row, Table } from "react-bootstrap";
-import { FaKey, FaPen, FaPowerOff, FaRegEye, FaSearch, FaTrashAlt } from "react-icons/fa";
+import ModalOffOn from '@/container/Setting/ModalOffOn';
+import { Alert, Button, Card, Image, Form, InputGroup, Tooltip, OverlayTrigger, Table } from "react-bootstrap";
+import { FaKey, FaPen, FaPowerOff, FaRegEye, FaSearch, FaToolbox, FaTrashAlt } from "react-icons/fa";
 import Link from "next/link";
+import AdminAdd from "@/container/Admin/AdminAdd";
 
 
 const AdminPage: React.FC = () => {
@@ -24,7 +25,7 @@ const AdminPage: React.FC = () => {
       <div className='admin-page h-100'>
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
-            <h4 className="mb-0">
+            <h4 className="mb-0 py-1">
               Admin
             </h4>
             <InputGroup className="w-auto" bsPrefix="input-icon">
@@ -38,9 +39,7 @@ const AdminPage: React.FC = () => {
               />
             </InputGroup>
             <span>
-              <Button className="ms-2 btn" bsPrefix="icon">
-                เพิ่ม Admin
-              </Button>
+              <AdminAdd />
               <Link href="/setting/admin/team" className="ms-2 btn icon">
                 จัดการ Team
               </Link>
@@ -62,7 +61,7 @@ const AdminPage: React.FC = () => {
                     <td>
                       <b>นรากร ปากา</b>
                       <br />
-                      <b>เอ</b>
+                      <b>{" ชื่อเล่น "}เอ</b>
                     </td>
                     <td>
                       <b>A / หัวหน้าทีม</b>
@@ -73,17 +72,22 @@ const AdminPage: React.FC = () => {
                       <b>Line : 0381234567</b>
                     </td>
                     <td>
-                      <Button className="ms-2 btn" bsPrefix="icon">
-                        <FaPowerOff />
+                      <ModalOffOn />
+                      <Button className="ms-2 btn info" bsPrefix="icon">
+                        <FaToolbox />
+                        <span className="h-tooltiptext">กำหนดสิทธิ</span>
                       </Button>
-                      <Button className="ms-2 btn" bsPrefix="icon">
+                      <Button className="ms-2 btn warning" bsPrefix="icon">
                         <FaKey />
+                        <span className="h-tooltiptext">เปลี่ยนรหัส</span>
                       </Button>
-                      <Button className="ms-2 btn" bsPrefix="icon">
+                      <Button className="ms-2 btn primary" bsPrefix="icon" >
                         <FaPen />
+                        <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                       </Button>
                       <Button className="ms-2 btn" bsPrefix="icon">
                         <FaTrashAlt />
+                        <span className="h-tooltiptext">ลบข้อมูล</span>
                       </Button>
                     </td>
                   </tr>

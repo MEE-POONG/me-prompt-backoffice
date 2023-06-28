@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
-import HeroSection from '@/container/Home/HeroSection';
 import { Alert, Button, Card, Col, Form, InputGroup, Row, Table } from "react-bootstrap";
 import { FaPen, FaPowerOff, FaRegEye, FaSearch } from "react-icons/fa";
 import Link from "next/link";
@@ -24,7 +23,7 @@ const PartnerPage: React.FC = () => {
       <div className='partner-page h-100'>
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
-            <h4 className="mb-0">
+            <h4 className="mb-0 py-1">
               Partner - Master
             </h4>
             <InputGroup className="w-auto" bsPrefix="input-icon">

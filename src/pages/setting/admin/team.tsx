@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
-import HeroSection from '@/container/Home/HeroSection';
 import { Alert, Button, Card, Col, Form, InputGroup, Row, Table } from "react-bootstrap";
 import { FaKey, FaPen, FaPowerOff, FaRegEye, FaSearch, FaTrashAlt } from "react-icons/fa";
 

@@ -4,7 +4,6 @@ import LayOut from "@/components/LayOut";
 import { Button, Card, Col,Form, Image,  Row } from "react-bootstrap";
 
 const PartnerPage: React.FC = () => {
-
   return (
     <LayOut>
       <Head>
@@ -18,7 +17,7 @@ const PartnerPage: React.FC = () => {
       <div className='setting-page h-100'>
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
-            <h4 className="mb-0">
+            <h4 className="mb-0 py-1">
               ติดต่อเรา
             </h4>
             <span>
@@ -80,9 +79,6 @@ const PartnerPage: React.FC = () => {
                 </Row>
               </Col>
             </Row>
-
-
-
           </Card.Body>
           <Card.Footer className="d-flex space-between">
             <span className="ms-auto">
@@ -98,7 +94,6 @@ const PartnerPage: React.FC = () => {
             </span>
           </Card.Footer>
         </Card>
-
       </div>
     </LayOut>
   );

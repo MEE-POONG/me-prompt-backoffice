@@ -15,11 +15,6 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
     const { asPath } = useRouter();
     const [checkClickPath, setCheckClickPath] = useState<string>('/');
     useEffect(() => {
-        console.log(show);
-
-    }, [show])
-
-    useEffect(() => {
         setCheckClickPath(asPath);
     }, [asPath])
     const handlePath = (valPath: string): void => { checkClickPath === valPath ? setCheckClickPath('') : setCheckClickPath(valPath) };
@@ -35,19 +30,19 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                         <span className="ms-2">Home</span>
                     </Link>
                     <div id="partner" className='select-page'>
-                        <Dropdown.Toggle onClick={() => handlePath('/partner')} className={asPath === "/partner" || asPath === "/partner/agent" || asPath === "/partner/listname" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
+                        <Dropdown.Toggle onClick={() => handlePath('/partner')} className={asPath === "/partner" || asPath === "/partner/agent" || asPath === "/partner/member" || asPath === "/partner/member/add" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
                             <i >
                                 <FaTachometerAlt />
                             </i>
                             <span className="ms-2">Partner</span>
                         </Dropdown.Toggle>
 
-                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/partner" || checkClickPath === "/partner/agent" || checkClickPath === "/partner/listname"} >
+                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/partner" || checkClickPath === "/partner/agent" || checkClickPath === "/partner/member" || asPath === "/partner/member/add"} >
                             <Link href="/partner" className={asPath === "/partner" || asPath === "/partner/agent" ? "nav-link active" : "nav-link"}>
                                 <span>Master</span>
                             </Link>
-                            <Link href="/partner/listname" className={asPath === "/partner/listname" ? "nav-link active" : "nav-link"}>
-                                <span>รายชื่อ</span>
+                            <Link href="/partner/member" className={asPath === "/partner/member" || asPath === "/partner/member/add" ? "nav-link active" : "nav-link"}>
+                                <span>Member</span>
                             </Link>
                         </Dropdown.Menu>
                     </div>
@@ -78,7 +73,6 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                             </i>
                             <span className="ms-2">income Auto</span>
                         </Dropdown.Toggle>
-
                         <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/income" || checkClickPath === "/income/agent" || checkClickPath === "/income/listname"} >
                             <Link href="/income" className={asPath === "/income" || asPath === "/income/agent" ? "nav-link active" : "nav-link"}>
                                 <span>ได้เสียลูกค้า</span>

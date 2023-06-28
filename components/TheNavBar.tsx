@@ -17,7 +17,7 @@ const TheNavBar: React.FC<TheNavBarProps> = ({ show, onToggleShow }) => {
     <Navbar className="navbar-expand navbar-head sticky-top px-4 py-0">
 
       <Container fluid>
-        <Link href="/" className="navbar-brand mx-4">
+        <Link href="/" className="navbar-brand me-4">
           <h3 className="text-primary">
             <FaUserEdit className="fa me-2" />
             MeePrompt
@@ -102,7 +102,7 @@ const TheNavBar: React.FC<TheNavBarProps> = ({ show, onToggleShow }) => {
           <NavDropdown
             id="nav-dropdown-dark-example"
             title={<>
-              <Image className="rounded-circle me-lg-2" src={'./images/user/1.jpg'} alt="" style={{ width: "30px", height: "30px" }} />
+              <Image className="rounded-circle me-lg-2" src={'https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/947130a0-adde-4905-9003-48e461328800/100'} alt="" style={{ width: "30px", height: "30px" }} />
               <span className="d-none d-lg-inline-flex">มอง มอง</span>
             </>}
             menuVariant="dark"

@@ -11,14 +11,12 @@ const HomePage: React.FC = () => {
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        // handle the submit logic here
-        console.log(`Username: ${username}, Password: ${password}`);
     };
 
     return (
         <>
             <Head>
-                <title>Wellcome | Belletti-Niresidence</title>
+                <title>Wellcome | PSD-MeBack</title>
                 <meta
                     name="description"
                     content="T ACTIVE"
