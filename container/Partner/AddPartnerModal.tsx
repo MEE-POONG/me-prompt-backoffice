@@ -1,8 +1,9 @@
 import { Member } from '@prisma/client';
 import React, { useState } from 'react';
+import { Badge, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { FaRegEye } from 'react-icons/fa';
+import { FaRegEye, FaSearch, FaUserNinja } from 'react-icons/fa';
 interface PartnerAddPartnerModalProps {
     data: Member; // replace this with the actual type of your data
 }
@@ -14,27 +15,46 @@ const PartnerAddPartnerModal: React.FC<PartnerAddPartnerModalProps> = ({ data })
 
     return (
         <>
-            <Button className="mx-1 btn" bsPrefix="icon" onClick={handleShow}>
-                <FaRegEye />
-                <span className="h-tooltiptext">ปิดใช้งาน</span>
+            <Button className="mx-1 btn gold" bsPrefix="icon" onClick={handleShow}>
+                <FaUserNinja />
+                <span className="h-tooltiptext">เพิ่มพาร์ทเนอร์</span>
             </Button>
-
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose} size='lg'>
                 <Modal.Header closeButton>
-                    <Modal.Title>ข้อมูล </Modal.Title>
+                    <Modal.Title>พาร์ทเนอร์ </Modal.Title>
+                    <InputGroup className="w-auto mx-auto" bsPrefix="input-icon">
+                        <InputGroup.Text id="basic-addon1">
+                            <FaSearch />
+                        </InputGroup.Text>
+                        <Form.Control
+                            placeholder="Username"
+                            aria-label="Username"
+                            aria-describedby="basic-addon1"
+                        />
+                    </InputGroup>
                 </Modal.Header>
                 <Modal.Body>
-                    Woohoo, you are reading this text in a modal!
-                </Modal.Body>
+                    <Row>
+                        <Col sm="12">
+                            <div className='text-center'>Master</div>
+                            <Badge className="mx-1" bg="info">
+                                Info
+                            </Badge>
+                        </Col>
+                        <Col sm="12">
+                            <div className='text-center'>Agent</div>
+                            <Badge className="mx-1" bg="info">
+                                Info
+                            </Badge>
+                        </Col>
+                    </Row>
+                </Modal.Body >
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
+                    <Button variant="success" onClick={handleClose}>
+                        ปิด
                     </Button>
                 </Modal.Footer>
-            </Modal>
+            </Modal >
         </>
     );
 }

@@ -10,6 +10,7 @@ import { bankMap } from "@/test";
 import PartnerViewMemberModal from "@/container/Partner/ViewModal";
 import DeleteModal from "@/components/modal/DeleteModal";
 import { Member } from "@prisma/client";
+import PartnerAddPartnerModal from "@/container/Partner/AddPartnerModal";
 
 interface Params {
   page: number;
@@ -167,10 +168,8 @@ const MemberPage: React.FC = () => {
                       </td>
                       <td>
                         <PartnerViewMemberModal data={member} />
-                        <Button className="mx-1 btn gold" bsPrefix="icon">
-                          <FaUserNinja />
-                          <span className="h-tooltiptext">เพิ่มพาร์ทเนอร์</span>
-                        </Button>
+
+                        <PartnerAddPartnerModal data={member}/>
                         {/* <EditMemberModal data={member} apiEdit={() => editMember(editList)} /> */}
                         <Link href={`/partner/member/edit/${member.id}`} className="mx-1 btn info icon icon-primary">
                           <FaPen />
