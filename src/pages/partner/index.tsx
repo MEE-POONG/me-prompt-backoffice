@@ -87,7 +87,7 @@ const PartnerPage: React.FC = () => {
                 aria-describedby="basic-addon1"
               />
             </InputGroup>
-            <Link href="/partner/partner/add" className="ms-2 btn icon icofn-primary">
+            <Link href="/partner/add" className="ms-2 btn icon icofn-primary">
               เพิ่มพาร์ทเนอร์
             </Link>
           </Card.Header>
@@ -119,19 +119,24 @@ const PartnerPage: React.FC = () => {
                     </td>
                     <td>{partner.percent}%</td>
                     <td>
-                      <Button className="ms-2 btn" bsPrefix="icon">
+                      <Button
+                        className={`ms-2 btn icon ${partner.commission ? 'active' : ''}`}>
                         ค่าคอม
                       </Button>
-                      <Button className="ms-2 btn" bsPrefix="icon">
+                      <Button
+                        className={`ms-2 btn icon ${partner.overdue ? 'active' : ''}`}>
                         ค้างบวก
                       </Button>
-                      <Button className="ms-2 btn" bsPrefix="icon">
+                      <Button
+                        className={`ms-2 btn icon ${partner.adjustPercentage ? 'active' : ''}`}>
                         ปรับสู้ฟรี
                       </Button>
-                      <Button className="ms-2 btn" bsPrefix="icon">
+                      <Button
+                        className={`ms-2 btn icon ${partner.pay ? 'active' : ''}`}>
                         จ่าย
                       </Button>
-                      <Button className="ms-2 btn" bsPrefix="icon">
+                      <Button
+                        className={`ms-2 btn icon ${partner.customerCommission ? 'active' : ''}`}>
                         คืนลูกค้า
                       </Button>
                     </td>
