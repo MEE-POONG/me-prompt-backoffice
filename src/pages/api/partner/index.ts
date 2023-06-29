@@ -32,6 +32,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 const partners = await prisma.partner.findMany({
                     skip: (page - 1) * pageSize,
                     take: pageSize,
+                    include: {
+                        Member: true,
+                    },
                 });
 
                 const totalPartnersCount: number = await prisma.partner.count();

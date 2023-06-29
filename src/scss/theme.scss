@@ -19,7 +19,69 @@
 }
 button,
 .btn {
+    &.icon {
+        display: inline-grid;
+        padding: 0.25rem;
+        color: var(--bs-alert-color);
+        font-size: 16px;
+        border-color: var(--bs-alert-color);
+        position: relative;
+        &.primary {
+            color: #0d6efd;
+        }
+        &.secondary {
+            color: #6c757d;
+        }
+        &.success {
+            color: #198754;
+        }
+        &.danger {
+            color: #dc3545;
+        }
+        &.warning {
+            color: #ffc107;
+        }
+        &.gold {
+            color: #967117;
+        }
+        &.info {
+            color: #0dcaf0;
+        }
+        &.light {
+            color: #f8f9fa;
+        }
+        &.dark {
+            color: #212529;
+        }
+        &:hover,
+        &:active,
+        .active {
+            color: var(--primary);
+            background: var(--bg-active);
+        }
+        .h-tooltiptext {
+            visibility: hidden;
+            width: max-content;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            top: calc(100% + 5px);
+            margin: auto;
+            left: 50%;
+            transform: translate(-50%, 0%);
+        }
+        &:hover {
+            .h-tooltiptext {
+                visibility: visible;
+            }
+        }
+    }
     &.active {
+        color: var(--primary);
         background: linear-gradient(90deg, #16474d 0%, #12323d 50%, #133041 100%);
     }
 }
@@ -290,69 +352,7 @@ button.bar-slide {
     display: flex;
     justify-content: space-around;
 }
-button,
-.btn {
-    &.icon {
-        display: inline-grid;
-        padding: 0.25rem;
-        color: var(--bs-alert-color);
-        font-size: 16px;
-        border-color: var(--bs-alert-color);
-        position: relative;
-        &.primary {
-            color: #0d6efd;
-        }
-        &.secondary {
-            color: #6c757d;
-        }
-        &.success {
-            color: #198754;
-        }
-        &.danger {
-            color: #dc3545;
-        }
-        &.warning {
-            color: #ffc107;
-        }
-        &.gold {
-            color: #967117  ;
-        }
-        &.info {
-            color: #0dcaf0;
-        }
-        &.light {
-            color: #f8f9fa;
-        }
-        &.dark {
-            color: #212529;
-        }
-        &:hover,
-        &:active {
-            color: var(--primary);
-            background: var(--bg-active);
-        }
-        .h-tooltiptext {
-            visibility: hidden;
-            width: max-content;
-            background-color: black;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px;
-            position: absolute;
-            z-index: 1;
-            top: calc(100% + 5px);
-            margin: auto;
-            left: 50%;
-            transform: translate(-50%, 0%);
-        }
-        &:hover {
-            .h-tooltiptext {
-                visibility: visible;
-            }
-        }
-    }
-}
+
 .table.scroll {
     width: 100%;
     margin: 0;
@@ -438,7 +438,7 @@ a.text-primary {
     width: 6rem;
     text-align: end;
 }
-.btn-select-form{
+.btn-select-form {
     text-align: start;
     padding: 0;
     background-color: unset;

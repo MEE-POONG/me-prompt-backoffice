@@ -6,12 +6,19 @@ import { FaAppStoreIos, FaPen, FaRegEye, FaSearch, FaTrashAlt, FaUserNinja } fro
 import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
-import { bankMap } from "@/test";
 import PartnerViewPartnerModal from "@/container/Partner/ViewModal";
 import DeleteModal from "@/components/modal/DeleteModal";
-import { Partner } from "@prisma/client";
 import PartnerAddPartnerModal from "@/container/Partner/AddPartnerModal";
+import axios from "axios";
 
+import { Partner as PrismaPartner, Member as PrismaMember } from '@prisma/client';
+
+interface Member extends PrismaMember {
+}
+
+interface Partner extends PrismaPartner {
+  Member: Member[];
+}
 interface Params {
   page: number;
   pageSize: number;
@@ -23,28 +30,19 @@ const PartnerPage: React.FC = () => {
     pageSize: 10,
     totalPages: 1,
   });
-  const [{ data: partnersData }, getPartner,] = useAxios({
+  const [{ data, loading, error }, getMember,] = useAxios({
     url: `/api/partner?page=${params.page}&pageSize=${params.pageSize}`,
     method: "GET",
   });
-
-  const [{ loading: deletePartnerLoading, error: deletePartnerError }, executePartnerDelete,] = useAxios({}, { manual: true });
-
-  const [filteredPartnersData, setFilteredPartnersData] = useState<Partner[]>([]);
+  const [partnersData, setPartnersData] = useState([]);
 
   useEffect(() => {
-    setFilteredPartnersData(partnersData?.data ?? []);
+    getMember().then(response => setPartnersData(response?.data?.data)).catch(err => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    console.log("partnersData : ", partnersData)
   }, [partnersData]);
-
-  const deletePartner = (id: string): Promise<any> => {
-    return executePartnerDelete({
-      url: "/api/partner/" + id,
-      method: "DELETE",
-    }).then(() => {
-      setFilteredPartnersData(prevPartners => prevPartners.filter(partner => partner.id !== id));
-    });
-  };
-
 
   const handleChangePage = (page: number) => {
     setParams(prevParams => ({
@@ -59,6 +57,10 @@ const PartnerPage: React.FC = () => {
       pageSize: size,
     }));
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error!</p>;
+
   return (
     <LayOut>
       <Head>
@@ -73,7 +75,7 @@ const PartnerPage: React.FC = () => {
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              Partner - Partner
+              Partner - Master
             </h4>
             <InputGroup className="w-auto" bsPrefix="input-icon">
               <InputGroup.Text id="basic-addon1">
@@ -85,7 +87,6 @@ const PartnerPage: React.FC = () => {
                 aria-describedby="basic-addon1"
               />
             </InputGroup>
-            {/* <AddListName /> */}
             <Link href="/partner/partner/add" className="ms-2 btn icon icofn-primary">
               เพิ่มพาร์ทเนอร์
             </Link>
@@ -96,13 +97,69 @@ const PartnerPage: React.FC = () => {
                 <tr>
                   <th className="first">No.</th>
                   <th >userAG</th>
+                  <th >ผู้ใช้</th>
                   <th>Partner</th>
                   <th>Benefit</th>
                   <th>จัดการ</th>
                 </tr>
               </thead>
               <tbody className="text-center">
-                {filteredPartnersData?.map((partner: Partner, index: number) => {
+                {partnersData.map((partner: Partner, index: number) => (
+                  <tr key={partner.id}>
+                    <td>{index + 1}</td>
+                    <td>{partner.userAG}</td>
+                    <td>
+                      {partner.Member.length > 0 ? (
+                        partner.Member.map((member: Member) => (
+                          <div key={member.id}>{member.firstname + " " + member.lastname}</div>
+                        ))
+                      ) : (
+                        <div>ไม่มีผู้ใช้</div>
+                      )}
+                    </td>
+                    <td>{partner.percent}%</td>
+                    <td>
+                      <Button className="ms-2 btn" bsPrefix="icon">
+                        ค่าคอม
+                      </Button>
+                      <Button className="ms-2 btn" bsPrefix="icon">
+                        ค้างบวก
+                      </Button>
+                      <Button className="ms-2 btn" bsPrefix="icon">
+                        ปรับสู้ฟรี
+                      </Button>
+                      <Button className="ms-2 btn" bsPrefix="icon">
+                        จ่าย
+                      </Button>
+                      <Button className="ms-2 btn" bsPrefix="icon">
+                        คืนลูกค้า
+                      </Button>
+                    </td>
+                    <td>
+                      <Button className="ms-2 btn" bsPrefix="icon">
+                        <FaRegEye />
+                      </Button>
+                      <Button className="ms-2 btn" bsPrefix="icon">
+                        <FaPen />
+                      </Button>
+                      <Button className="ms-2 btn" bsPrefix="icon">
+                        <FaPen />
+                      </Button>
+
+                    </td>
+                    {/* <td>{partner.commission.toString()}</td>
+                    <td>{partner.overdue.toString()}</td>
+                    <td>{partner.adjustPercentage.toString()}</td>
+                    <td>{partner.pay.toString()}</td>
+                    <td>{partner.customerCommission.toString()}</td>
+                    <td>{partner.recommender}</td>
+                    <td>{new Date(partner.createdAt).toLocaleDateString()}</td>
+                    <td>{new Date(partner.updatedAt).toLocaleDateString()}</td> */}
+                  </tr>
+                ))}
+                {/* {filteredPartnersData?.map((partner: Partner, index: number) => {
+                  const member = partner.Member && partner.Member.length > 0 ? partner.Member[0] : null;
+
                   return (
                     <tr key={index}>
                       <td className="text-end">
@@ -115,7 +172,7 @@ const PartnerPage: React.FC = () => {
                         </div>
                       </td>
                       <td>
-                        <b>นรากร ปากา</b>
+                        <b>{member ? `${member.firstname} ${member.lastname}` : 'No Member'}</b>
                       </td>
                       <td>
                         <Button className="ms-2 btn" bsPrefix="icon">
@@ -145,12 +202,12 @@ const PartnerPage: React.FC = () => {
                       </td>
                     </tr>
                   );
-                })}
+                })} */}
               </tbody>
             </Table>
           </Card.Body>
           <Card.Footer>
-            <PageSelect page={params.page} totalPages={partnersData?.pagination?.total} onChangePage={handleChangePage} onChangePageSize={handleChangePageSize} />
+            <PageSelect page={params.page} totalPages={data?.pagination?.total} onChangePage={handleChangePage} onChangePageSize={handleChangePageSize} />
           </Card.Footer>
         </Card>
 
@@ -207,3 +264,6 @@ export default PartnerPage;
                     </tr>
                   );
                 })} */}
+
+
+
