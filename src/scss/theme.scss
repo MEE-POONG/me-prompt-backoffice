@@ -446,3 +446,18 @@ a.text-primary {
     border: unset;
     // &:hover
 }
+.form-floating {
+    .form-control {
+        .dropdown-toggle {
+            .form-control {
+                padding: 0;
+                border: unset;
+                color: black;
+                box-shadow: unset;
+            }
+            &::after {
+                display: none;
+            }
+        }
+    }
+}

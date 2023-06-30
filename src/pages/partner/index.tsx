@@ -120,23 +120,23 @@ const PartnerPage: React.FC = () => {
                     <td>{partner.percent}%</td>
                     <td>
                       <Button
-                        className={`ms-2 btn icon ${partner.commission ? 'active' : ''}`}>
+                        bsPrefix="icon" className={`ms-2 btn ${partner.commission ? 'active' : ''}`}>
                         ค่าคอม
                       </Button>
                       <Button
-                        className={`ms-2 btn icon ${partner.overdue ? 'active' : ''}`}>
+                        bsPrefix="icon" className={`ms-2 btn ${partner.overdue ? 'active' : ''}`}>
                         ค้างบวก
                       </Button>
                       <Button
-                        className={`ms-2 btn icon ${partner.adjustPercentage ? 'active' : ''}`}>
+                        bsPrefix="icon" className={`ms-2 btn ${partner.adjustPercentage ? 'active' : ''}`}>
                         ปรับสู้ฟรี
                       </Button>
                       <Button
-                        className={`ms-2 btn icon ${partner.pay ? 'active' : ''}`}>
+                        bsPrefix="icon" className={`ms-2 btn ${partner.pay ? 'active' : ''}`}>
                         จ่าย
                       </Button>
                       <Button
-                        className={`ms-2 btn icon ${partner.customerCommission ? 'active' : ''}`}>
+                        bsPrefix="icon" className={`ms-2 btn ${partner.customerCommission ? 'active' : ''}`}>
                         คืนลูกค้า
                       </Button>
                     </td>
