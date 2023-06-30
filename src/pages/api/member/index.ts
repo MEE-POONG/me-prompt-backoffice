@@ -36,28 +36,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
                 const searchTerms = searchTerm.split(' ');
 
+                const searchName = {
+                    OR: searchTerms.length > 1 ? {
+                        AND: [
+                            { firstname: { contains: searchTerms[0], mode: 'insensitive' } },
+                            { lastname: { contains: searchTerms[1], mode: 'insensitive' } },
+                        ]
+                    } : {
+                        OR: [
+                            { firstname: { contains: searchTerms[0], mode: 'insensitive' } },
+                            { lastname: { contains: searchTerms[0], mode: 'insensitive' } },
+                        ]
+                    }
+                };
+
                 const members = await prisma.member.findMany({
-                    where: {
-                        OR: searchTerms.map(term => ({
-                            AND: [
-                                { firstname: { contains: term, mode: 'insensitive' } },
-                                { lastname: { contains: term, mode: 'insensitive' } },
-                            ]
-                        }))
-                    },
+                    where: searchName,
                     skip: (page - 1) * pageSize,
                     take: pageSize,
                 });
 
                 const totalMembersCount: number = await prisma.member.count({
-                    where: {
-                        OR: searchTerms.map(term => ({
-                            AND: [
-                                { firstname: { contains: term, mode: 'insensitive' } },
-                                { lastname: { contains: term, mode: 'insensitive' } },
-                            ]
-                        }))
-                    },
+                    where: searchName,
                 });
 
                 const totalPages: number = Math.ceil(totalMembersCount / pageSize);
