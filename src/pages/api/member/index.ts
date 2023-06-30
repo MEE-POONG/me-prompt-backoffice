@@ -31,7 +31,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 const query: RequestQuery = req.query as unknown as RequestQuery;
                 const page: number = parseInt(query.page || '1', 10);
                 const pageSize: number = parseInt(query.pageSize || '10', 10);
-                const searchTerm: string = query.searchTerm || '';
+                let searchTerm: string = decodeURIComponent(query.searchTerm || '');
+                console.log(searchTerm);
 
                 const searchTerms = searchTerm.split(' ');
 

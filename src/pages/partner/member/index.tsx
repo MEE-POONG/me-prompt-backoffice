@@ -26,7 +26,7 @@ const MemberPage: React.FC = () => {
     totalPages: 1,
   });
   const [{ data: membersData }, getMember,] = useAxios({
-    url: `/api/member?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${encodeURIComponent(params.searchTerm)}`,
+    url: `/api/member?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchTerm}`,
     method: "GET",
   });
 
@@ -36,6 +36,8 @@ const MemberPage: React.FC = () => {
 
   useEffect(() => {
     setFilteredMembersData(membersData?.data ?? []);
+  console.log(membersData);
+  
   }, [membersData]);
 
   const deleteMember = (id: string): Promise<any> => {
