@@ -4,9 +4,7 @@ import LayOut from "@/components/LayOut";
 import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
 import AddModal from "@/components/modal/AddModal";
 import useAxios from "axios-hooks";
-import BankAccount from "@/components/Input/BankAccount";
 import Link from "next/link";
-import { bankMap } from '@/test';
 import InputWithSelect from "@/components/InputWithSelect";
 
 
@@ -61,49 +59,45 @@ const UserAGAdd: React.FC = () => {
   }
 
   const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
-    // event.preventDefault();
-    // event.stopPropagation();
-    // let missingFields = [];
-    // if (!userAG) missingFields.push("userAG");
-    // if (!originAG) missingFields.push("password");
-    // if (!recommender) missingFields.push("recommender");
+    event.preventDefault();
+    event.stopPropagation();
+    let missingFields = [];
+    if (!userAG) missingFields.push("userAG");
+    if (!originAG) missingFields.push("password");
 
-    // if (missingFields.length > 0) {
-    //   setAlertForm("warning");
-    //   setInputForm(true);
-    //   setCheckBody(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
-    // } else {
-    //   try {
-    // setAlertForm("primary");
-    const data = {
-      userAG,
-      originAG,
-      percent,
-      overdue,
-      commission,
-      adjustPercentage,
-      pay,
-      customerCommission,
-      recommender,
-      memberId,
-    };
-    console.log(data);
-
-
-    //     const response = await executeMember({ data });
-    //     if (response && response.status === 201) {
-    //       setAlertForm("success");
-    //       setTimeout(() => {
-    //         clear();
-    //       }, 5000);
-    //     } else {
-    //       setAlertForm("danger");
-    //       throw new Error('Failed to send data');
-    //     }
-    //   } catch (error) {
-    //     setAlertForm("danger");
-    //   }
-    // }
+    if (missingFields.length > 0) {
+      setAlertForm("warning");
+      setInputForm(true);
+      setCheckBody(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
+    } else {
+      try {
+        setAlertForm("primary");
+        const data = {
+          userAG,
+          originAG,
+          percent,
+          overdue,
+          commission,
+          adjustPercentage,
+          pay,
+          customerCommission,
+          recommender,
+          memberId,
+        };
+        const response = await executePartner({ data });
+        if (response && response.status === 201) {
+          setAlertForm("success");
+          setTimeout(() => {
+            clear();
+          }, 5000);
+        } else {
+          setAlertForm("danger");
+          throw new Error('Failed to send data');
+        }
+      } catch (error) {
+        setAlertForm("danger");
+      }
+    }
   };
   return (
     <LayOut>
@@ -169,7 +163,6 @@ const UserAGAdd: React.FC = () => {
                 <FloatingLabel controlId="recommender" label="recommender / ผู้แนะนำ" className="mb-3">
                   <Form.Control
                     isValid={inputForm && recommender !== ""}
-                    isInvalid={inputForm && recommender === ""}
                     type="text"
                     value={recommender}
                     onChange={e => setRecommender(e.target.value)}
@@ -214,7 +207,7 @@ const UserAGAdd: React.FC = () => {
             </div>
             <Row>
               <Col>
-                <InputWithSelect textShow={searchTerm}  textSearch={setSearchTerm} setID={setMemberId} arrayData={membersData?.data} />
+                <InputWithSelect textShow={searchTerm} textSearch={setSearchTerm} setID={setMemberId} arrayData={membersData?.data} />
               </Col>
             </Row>
           </Card.Body>
