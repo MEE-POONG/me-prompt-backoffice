@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { Member, PrismaClient } from '@prisma/client'
+import { Member, PrismaClient, Prisma } from '@prisma/client'
 const prisma = new PrismaClient();
 
 type Data = {
@@ -32,24 +32,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 const page: number = parseInt(query.page || '1', 10);
                 const pageSize: number = parseInt(query.pageSize || '10', 10);
                 let searchTerm: string = decodeURIComponent(query.searchTerm || '');
-                console.log(searchTerm);
 
                 const searchTerms = searchTerm.split(' ');
-
-                const searchName = {
-                    OR: searchTerms.length > 1 ? {
-                        AND: [
-                            { firstname: { contains: searchTerms[0], mode: 'insensitive' } },
-                            { lastname: { contains: searchTerms[1], mode: 'insensitive' } },
-                        ]
-                    } : {
-                        OR: [
-                            { firstname: { contains: searchTerms[0], mode: 'insensitive' } },
-                            { lastname: { contains: searchTerms[0], mode: 'insensitive' } },
-                        ]
-                    }
+                const searchName: Prisma.MemberWhereInput = {
+                    OR: searchTerms.length > 1 ? [
+                        {
+                            AND: [
+                                { firstname: { contains: searchTerms[0], mode: 'insensitive' } },
+                                { lastname: { contains: searchTerms[1], mode: 'insensitive' } },
+                            ]
+                        }
+                    ] : [
+                        { firstname: { contains: searchTerms[0], mode: 'insensitive' } },
+                        { lastname: { contains: searchTerms[0], mode: 'insensitive' } },
+                    ]
                 };
-
                 const members = await prisma.member.findMany({
                     where: searchName,
                     skip: (page - 1) * pageSize,
