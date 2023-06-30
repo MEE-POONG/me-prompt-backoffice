@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
-import { Badge, Button, Card, Col, Form, InputGroup, Row, Table } from "react-bootstrap";
-import { FaAppStoreIos, FaPen, FaRegEye, FaSearch, FaTrashAlt, FaUserNinja } from "react-icons/fa";
+import { Badge, Card, Form, InputGroup, Table } from "react-bootstrap";
+import { FaPen, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
@@ -36,8 +36,8 @@ const MemberPage: React.FC = () => {
 
   useEffect(() => {
     setFilteredMembersData(membersData?.data ?? []);
-  console.log(membersData);
-  
+    console.log(membersData);
+
   }, [membersData]);
 
   const deleteMember = (id: string): Promise<any> => {
