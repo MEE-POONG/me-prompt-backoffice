@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
 import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
@@ -36,6 +36,9 @@ const UserAGAdd: React.FC = () => {
   const [checkBody, setCheckBody] = useState<string>("");
 
 
+  useEffect(() => {
+    console.log("partnersData : ", membersData)
+  }, [membersData]);
 
   const reloadPage = () => {
     clear();
@@ -211,7 +214,7 @@ const UserAGAdd: React.FC = () => {
             </div>
             <Row>
               <Col>
-                <InputWithSelect textSearch={setSearchTerm} setID={setMemberId} arrayData={membersData}/>
+                <InputWithSelect textShow={searchTerm}  textSearch={setSearchTerm} setID={setMemberId} arrayData={membersData?.data} />
               </Col>
             </Row>
           </Card.Body>

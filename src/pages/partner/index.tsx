@@ -40,9 +40,6 @@ const PartnerPage: React.FC = () => {
     getMember().then(response => setPartnersData(response?.data?.data)).catch(err => console.log(err));
   }, []);
 
-  useEffect(() => {
-    console.log("partnersData : ", partnersData)
-  }, [partnersData]);
 
   const handleChangePage = (page: number) => {
     setParams(prevParams => ({
@@ -150,64 +147,9 @@ const PartnerPage: React.FC = () => {
                       <Button className="ms-2 btn" bsPrefix="icon">
                         <FaPen />
                       </Button>
-
                     </td>
-                    {/* <td>{partner.commission.toString()}</td>
-                    <td>{partner.overdue.toString()}</td>
-                    <td>{partner.adjustPercentage.toString()}</td>
-                    <td>{partner.pay.toString()}</td>
-                    <td>{partner.customerCommission.toString()}</td>
-                    <td>{partner.recommender}</td>
-                    <td>{new Date(partner.createdAt).toLocaleDateString()}</td>
-                    <td>{new Date(partner.updatedAt).toLocaleDateString()}</td> */}
                   </tr>
                 ))}
-                {/* {filteredPartnersData?.map((partner: Partner, index: number) => {
-                  const member = partner.Member && partner.Member.length > 0 ? partner.Member[0] : null;
-
-                  return (
-                    <tr key={index}>
-                      <td className="text-end">
-                        {index + 1}
-                      </td>
-                      <td>
-                        <div className="space-around ">
-                          <b>{partner?.userAG}</b>
-                          <Link href="/partner/agent" className="ms-2 btn icon">Agent</Link>
-                        </div>
-                      </td>
-                      <td>
-                        <b>{member ? `${member.firstname} ${member.lastname}` : 'No Member'}</b>
-                      </td>
-                      <td>
-                        <Button className="ms-2 btn" bsPrefix="icon">
-                          ค่าคอม
-                        </Button>
-                        <Button className="ms-2 btn" bsPrefix="icon">
-                          ค้างบวก
-                        </Button>
-                        <Button className="ms-2 btn" bsPrefix="icon">
-                          ปรับสู้ฟรี
-                        </Button>
-                        <Button className="ms-2 btn" bsPrefix="icon">
-                          จ่าย
-                        </Button>
-                        <Button className="ms-2 btn" bsPrefix="icon">
-                          คืนลูกค้า
-                        </Button>
-                      </td>
-                      <td>
-                        <Button className="ms-2 btn" bsPrefix="icon">
-                          <FaRegEye />
-                        </Button>
-                        <Button className="ms-2 btn" bsPrefix="icon">
-                          <FaPen />
-                        </Button>
-
-                      </td>
-                    </tr>
-                  );
-                })} */}
               </tbody>
             </Table>
           </Card.Body>
@@ -221,54 +163,3 @@ const PartnerPage: React.FC = () => {
   );
 }
 export default PartnerPage;
-
-
-
-
-{/* {filteredPartnerData.map((master: Partner, index: number) => {
-                  return (
-                    <tr key={index}>
-                      <td className="text-end">
-                        {index + 1}
-                      </td>
-                      <td>
-                        <div className="space-around ">
-                          <b>ufruu01</b>
-                          <Link href="/partner/agent" className="ms-2 btn icon">Agent</Link>
-                        </div>
-                      </td>
-                      <td>
-                        <b>นรากร ปากา</b>
-                      </td>
-                      <td>
-                        <Button className="ms-2 btn" bsPrefix="icon">
-                          ค่าคอม
-                        </Button>
-                        <Button className="ms-2 btn" bsPrefix="icon">
-                          ค้างบวก
-                        </Button>
-                        <Button className="ms-2 btn" bsPrefix="icon">
-                          ปรับสู้ฟรี
-                        </Button>
-                        <Button className="ms-2 btn" bsPrefix="icon">
-                          จ่าย
-                        </Button>
-                        <Button className="ms-2 btn" bsPrefix="icon">
-                          คืนลูกค้า
-                        </Button>
-                      </td>
-                      <td>
-                        <Button className="ms-2 btn" bsPrefix="icon">
-                          <FaRegEye />
-                        </Button>
-                        <Button className="ms-2 btn" bsPrefix="icon">
-                          <FaPen />
-                        </Button>
-
-                      </td>
-                    </tr>
-                  );
-                })} */}
-
-
-
