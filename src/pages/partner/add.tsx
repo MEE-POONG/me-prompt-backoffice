@@ -13,9 +13,9 @@ import InputWithSelect from "@/components/InputWithSelect";
 
 const UserAGAdd: React.FC = () => {
   const [{ data, loading, error }, executePartner] = useAxios({ url: '/api/partner', method: 'POST' }, { manual: true });
-
+  const [searchTerm, setSearchTerm] = useState("");
   const [{ data: membersData }, getMember,] = useAxios({
-    url: `/api/member?page=1&pageSize=10`,
+    url: `/api/member?page=1&pageSize=9&searchTerm=${searchTerm}`,
     method: "GET",
   });
 
@@ -211,7 +211,7 @@ const UserAGAdd: React.FC = () => {
             </div>
             <Row>
               <Col>
-                <InputWithSelect />
+                <InputWithSelect textSearch={setSearchTerm} setID={setMemberId} arrayData={membersData}/>
               </Col>
             </Row>
           </Card.Body>

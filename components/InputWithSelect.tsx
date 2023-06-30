@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { Form, Dropdown, FloatingLabel } from 'react-bootstrap';
-
-const InputWithSelect: React.FC = () => {
+interface SearchDataProps {
+    textSearch: React.Dispatch<React.SetStateAction<string>>;
+    setID: React.Dispatch<React.SetStateAction<string>>;
+    arrayData: any;
+}
+const InputWithSelect: React.FC<SearchDataProps> = ({ textSearch, setID, arrayData }) => {
     const [isDropdownVisible, setDropdownVisible] = useState(false);
 
     const handleMouseEnter = () => {
@@ -13,13 +17,13 @@ const InputWithSelect: React.FC = () => {
     };
 
     return (
-        <FloatingLabel 
-            controlId="memberID" 
-            label="memberID / ผู้แนะนำ" 
+        <FloatingLabel
+            controlId="memberID"
+            label="memberID / ผู้แนะนำ"
             className="mb-3"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            // onClick={handleClick}
+        // onClick={handleClick}
         >
             <Form.Control
                 type="text"
