@@ -19,6 +19,7 @@ type Pagination = {
 interface RequestQuery {
     page?: string;
     pageSize?: string;
+    searchTerm?: string;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
@@ -30,13 +31,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 const query: RequestQuery = req.query as unknown as RequestQuery;
                 const page: number = parseInt(query.page || '1', 10);
                 const pageSize: number = parseInt(query.pageSize || '10', 10);
+                const searchTerm: string = query.searchTerm || '';
+
+                const searchTerms = searchTerm.split(' ');
 
                 const members = await prisma.member.findMany({
+                    where: {
+                        OR: searchTerms.map(term => ({
+                            AND: [
+                                { firstname: { contains: term, mode: 'insensitive' } },
+                                { lastname: { contains: term, mode: 'insensitive' } },
+                            ]
+                        }))
+                    },
                     skip: (page - 1) * pageSize,
                     take: pageSize,
                 });
 
-                const totalMembersCount: number = await prisma.member.count();
+                const totalMembersCount: number = await prisma.member.count({
+                    where: {
+                        OR: searchTerms.map(term => ({
+                            AND: [
+                                { firstname: { contains: term, mode: 'insensitive' } },
+                                { lastname: { contains: term, mode: 'insensitive' } },
+                            ]
+                        }))
+                    },
+                });
+
                 const totalPages: number = Math.ceil(totalMembersCount / pageSize);
 
                 res.status(200).json({ success: true, data: members, pagination: { total: totalPages, page: page, pageSize: pageSize } });
@@ -49,7 +71,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             try {
                 const { username, password, firstname, lastname, bankAccount, bank, phone, line, email } = req.body;
 
-                if (!username || !password || !firstname || !lastname || !bankAccount || !bank || !phone || !line ) {
+                if (!username || !password || !firstname || !lastname || !bankAccount || !bank || !phone || !line) {
                     return res.status(400).json({ success: false, message: "All fields are required" });
                 }
                 const newMember: Member = await prisma.member.create({

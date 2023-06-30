@@ -12,7 +12,13 @@ import InputWithSelect from "@/components/InputWithSelect";
 
 
 const UserAGAdd: React.FC = () => {
-  const [{ data, loading, error }, executeMember] = useAxios({ url: '/api/partner', method: 'POST' }, { manual: true });
+  const [{ data, loading, error }, executePartner] = useAxios({ url: '/api/partner', method: 'POST' }, { manual: true });
+
+  const [{ data: membersData }, getMember,] = useAxios({
+    url: `/api/member?page=1&pageSize=10`,
+    method: "GET",
+  });
+
 
   const [userAG, setUserAG] = useState<string>("");
   const [originAG, setOriginAG] = useState<string>("");
@@ -29,12 +35,8 @@ const UserAGAdd: React.FC = () => {
   const [inputForm, setInputForm] = useState<boolean>(false);
   const [checkBody, setCheckBody] = useState<string>("");
 
-  const handleInputChange = (setter: any) => (event: any) => {
-    const newValue = event.target.value;
-    if (!isNaN(newValue) && !newValue.includes('.')) {
-      setter(newValue);
-    }
-  };
+
+
   const reloadPage = () => {
     clear();
   };

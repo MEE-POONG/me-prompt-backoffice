@@ -15,16 +15,18 @@ import PartnerAddPartnerModal from "@/container/Partner/AddPartnerModal";
 interface Params {
   page: number;
   pageSize: number;
+  searchTerm: string;
   totalPages: number;
 }
 const MemberPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
+    searchTerm: "",
     totalPages: 1,
   });
   const [{ data: membersData }, getMember,] = useAxios({
-    url: `/api/member?page=${params.page}&pageSize=${params.pageSize}`,
+    url: `/api/member?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${encodeURIComponent(params.searchTerm)}`,
     method: "GET",
   });
 
@@ -52,6 +54,7 @@ const MemberPage: React.FC = () => {
       page: page,
     }));
   };
+
   const handleChangePageSize = (size: number) => {
     setParams(prevParams => ({
       ...prevParams,
@@ -59,6 +62,14 @@ const MemberPage: React.FC = () => {
       pageSize: size,
     }));
   };
+
+  const handleChangeSearchTerm = (search: string) => {
+    setParams(prevParams => ({
+      ...prevParams,
+      searchTerm: search,
+    }));
+  };
+
   return (
     <LayOut>
       <Head>
@@ -80,8 +91,9 @@ const MemberPage: React.FC = () => {
                 <FaSearch />
               </InputGroup.Text>
               <Form.Control
-                placeholder="Username"
-                aria-label="Username"
+                onChange={e => handleChangeSearchTerm(e.target.value)}
+                placeholder="ค้นหาผู้ใช้"
+                aria-label="Fullname"
                 aria-describedby="basic-addon1"
               />
             </InputGroup>
@@ -165,7 +177,7 @@ const MemberPage: React.FC = () => {
                       <td>
                         <PartnerViewMemberModal data={member} />
 
-                        <PartnerAddPartnerModal data={member}/>
+                        <PartnerAddPartnerModal data={member} />
                         {/* <EditMemberModal data={member} apiEdit={() => editMember(editList)} /> */}
                         <Link href={`/partner/member/edit/${member.id}`} className="mx-1 btn info icon icon-primary">
                           <FaPen />
