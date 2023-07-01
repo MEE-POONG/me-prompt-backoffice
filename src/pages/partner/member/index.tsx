@@ -134,7 +134,7 @@ const MemberPage: React.FC = () => {
                       <td className="bank">
                         {bankObj &&
                           <div>
-                            <img src={bankObj.image} alt={bankObj.value} style={{ width: '30px', marginRight: '10px' }} />
+                            <img src={bankObj.image} alt={bankObj.value} style={{ width: '30px' }} />
                           </div>
                         }
 

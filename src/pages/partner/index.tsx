@@ -16,7 +16,7 @@ interface Member extends PrismaMember {
 }
 
 interface Partner extends PrismaPartner {
-  member: Member[];
+  member: Member;
 }
 interface Params {
   page: number;
@@ -42,6 +42,7 @@ const PartnerPage: React.FC = () => {
 
   useEffect(() => {
     setFilteredPartnersData(data?.data ?? []);
+
   }, [data]);
 
   const deletePartner = (id: string): Promise<any> => {
@@ -122,56 +123,58 @@ const PartnerPage: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="text-center">
-                {filteredPartnersData.map((partner: Partner, index: number) => (
-                  <tr key={partner?.id}>
-                    <td>{index + 1}</td>
-                    <td>{partner?.userAG}</td>
-                    <td>
-                      {partner?.member[0].firstname}
-                      {partner?.member && partner.member.length > 0 ? (
-                        <div>
-                          {partner.member[0].firstname} {partner.member[0].lastname}
-                        </div>
-                      ) : (
-                        <div>ไม่มีผู้ใช้</div>
-                      )}
-                    </td>
-                    <td>{partner?.percent}%</td>
-                    <td>
-                      <Button
-                        bsPrefix="icon" className={`ms-2 btn ${partner?.commission ? 'active' : ''}`}>
-                        ค่าคอม
-                      </Button>
-                      <Button
-                        bsPrefix="icon" className={`ms-2 btn ${partner?.overdue ? 'active' : ''}`}>
-                        ค้างบวก
-                      </Button>
-                      <Button
-                        bsPrefix="icon" className={`ms-2 btn ${partner?.adjustPercentage ? 'active' : ''}`}>
-                        ปรับสู้ฟรี
-                      </Button>
-                      <Button
-                        bsPrefix="icon" className={`ms-2 btn ${partner?.pay ? 'active' : ''}`}>
-                        จ่าย
-                      </Button>
-                      <Button
-                        bsPrefix="icon" className={`ms-2 btn ${partner?.customerCommission ? 'active' : ''}`}>
-                        คืนลูกค้า
-                      </Button>
-                    </td>
-                    <td>
-                      <Button className="ms-2 btn" bsPrefix="icon">
-                        <FaRegEye />
-                      </Button>
-                      <Button className="ms-2 btn" bsPrefix="icon">
-                        <FaPen />
-                      </Button>
-                      <Button className="ms-2 btn" bsPrefix="icon">
-                        <FaPen />
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
+                {filteredPartnersData.map((partner: Partner, index: number) => {
+                  console.log(partner);
+                  return (
+                    <tr key={partner?.id}>
+                      <td>{index + 1}</td>
+                      <td>{partner?.userAG}</td>
+                      <td>
+                        {/* {partner?.member[0].firstname} */}
+                        {partner?.member ? (
+                          <div>
+                            {partner.member.firstname} {partner.member.lastname}
+                          </div>
+                        ) : (
+                          <div>ไม่มีผู้ใช้</div>
+                        )}
+                      </td>
+                      <td>{partner?.percent}%</td>
+                      <td>
+                        <Button
+                          bsPrefix="icon" className={`ms-2 btn ${partner?.commission ? 'active' : ''}`}>
+                          ค่าคอม
+                        </Button>
+                        <Button
+                          bsPrefix="icon" className={`ms-2 btn ${partner?.overdue ? 'active' : ''}`}>
+                          ค้างบวก
+                        </Button>
+                        <Button
+                          bsPrefix="icon" className={`ms-2 btn ${partner?.adjustPercentage ? 'active' : ''}`}>
+                          ปรับสู้ฟรี
+                        </Button>
+                        <Button
+                          bsPrefix="icon" className={`ms-2 btn ${partner?.pay ? 'active' : ''}`}>
+                          จ่าย
+                        </Button>
+                        <Button
+                          bsPrefix="icon" className={`ms-2 btn ${partner?.customerCommission ? 'active' : ''}`}>
+                          คืนลูกค้า
+                        </Button>
+                      </td>
+                      <td>
+                        <Button className="ms-2 btn" bsPrefix="icon">
+                          <FaRegEye />
+                        </Button>
+                        <Button className="ms-2 btn" bsPrefix="icon">
+                          <FaPen />
+                        </Button>
+                        <DeleteModal data={partner} apiDelete={() => deletePartner(partner.id)} />
+                      </td>
+                    </tr>
+                  )
+                }
+                )}
               </tbody>
             </Table>
           </Card.Body>
