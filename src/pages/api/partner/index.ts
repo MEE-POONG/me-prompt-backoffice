@@ -33,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     skip: (page - 1) * pageSize,
                     take: pageSize,
                     include: {
-                        Member: true,
+                        member: true,
                     },
                 });
 
@@ -42,6 +42,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
                 res.status(200).json({ success: true, data: partners, pagination: { total: totalPages, page: page, pageSize: pageSize } });
             } catch (error) {
+                console.log(error);
+
                 res.status(500).json({ success: false, message: "An error occurred while fetching the partners" });
             }
             break;
@@ -63,7 +65,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 });
                 res.status(201).json({ success: true, data: newPartner });
             } catch (error) {
-                res.status(500).json({ success: true, message: "An error occurred while creating the member" });
+                res.status(500).json({ success: true, message: "An error occurred while creating the partner" });
             }
             break;
 

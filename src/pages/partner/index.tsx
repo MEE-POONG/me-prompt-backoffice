@@ -1,44 +1,57 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
-import { Badge, Button, Card, Col, Form, InputGroup, Row, Table } from "react-bootstrap";
-import { FaAppStoreIos, FaPen, FaRegEye, FaSearch, FaTrashAlt, FaUserNinja } from "react-icons/fa";
+import { Badge, Button, Card, Form, InputGroup, Table } from "react-bootstrap";
+import { FaPen, FaRegEye, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
-import PartnerViewPartnerModal from "@/container/Partner/ViewModal";
-import DeleteModal from "@/components/modal/DeleteModal";
-import PartnerAddPartnerModal from "@/container/Partner/AddPartnerModal";
-import axios from "axios";
+import { bankMap } from "@/test";
 
 import { Partner as PrismaPartner, Member as PrismaMember } from '@prisma/client';
-
+import PartnerAddPartnerModal from "@/container/Partner/AddPartnerModal";
+import PartnerViewPartnerModal from "@/container/Partner/ViewModal";
+import DeleteModal from "@/components/modal/DeleteModal";
 interface Member extends PrismaMember {
 }
 
 interface Partner extends PrismaPartner {
-  Member: Member[];
+  member: Member[];
 }
 interface Params {
   page: number;
   pageSize: number;
+  searchTerm: string;
   totalPages: number;
 }
 const PartnerPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
+    searchTerm: "",
     totalPages: 1,
   });
-  const [{ data, loading, error }, getMember,] = useAxios({
-    url: `/api/partner?page=${params.page}&pageSize=${params.pageSize}`,
+  const [{ data, loading, error }, getPartner,] = useAxios({
+    url: `/api/partner?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchTerm}`,
     method: "GET",
   });
-  const [partnersData, setPartnersData] = useState([]);
+
+  const [{ }, executePartnerDelete,] = useAxios({}, { manual: true });
+
+  const [filteredPartnersData, setFilteredPartnersData] = useState<Partner[]>([]);
 
   useEffect(() => {
-    getMember().then(response => setPartnersData(response?.data?.data)).catch(err => console.log(err));
-  }, []);
+    setFilteredPartnersData(data?.data ?? []);
+  }, [data]);
+
+  const deletePartner = (id: string): Promise<any> => {
+    return executePartnerDelete({
+      url: "/api/partner/" + id,
+      method: "DELETE",
+    }).then(() => {
+      setFilteredPartnersData(prevPartners => prevPartners.filter(partner => partner?.id !== id));
+    });
+  };
 
 
   const handleChangePage = (page: number) => {
@@ -47,6 +60,7 @@ const PartnerPage: React.FC = () => {
       page: page,
     }));
   };
+
   const handleChangePageSize = (size: number) => {
     setParams(prevParams => ({
       ...prevParams,
@@ -55,9 +69,14 @@ const PartnerPage: React.FC = () => {
     }));
   };
 
+  const handleChangeSearchTerm = (search: string) => {
+    setParams(prevParams => ({
+      ...prevParams,
+      searchTerm: search,
+    }));
+  };
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error!</p>;
-
   return (
     <LayOut>
       <Head>
@@ -79,12 +98,14 @@ const PartnerPage: React.FC = () => {
                 <FaSearch />
               </InputGroup.Text>
               <Form.Control
-                placeholder="Username"
-                aria-label="Username"
+                onChange={e => handleChangeSearchTerm(e.target.value)}
+                placeholder="ค้นหาผู้ใช้"
+                aria-label="Fullname"
                 aria-describedby="basic-addon1"
               />
             </InputGroup>
-            <Link href="/partner/add" className="ms-2 btn icon icofn-primary">
+            {/* <AddListName /> */}
+            <Link href="/partner/partner/add" className="ms-2 btn icon icofn-primary">
               เพิ่มพาร์ทเนอร์
             </Link>
           </Card.Header>
@@ -101,39 +122,40 @@ const PartnerPage: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="text-center">
-                {partnersData.map((partner: Partner, index: number) => (
-                  <tr key={partner.id}>
+                {filteredPartnersData.map((partner: Partner, index: number) => (
+                  <tr key={partner?.id}>
                     <td>{index + 1}</td>
-                    <td>{partner.userAG}</td>
+                    <td>{partner?.userAG}</td>
                     <td>
-                      {partner.Member.length > 0 ? (
-                        partner.Member.map((member: Member) => (
-                          <div key={member.id}>{member.firstname + " " + member.lastname}</div>
-                        ))
+                      {partner?.member[0].firstname}
+                      {partner?.member && partner.member.length > 0 ? (
+                        <div>
+                          {partner.member[0].firstname} {partner.member[0].lastname}
+                        </div>
                       ) : (
                         <div>ไม่มีผู้ใช้</div>
                       )}
                     </td>
-                    <td>{partner.percent}%</td>
+                    <td>{partner?.percent}%</td>
                     <td>
                       <Button
-                        bsPrefix="icon" className={`ms-2 btn ${partner.commission ? 'active' : ''}`}>
+                        bsPrefix="icon" className={`ms-2 btn ${partner?.commission ? 'active' : ''}`}>
                         ค่าคอม
                       </Button>
                       <Button
-                        bsPrefix="icon" className={`ms-2 btn ${partner.overdue ? 'active' : ''}`}>
+                        bsPrefix="icon" className={`ms-2 btn ${partner?.overdue ? 'active' : ''}`}>
                         ค้างบวก
                       </Button>
                       <Button
-                        bsPrefix="icon" className={`ms-2 btn ${partner.adjustPercentage ? 'active' : ''}`}>
+                        bsPrefix="icon" className={`ms-2 btn ${partner?.adjustPercentage ? 'active' : ''}`}>
                         ปรับสู้ฟรี
                       </Button>
                       <Button
-                        bsPrefix="icon" className={`ms-2 btn ${partner.pay ? 'active' : ''}`}>
+                        bsPrefix="icon" className={`ms-2 btn ${partner?.pay ? 'active' : ''}`}>
                         จ่าย
                       </Button>
                       <Button
-                        bsPrefix="icon" className={`ms-2 btn ${partner.customerCommission ? 'active' : ''}`}>
+                        bsPrefix="icon" className={`ms-2 btn ${partner?.customerCommission ? 'active' : ''}`}>
                         คืนลูกค้า
                       </Button>
                     </td>

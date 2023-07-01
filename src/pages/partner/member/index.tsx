@@ -180,7 +180,6 @@ const MemberPage: React.FC = () => {
                         <PartnerViewMemberModal data={member} />
 
                         <PartnerAddPartnerModal data={member} />
-                        {/* <EditMemberModal data={member} apiEdit={() => editMember(editList)} /> */}
                         <Link href={`/partner/member/edit/${member.id}`} className="mx-1 btn info icon icon-primary">
                           <FaPen />
                           <span className="h-tooltiptext">แก้ไขข้อมูล</span>

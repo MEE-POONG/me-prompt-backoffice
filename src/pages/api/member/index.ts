@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { Member, PrismaClient, Prisma } from '@prisma/client'
+import { PrismaClient, Prisma } from '@prisma/client'
 const prisma = new PrismaClient();
 
 type Data = {
@@ -72,7 +72,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 if (!username || !password || !firstname || !lastname || !bankAccount || !bank || !phone || !line) {
                     return res.status(400).json({ success: false, message: "All fields are required" });
                 }
-                const newMember: Member = await prisma.member.create({
+                const newMember = await prisma.member.create({
                     data: {
                         username,
                         password,

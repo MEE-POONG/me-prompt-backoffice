@@ -83,7 +83,7 @@ model Member {
   createdAt     DateTime? @default(now())
   updatedAt     DateTime? @updatedAt
   deleted_at    DateTime? @map("deleted_at")
-  Partner Partner[]
+  Partner       Partner[]
 }
 
 model MinusIncome {
@@ -101,6 +101,7 @@ model Partner {
   id                 String    @id @default(auto()) @map("_id") @db.ObjectId
   userAG             String?
   originAG           String?
+  position           String?
   percent            Int?
   commission         Boolean?  @default(false)
   overdue            Boolean?  @default(false)
