@@ -4,8 +4,8 @@ import LayOut from "@/components/LayOut";
 import { Badge, Button, Card, Col, Form, InputGroup, Row, Table } from "react-bootstrap";
 import { FaRegEye, FaSearch, FaTrashAlt } from "react-icons/fa";
 import Link from "next/link";
-import AddListName from "@/container/Partner/AddListName";
-import EditListName from "@/container/Partner/EditListName";
+// import AddListName from "@/container/Partner/AddListName";
+// import EditListName from "@/container/Partner/EditListName";
 
 
 const ListNamePage: React.FC = () => {
@@ -48,7 +48,7 @@ const ListNamePage: React.FC = () => {
                 aria-describedby="basic-addon1"
               />
             </InputGroup>
-            <AddListName />
+            {/* <AddListName /> */}
           </Card.Header>
           <Card.Body>
             <Table striped bordered hover className="scroll">
@@ -139,7 +139,7 @@ const ListNamePage: React.FC = () => {
                       <Button className="ms-2 btn" bsPrefix="icon">
                         <FaRegEye />
                       </Button>
-                      <EditListName />
+                      {/* <EditListName /> */}
                       <Button className="ms-2 btn" bsPrefix="icon">
                         <FaTrashAlt />
                       </Button>
