@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
 import { Button, Card, Col,Form, Image,  Row } from "react-bootstrap";
+import useAxios from "axios-hooks";
 
 const PartnerPage: React.FC = () => {
+  const [{ data: settingsData }, getMember,] = useAxios({
+    url: `/api/setting`,
+    method: "GET",
+  });
+  const [username, setUsername] = useState<string>("");
+
+  useEffect(() => {
+    // setFilteredPartnersData(data?.data ?? []);
+    console.log(settingsData?.data?.username);
+    setUsername(settingsData?.data?.username)
+
+  }, [settingsData]);
   return (
     <LayOut>
       <Head>
@@ -55,7 +68,7 @@ const PartnerPage: React.FC = () => {
                   <Col lg="4">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                       <Form.Label>Web Play</Form.Label>
-                      <Form.Control type="text" placeholder="Link Web" />
+                      <Form.Control type="text" placeholder="Link Web"  defaultValue={username}/>
                     </Form.Group>
                   </Col>
                   <Col lg="4">
