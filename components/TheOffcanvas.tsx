@@ -38,11 +38,11 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/partner" || checkClickPath === "/partner/agent" || checkClickPath === "/partner/member" || asPath === "/partner/member/add"} >
-                            <Link href="/partner" className={asPath === "/partner" || asPath === "/partner/agent" ? "nav-link active" : "nav-link"}>
-                                <span>Master</span>
+                            <Link href="/partner" className={asPath === "/partner" ? "nav-link active" : "nav-link"}>
+                                <span>พันธมิตร</span>
                             </Link>
-                            <Link href="/partner/member" className={asPath === "/partner/member" || asPath === "/partner/member/add" ? "nav-link active" : "nav-link"}>
-                                <span>Member</span>
+                            <Link href="/partner/userAG" className={asPath === "/partner/userAG" || asPath === "/partner/userAG/agent" ? "nav-link active" : "nav-link"}>
+                                <span>UserAg</span>
                             </Link>
                         </Dropdown.Menu>
                     </div>
@@ -55,14 +55,17 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/bot" || checkClickPath === "/bot/agent" || checkClickPath === "/bot/listname"} >
-                            <Link href="/bot" className={asPath === "/bot" || asPath === "/bot/agent" ? "nav-link active" : "nav-link"}>
-                                <span>ได้เสียลูกค้า</span>
+                            <Link href="/bot" className={asPath === "/bot" ? "nav-link active" : "nav-link"}>
+                                <span>คำสั่งบอท</span>
                             </Link>
-                            <Link href="/bot" className={asPath === "/bot" || asPath === "/bot/agent" ? "nav-link active" : "nav-link"}>
-                                <span>ได้เสียเอเย่น</span>
+                            <Link href="/bot/customer" className={asPath === "/bot" || asPath === "/bot/customer" ? "nav-link active" : "nav-link"}>
+                                <span>ลูกค้า</span>
                             </Link>
-                            <Link href="/bot" className={asPath === "/bot" || asPath === "/bot/agent" ? "nav-link active" : "nav-link"}>
-                                <span>ได้เสียมาสเตอร์</span>
+                            <Link href="/bot/agent" className={asPath === "/bot" || asPath === "/bot/agent" ? "nav-link active" : "nav-link"}>
+                                <span>เอเย่น</span>
+                            </Link>
+                            <Link href="/bot/master" className={asPath === "/bot" || asPath === "/bot/agent" ? "nav-link active" : "nav-link"}>
+                                <span>มาสเตอร์</span>
                             </Link>
                         </Dropdown.Menu>
                     </div>

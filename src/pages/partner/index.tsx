@@ -1,56 +1,51 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/LayOut";
-import { Badge, Button, Card, Form, InputGroup, Table } from "react-bootstrap";
-import { FaPen, FaRegEye, FaSearch } from "react-icons/fa";
+import { Badge, Card, Form, InputGroup, Table } from "react-bootstrap";
+import { FaPen, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
 import { bankMap } from "@/test";
-
-import { Partner as PrismaPartner, Member as PrismaMember } from '@prisma/client';
-import PartnerAddPartnerModal from "@/container/Partner/AddPartnerModal";
-import PartnerViewPartnerModal from "@/container/Partner/ViewModal";
+import PartnerViewMemberModal from "@/container/Partner/ViewModal";
 import DeleteModal from "@/components/modal/DeleteModal";
-interface Member extends PrismaMember {
-}
+import { Member } from "@prisma/client";
+import PartnerAddPartnerModal from "@/container/Partner/AddPartnerModal";
 
-interface Partner extends PrismaPartner {
-  member: Member;
-}
 interface Params {
   page: number;
   pageSize: number;
   searchTerm: string;
   totalPages: number;
 }
-const PartnerPage: React.FC = () => {
+const MemberPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
     searchTerm: "",
     totalPages: 1,
   });
-  const [{ data, loading, error }, getPartner,] = useAxios({
-    url: `/api/partner?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchTerm}`,
+  const [{ data: membersData }, getMember,] = useAxios({
+    url: `/api/member?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${params.searchTerm}`,
     method: "GET",
   });
 
-  const [{ }, executePartnerDelete,] = useAxios({}, { manual: true });
+  const [{ loading: deleteMemberLoading, error: deleteMemberError }, executeMemberDelete,] = useAxios({}, { manual: true });
 
-  const [filteredPartnersData, setFilteredPartnersData] = useState<Partner[]>([]);
+  const [filteredMembersData, setFilteredMembersData] = useState<Member[]>([]);
 
   useEffect(() => {
-    setFilteredPartnersData(data?.data ?? []);
+    setFilteredMembersData(membersData?.data ?? []);
+    console.log(membersData);
 
-  }, [data]);
+  }, [membersData]);
 
-  const deletePartner = (id: string): Promise<any> => {
-    return executePartnerDelete({
-      url: "/api/partner/" + id,
+  const deleteMember = (id: string): Promise<any> => {
+    return executeMemberDelete({
+      url: "/api/member/" + id,
       method: "DELETE",
     }).then(() => {
-      setFilteredPartnersData(prevPartners => prevPartners.filter(partner => partner?.id !== id));
+      setFilteredMembersData(prevMembers => prevMembers.filter(member => member.id !== id));
     });
   };
 
@@ -76,8 +71,7 @@ const PartnerPage: React.FC = () => {
       searchTerm: search,
     }));
   };
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error!</p>;
+
   return (
     <LayOut>
       <Head>
@@ -92,7 +86,7 @@ const PartnerPage: React.FC = () => {
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              Partner - Master
+              Partner - Member
             </h4>
             <InputGroup className="w-auto" bsPrefix="input-icon">
               <InputGroup.Text id="basic-addon1">
@@ -106,7 +100,7 @@ const PartnerPage: React.FC = () => {
               />
             </InputGroup>
             {/* <AddListName /> */}
-            <Link href="/partner/partner/add" className="ms-2 btn icon icofn-primary">
+            <Link href="/partner/member/add" className="ms-2 btn icon icofn-primary">
               เพิ่มพาร์ทเนอร์
             </Link>
           </Card.Header>
@@ -115,71 +109,91 @@ const PartnerPage: React.FC = () => {
               <thead>
                 <tr>
                   <th className="first">No.</th>
-                  <th >userAG</th>
-                  <th >ผู้ใช้</th>
-                  <th>Partner</th>
-                  <th>Benefit</th>
+                  <th className="name">ชื่อ-สกุล</th>
+                  <th className="bank">ธนาคาร</th>
+                  <th>
+                    AG User
+                  </th>
                   <th>จัดการ</th>
                 </tr>
               </thead>
               <tbody className="text-center">
-                {filteredPartnersData.map((partner: Partner, index: number) => {
-                  console.log(partner);
+                {filteredMembersData?.map((member: Member, index: number) => {
+                  const bankObj = bankMap.find(bank => bank.value === member?.bank);
                   return (
-                    <tr key={partner?.id}>
-                      <td>{index + 1}</td>
-                      <td>{partner?.userAG}</td>
-                      <td>
-                        {/* {partner?.member[0].firstname} */}
-                        {partner?.member ? (
+                    <tr key={member.id}>
+                      <td className="first">
+                        {((params.page * 10) - 10) + index + 1}
+                      </td>
+                      <td className="name">
+                        <div className="space-around ">
+                          <b>{member?.firstname}</b>
+                          <b>{member?.lastname}</b>
+                        </div>
+                      </td>
+                      <td className="bank">
+                        {bankObj &&
                           <div>
-                            {partner.member.firstname} {partner.member.lastname}
+                            <img src={bankObj.image} alt={bankObj.value} style={{ width: '30px' }} />
                           </div>
-                        ) : (
-                          <div>ไม่มีผู้ใช้</div>
-                        )}
-                      </td>
-                      <td>{partner?.percent}%</td>
-                      <td>
-                        <Button
-                          bsPrefix="icon" className={`ms-2 btn ${partner?.commission ? 'active' : ''}`}>
-                          ค่าคอม
-                        </Button>
-                        <Button
-                          bsPrefix="icon" className={`ms-2 btn ${partner?.overdue ? 'active' : ''}`}>
-                          ค้างบวก
-                        </Button>
-                        <Button
-                          bsPrefix="icon" className={`ms-2 btn ${partner?.adjustPercentage ? 'active' : ''}`}>
-                          ปรับสู้ฟรี
-                        </Button>
-                        <Button
-                          bsPrefix="icon" className={`ms-2 btn ${partner?.pay ? 'active' : ''}`}>
-                          จ่าย
-                        </Button>
-                        <Button
-                          bsPrefix="icon" className={`ms-2 btn ${partner?.customerCommission ? 'active' : ''}`}>
-                          คืนลูกค้า
-                        </Button>
+                        }
+
+                        <div>{member.bankAccount} </div>
                       </td>
                       <td>
-                        <Button className="ms-2 btn" bsPrefix="icon">
-                          <FaRegEye />
-                        </Button>
-                        <Button className="ms-2 btn" bsPrefix="icon">
+                        <Badge className="mx-1" bg="success">
+                          Success
+                        </Badge>
+                        <Badge className="mx-1" bg="success">
+                          Success
+                        </Badge>
+                        <Badge className="mx-1" bg="success">
+                          Success
+                        </Badge>
+                        <Badge className="mx-1" bg="success">
+                          Success
+                        </Badge>
+                        <Badge className="mx-1" bg="success">
+                          Success
+                        </Badge>
+                        <Badge className="mx-1" bg="success">
+                          Success
+                        </Badge>
+                        <Badge className="mx-1" bg="success">
+                          Success
+                        </Badge>
+                        <br />
+                        <Badge className="mx-1" bg="info">
+                          Info
+                        </Badge>
+                        <Badge className="mx-1" bg="info">
+                          Info
+                        </Badge>
+                        <Badge className="mx-1" bg="info">
+                          Info
+                        </Badge>
+                        <Badge className="mx-1" bg="info">
+                          Info
+                        </Badge>
+                      </td>
+                      <td>
+                        <PartnerViewMemberModal data={member} />
+
+                        <PartnerAddPartnerModal data={member} />
+                        <Link href={`/partner/member/edit/${member.id}`} className="mx-1 btn info icon icon-primary">
                           <FaPen />
-                        </Button>
-                        <DeleteModal data={partner} apiDelete={() => deletePartner(partner.id)} />
+                          <span className="h-tooltiptext">แก้ไขข้อมูล</span>
+                        </Link>
+                        <DeleteModal data={member} apiDelete={() => deleteMember(member.id)} />
                       </td>
                     </tr>
-                  )
-                }
-                )}
+                  );
+                })}
               </tbody>
             </Table>
           </Card.Body>
           <Card.Footer>
-            <PageSelect page={params.page} totalPages={data?.pagination?.total} onChangePage={handleChangePage} onChangePageSize={handleChangePageSize} />
+            <PageSelect page={params.page} totalPages={membersData?.pagination?.total} onChangePage={handleChangePage} onChangePageSize={handleChangePageSize} />
           </Card.Footer>
         </Card>
 
@@ -187,4 +201,4 @@ const PartnerPage: React.FC = () => {
     </LayOut>
   );
 }
-export default PartnerPage;
+export default MemberPage;

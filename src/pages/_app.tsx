@@ -2,7 +2,6 @@ import React,{ useEffect } from "react";
 import Head from "next/head";
 import type { AppProps } from 'next/app'
 import { useRouter } from "next/router";
-import { SSRProvider } from "react-bootstrap";
 
 import '../scss/globals.scss'
 
@@ -15,7 +14,6 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [router.events]);
 
   return (
-    <SSRProvider>
       <React.Fragment>
         <Head>
           <meta
@@ -26,6 +24,5 @@ export default function App({ Component, pageProps }: AppProps) {
         </Head>
           <Component {...pageProps} />
       </React.Fragment>
-    </SSRProvider >
   )
 }
