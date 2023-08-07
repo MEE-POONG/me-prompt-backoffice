@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import LayOut from "@/components/LayOut";
+import LayOut from "@/components/RootPage/LayOut";
 import { Alert, Button, Card, Col, Row } from "react-bootstrap";
 import { FaRegEye } from "react-icons/fa";
 

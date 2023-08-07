@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Head from 'next/head';
-import LayOut from "@/components/LayOut";
+import LayOut from "@/components/RootPage/LayOut";
 import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
 import AddModal from "@/components/modal/AddModal";
 import useAxios from "axios-hooks";

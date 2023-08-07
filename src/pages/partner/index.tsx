@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
-import LayOut from "@/components/LayOut";
+import LayOut from "@/components/RootPage/LayOut";
 import { Badge, Card, Form, InputGroup, Table } from "react-bootstrap";
 import { FaPen, FaSearch } from "react-icons/fa";
 import Link from "next/link";

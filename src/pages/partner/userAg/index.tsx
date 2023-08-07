@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
-import LayOut from "@/components/LayOut";
+import LayOut from "@/components/RootPage/LayOut";
 import { Badge, Button, Card, Form, InputGroup, Table } from "react-bootstrap";
 import { FaPen, FaRegEye, FaSearch } from "react-icons/fa";
 import Link from "next/link";
@@ -99,7 +99,7 @@ const PartnerPage: React.FC = () => {
               />
             </InputGroup>
             {/* <AddListName /> */}
-            <Link href="/partner/partner/add" className="ms-2 btn icon icofn-primary">
+            <Link href="/partner/userAG/add" className="ms-2 btn icon icofn-primary">
               เพิ่มพาร์ทเนอร์
             </Link>
           </Card.Header>

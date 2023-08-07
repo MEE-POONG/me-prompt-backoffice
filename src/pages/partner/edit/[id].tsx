@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from 'next/head';
-import LayOut from "@/components/LayOut";
+import LayOut from "@/components/RootPage/LayOut";
 import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
 // import BankSelect from "@/components/Input/Bankselect";
 import EditModal from "@/components/modal/EditModal";

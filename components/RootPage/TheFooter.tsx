@@ -5,7 +5,7 @@ import { FaArrowRight, FaEnvelope, FaFacebookF, FaInstagram, FaLinkedinIn, FaMap
 
 interface FooterProps { }
 
-const Footer: React.FC = () => {
+const TheFooter: React.FC = () => {
 
   return (
       <footer className="pt-4">
@@ -24,4 +24,4 @@ const Footer: React.FC = () => {
   );
 };
 
-export default Footer;
+export default TheFooter;
