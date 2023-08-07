@@ -100,14 +100,7 @@ const MemberAdd: React.FC = () => {
   const bankObj = bankMap.find(b => b.value === bank);
   return (
     <LayOut>
-      <Head>
-        <title>Wellcome | MePrompt-BackOffice</title>
-        <meta
-          name="description"
-          content="T ACTIVE"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+
       <div className='member-page'>
         <Card>
           <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />

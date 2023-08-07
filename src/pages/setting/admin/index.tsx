@@ -14,14 +14,7 @@ const AdminPage: React.FC = () => {
 
   return (
     <LayOut>
-      <Head>
-        <title>Wellcome | MePrompt-BackOffice</title>
-        <meta
-          name="description"
-          content="T ACTIVE"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+
       <div className='admin-page h-100'>
         <Card className="h-100">
           <Card.Header className="d-flex space-between">

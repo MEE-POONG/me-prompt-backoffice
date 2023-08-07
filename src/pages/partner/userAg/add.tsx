@@ -101,14 +101,7 @@ const UserAGAdd: React.FC = () => {
   };
   return (
     <LayOut>
-      <Head>
-        <title>Wellcome | MePrompt-BackOffice</title>
-        <meta
-          name="description"
-          content="T ACTIVE"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+
       <div className='member-page'>
         <Card>
           <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />

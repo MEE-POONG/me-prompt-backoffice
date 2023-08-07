@@ -80,14 +80,7 @@ const PartnerPage: React.FC = () => {
   if (error) return <p>Error!</p>;
   return (
     <LayOut>
-      <Head>
-        <title>Wellcome | MePrompt-BackOffice</title>
-        <meta
-          name="description"
-          content="T ACTIVE"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+
       <div className='partner-page h-100'>
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
