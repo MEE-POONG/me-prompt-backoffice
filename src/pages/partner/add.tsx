@@ -232,7 +232,7 @@ const MemberAdd: React.FC = () => {
             <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
             </Button>
-            <Link href="/partner/member" className="btn btn-danger mx-2">
+            <Link href="/partner" className="btn btn-danger mx-2">
               ย้อนกลับ
             </Link>
           </Card.Footer>

@@ -100,7 +100,7 @@ const MemberPage: React.FC = () => {
               />
             </InputGroup>
             {/* <AddListName /> */}
-            <Link href="/partner/member/add" className="ms-2 btn icon icofn-primary">
+            <Link href="/partner/add" className="ms-2 btn icon icofn-primary">
               เพิ่มพาร์ทเนอร์
             </Link>
           </Card.Header>
@@ -180,7 +180,7 @@ const MemberPage: React.FC = () => {
                         <PartnerViewMemberModal data={member} />
 
                         <PartnerAddPartnerModal data={member} />
-                        <Link href={`/partner/member/edit/${member.id}`} className="mx-1 btn info icon icon-primary">
+                        <Link href={`/partner/edit/${member.id}`} className="mx-1 btn info icon icon-primary">
                           <FaPen />
                           <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                         </Link>
