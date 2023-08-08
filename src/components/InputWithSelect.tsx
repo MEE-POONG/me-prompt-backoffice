@@ -2,12 +2,13 @@ import { Member } from '@prisma/client';
 import React, { useEffect, useState } from 'react';
 import { Form, Dropdown, FloatingLabel } from 'react-bootstrap';
 interface SearchDataProps {
+    labelShow: string;
     textShow: string;
     textSearch: React.Dispatch<React.SetStateAction<string>>;
     setID: React.Dispatch<React.SetStateAction<string>>;
     arrayData: any;
 }
-const InputWithSelect: React.FC<SearchDataProps> = ({ textShow, textSearch, setID, arrayData }) => {
+const InputWithSelect: React.FC<SearchDataProps> = ({ labelShow, textShow, textSearch, setID, arrayData }) => {
     console.log("arrayData : ", arrayData);
 
     const [isDropdownVisible, setDropdownVisible] = useState(false);
@@ -29,8 +30,7 @@ const InputWithSelect: React.FC<SearchDataProps> = ({ textShow, textSearch, setI
     return (
         <FloatingLabel
             controlId="memberID"
-            label="memberID / ผู้ใช้ยูสนี้"
-            className="mb-3"
+            label={labelShow}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
@@ -41,7 +41,7 @@ const InputWithSelect: React.FC<SearchDataProps> = ({ textShow, textSearch, setI
                 onChange={keyword => { textSearch(keyword.target.value) }}
             />
             <Dropdown.Menu show={isDropdownVisible} className='w-100'>
-                <Dropdown.Header>เลือกผู้ใช้งาน</Dropdown.Header>
+                <Dropdown.Header>เลือกรายการ</Dropdown.Header>
                 {arrayData?.map((member: Member, index: number) => {
                     return (
                         <Dropdown.Item

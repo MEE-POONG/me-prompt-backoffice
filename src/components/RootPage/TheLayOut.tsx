@@ -1,7 +1,7 @@
 // Layout.tsx
 import React, { useState } from 'react';
 import TheNavBar from './TheNavBar';
-import Footer from './Footer';
+import TheFooter from './TheFooter';
 import TheOffcanvas from './TheOffcanvas';
 
 interface LayoutProps {
@@ -23,7 +23,7 @@ const LayOut: React.FC<LayoutProps> = ({ children }) => {
       <TheNavBar onToggleShow={handleToggleShow} show={show} />
       <div className='bg-whilt paper' style={mainStyle} >
         {children}
-        {/* <Footer /> */}
+        <TheFooter />
       </div>
     </main>
   );

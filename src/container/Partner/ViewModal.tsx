@@ -1,10 +1,10 @@
+import { bankMap } from '@/data/test';
 import { Member } from '@prisma/client';
 import React, { useState } from 'react';
 import { Badge, Col, Image, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FaRegEye } from 'react-icons/fa';
-import { bankMap } from "@/test";
 
 interface PartnerViewMemberModalProps {
     data: Member;

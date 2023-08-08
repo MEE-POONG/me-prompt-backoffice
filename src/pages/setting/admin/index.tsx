@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
-import LayOut from "@/components/RootPage/LayOut";
+import LayOut from "@/components/RootPage/TheLayOut";
 import ModalOffOn from '@/container/Setting/ModalOffOn';
 import { Alert, Button, Card, Image, Form, InputGroup, Tooltip, OverlayTrigger, Table } from "react-bootstrap";
 import { FaKey, FaPen, FaPowerOff, FaRegEye, FaSearch, FaToolbox, FaTrashAlt } from "react-icons/fa";

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
-import LayOut from "@/components/RootPage/LayOut";
+import LayOut from "@/components/RootPage/TheLayOut";
 import { Badge, Card, Form, InputGroup, Table } from "react-bootstrap";
 import { FaPen, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
-import { bankMap } from "@/test";
 import PartnerViewMemberModal from "@/container/Partner/ViewModal";
 import DeleteModal from "@/components/modal/DeleteModal";
 import { Member } from "@prisma/client";
 import PartnerAddPartnerModal from "@/container/Partner/AddPartnerModal";
+import { bankMap } from "@/data/test";
 
 interface Params {
   page: number;

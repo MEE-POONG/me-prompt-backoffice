@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
-import LayOut from "@/components/RootPage/LayOut";
+import LayOut from "@/components/RootPage/TheLayOut";
 import { Badge, Button, Card, Form, InputGroup, Table } from "react-bootstrap";
 import { FaPen, FaRegEye, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
-import { bankMap } from "@/test";
 
 import { Partner as PrismaPartner, Member as PrismaMember } from '@prisma/client';
 import PartnerAddPartnerModal from "@/container/Partner/AddPartnerModal";

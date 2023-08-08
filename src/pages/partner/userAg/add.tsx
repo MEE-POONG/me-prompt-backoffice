@@ -1,42 +1,46 @@
 import React, { useState, useEffect } from "react";
 import Head from 'next/head';
-import LayOut from "@/components/RootPage/LayOut";
-import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
-import AddModal from "@/components/modal/AddModal";
+import { Button, Card, Col, Dropdown, DropdownButton, FloatingLabel, Form, Image, InputGroup, Row } from "react-bootstrap";
 import useAxios from "axios-hooks";
 import Link from "next/link";
+import LayOut from "@/components/RootPage/TheLayOut";
+import AddModal from "@/components/modal/AddModal";
 import InputWithSelect from "@/components/InputWithSelect";
 
 
 
 const UserAGAdd: React.FC = () => {
-  const [{ data, loading, error }, executePartner] = useAxios({ url: '/api/partner', method: 'POST' }, { manual: true });
-  const [searchTerm, setSearchTerm] = useState("");
-  const [{ data: membersData }, getMember,] = useAxios({
-    url: `/api/member?page=1&pageSize=9&searchTerm=${searchTerm}`,
-    method: "GET",
-  });
+  // const [{ data, loading, error }, executePartner] = useAxios({ url: '/api/partner', method: 'POST' }, { manual: true });
+  // const [searchTerm, setSearchTerm] = useState("");
+  // const [{ data: partnerData }, getSearchPartner,] = useAxios({
+  //   url: `/api/member?page=1&pageSize=9&searchTerm=${searchTerm}`,
+  //   method: "GET",
+  // });
+  // const [{ data: membersData }, getMember,] = useAxios({
+  //   url: `/api/member?page=1&pageSize=9&searchTerm=${searchTerm}`,
+  //   method: "GET",
+  // });
 
 
   const [userAG, setUserAG] = useState<string>("");
-  const [originAG, setOriginAG] = useState<string>("");
-  const [percent, setPercent] = useState<number>(0);
-  const [commission, setCommission] = useState<boolean>(false);
-  const [adjustPercentage, setAdjustPercentage] = useState<boolean>(false);
-  const [pay, setPay] = useState<boolean>(false);
-  const [overdue, setOverdue] = useState<boolean>(false);
-  const [customerCommission, setCustomerCommission] = useState<boolean>(false);
-  const [recommender, setRecommender] = useState<string>("");
-  const [memberId, setMemberId] = useState<string>("");
+  // const [originAG, setOriginAG] = useState<string>("");
+  // const [percent, setPercent] = useState<number>(0);
+  // const [commission, setCommission] = useState<boolean>(false);
+  // const [adjustPercentage, setAdjustPercentage] = useState<boolean>(false);
+  // const [pay, setPay] = useState<boolean>(false);
+  // const [overdue, setOverdue] = useState<boolean>(false);
+  // const [customerCommission, setCustomerCommission] = useState<boolean>(false);
+  // const [recommender, setRecommender] = useState<string>("");
+  // const [memberId, setMemberId] = useState<string>("");
 
-  const [alertForm, setAlertForm] = useState<string>("not");
+  // const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
-  const [checkBody, setCheckBody] = useState<string>("");
+  // const [checkBody, setCheckBody] = useState<string>("");
 
 
-  useEffect(() => {
-    console.log("partnersData : ", membersData)
-  }, [membersData]);
+  // useEffect(() => {
+  //   console.log("partnersData : ", membersData)
+  // }, [membersData]);
 
   const reloadPage = () => {
     clear();
@@ -44,67 +48,67 @@ const UserAGAdd: React.FC = () => {
 
   const clear = () => {
     setUserAG("");
-    setOriginAG("");
-    setPercent(0);
-    setOverdue(false);
-    setCommission(false);
-    setAdjustPercentage(false);
-    setPay(false);
-    setCustomerCommission(false);
-    setRecommender("");
-    setMemberId("");
-    setAlertForm("not");
-    setInputForm(false);
-    setCheckBody("");
+    //   setOriginAG("");
+    //   setPercent(0);
+    //   setOverdue(false);
+    //   setCommission(false);
+    //   setAdjustPercentage(false);
+    //   setPay(false);
+    //   setCustomerCommission(false);
+    //   setRecommender("");
+    //   setMemberId("");
+    //   setAlertForm("not");
+    //   setInputForm(false);
+    //   setCheckBody("");
   }
 
-  const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-    let missingFields = [];
-    if (!userAG) missingFields.push("userAG");
-    if (!originAG) missingFields.push("password");
+  // const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
+  //   event.preventDefault();
+  //   event.stopPropagation();
+  //   let missingFields = [];
+  //   if (!userAG) missingFields.push("userAG");
+  //   if (!originAG) missingFields.push("password");
 
-    if (missingFields.length > 0) {
-      setAlertForm("warning");
-      setInputForm(true);
-      setCheckBody(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
-    } else {
-      try {
-        setAlertForm("primary");
-        const data = {
-          userAG,
-          originAG,
-          percent,
-          overdue,
-          commission,
-          adjustPercentage,
-          pay,
-          customerCommission,
-          recommender,
-          memberId,
-        };
-        const response = await executePartner({ data });
-        if (response && response.status === 201) {
-          setAlertForm("success");
-          setTimeout(() => {
-            clear();
-          }, 5000);
-        } else {
-          setAlertForm("danger");
-          throw new Error('Failed to send data');
-        }
-      } catch (error) {
-        setAlertForm("danger");
-      }
-    }
-  };
+  //   if (missingFields.length > 0) {
+  //     setAlertForm("warning");
+  //     setInputForm(true);
+  //     setCheckBody(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
+  //   } else {
+  //     try {
+  //       setAlertForm("primary");
+  //       const data = {
+  //         userAG,
+  //         originAG,
+  //         percent,
+  //         overdue,
+  //         commission,
+  //         adjustPercentage,
+  //         pay,
+  //         customerCommission,
+  //         recommender,
+  //         memberId,
+  //       };
+  //       const response = await executePartner({ data });
+  //       if (response && response.status === 201) {
+  //         setAlertForm("success");
+  //         setTimeout(() => {
+  //           clear();
+  //         }, 5000);
+  //       } else {
+  //         setAlertForm("danger");
+  //         throw new Error('Failed to send data');
+  //       }
+  //     } catch (error) {
+  //       setAlertForm("danger");
+  //     }
+  //   }
+  // };
   return (
     <LayOut>
 
       <div className='member-page'>
         <Card>
-          <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
+          {/* <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} /> */}
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
               UserAG - เพิ่มข้อมูล
@@ -124,7 +128,32 @@ const UserAGAdd: React.FC = () => {
                   />
                 </FloatingLabel>
               </Col>
-              <Col md={3}>
+              {/* <Col md={12}>
+                <InputGroup className="mb-3" size="lg">
+                  <DropdownButton
+                    variant="outline-secondary"
+                    title="เลือกตำแหน่ง"
+                    id="input-group-dropdown-1"
+                  >
+                    <Dropdown.Item href="#">Agent</Dropdown.Item>
+                    <Dropdown.Item href="#">Master</Dropdown.Item>
+                    <Dropdown.Item href="#">Senior</Dropdown.Item>
+                  </DropdownButton>
+                  <InputWithSelect labelShow={"OriginAG / ยูสต้นสาย"} textShow={searchTerm} textSearch={setSearchTerm} setID={setMemberId} arrayData={membersData?.data} />
+                  <DropdownButton
+                    variant="outline-secondary"
+                    title="Dropdown"
+                    id="input-group-dropdown-1"
+                  >
+                    <Dropdown.Item href="#">Action</Dropdown.Item>
+                    <Dropdown.Item href="#">Another action</Dropdown.Item>
+                    <Dropdown.Item href="#">Something else here</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item href="#">Separated link</Dropdown.Item>
+                  </DropdownButton>
+                </InputGroup>
+              </Col> */}
+              {/* <Col md={3}>
                 <FloatingLabel controlId="OriginAG" label="OriginAG / ยูสต้นสาย" className="mb-3">
                   <Form.Control
                     isValid={inputForm && originAG !== ""}
@@ -135,8 +164,8 @@ const UserAGAdd: React.FC = () => {
                     placeholder="name@example.com"
                   />
                 </FloatingLabel>
-              </Col>
-              <Col md={3}>
+              </Col> */}
+              {/* <Col md={3}>
                 <FloatingLabel
                   controlId="floatingSelectGrid"
                   label="เลือกเปอร์เซ็น"
@@ -151,8 +180,8 @@ const UserAGAdd: React.FC = () => {
                     placeholder="name@example.com"
                   />
                 </FloatingLabel>
-              </Col>
-              <Col md={3}>
+              </Col> */}
+              {/* <Col md={3}>
                 <FloatingLabel controlId="recommender" label="recommender / ผู้แนะนำ" className="mb-3">
                   <Form.Control
                     isValid={inputForm && recommender !== ""}
@@ -162,9 +191,9 @@ const UserAGAdd: React.FC = () => {
                     placeholder="name@example.com"
                   />
                 </FloatingLabel>
-              </Col>
+              </Col> */}
             </Row>
-            <div className="text-center mb-3">
+            {/* <div className="text-center mb-3">
               <div>สิทธิประโยชน์</div>
               <Button
                 bsPrefix="icon"
@@ -197,14 +226,14 @@ const UserAGAdd: React.FC = () => {
               >
                 คืนลูกค้า
               </Button>
-            </div>
-            <Row>
+            </div> */}
+            {/* <Row>
               <Col>
-                <InputWithSelect textShow={searchTerm} textSearch={setSearchTerm} setID={setMemberId} arrayData={membersData?.data} />
+                <InputWithSelect labelShow={"ยืนยัน Partner"} textShow={searchTerm} textSearch={setSearchTerm} setID={setMemberId} arrayData={membersData?.data} />
               </Col>
-            </Row>
+            </Row> */}
           </Card.Body>
-          <Card.Footer className="text-end">
+          {/* <Card.Footer className="text-end">
             <Button variant="success mx-2" onClick={handleSubmit}>
               ยืนยัน
             </Button>
@@ -214,7 +243,7 @@ const UserAGAdd: React.FC = () => {
             <Link href="/partner" className="btn btn-danger mx-2">
               ย้อนกลับ
             </Link>
-          </Card.Footer>
+          </Card.Footer> */}
         </Card>
       </div>
     </LayOut >

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
-import LayOut from "@/components/RootPage/LayOut";
+import LayOut from "@/components/RootPage/TheLayOut";
 import { Button, Card, Col,Form, Image,  Row } from "react-bootstrap";
 import useAxios from "axios-hooks";
 

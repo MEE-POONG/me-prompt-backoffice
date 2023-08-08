@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import Head from 'next/head';
-import LayOut from "@/components/RootPage/LayOut";
+import LayOut from "@/components/RootPage/TheLayOut";
 import { Button, Card, Col, Dropdown, FloatingLabel, Form, Image, Row } from "react-bootstrap";
 import AddModal from "@/components/modal/AddModal";
 import useAxios from "axios-hooks";
 import BankAccount from "@/components/Input/BankAccount";
 import Link from "next/link";
-import { bankMap } from '@/test';
+import { bankMap } from "@/data/test";
 
 
 

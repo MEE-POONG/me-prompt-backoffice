@@ -22,15 +22,6 @@
       "@/*": [
         "./src/*"
       ],
-      "@/test": [
-        "./data/test.ts"
-      ],
-      "@/components/*": [
-        "./components/*"
-      ],
-      "@/container/*": [
-        "./container/*"
-      ]
     }
   },
   "include": [
