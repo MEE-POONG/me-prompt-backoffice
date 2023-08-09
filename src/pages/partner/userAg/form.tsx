@@ -1,46 +1,57 @@
-// pages/form.tsx
-
 import BasicInput from "@/components/Input/Basic";
 import { useState } from "react";
-import { Button, Card, Form } from "react-bootstrap";
+import { Button, Card, Col, Form, Row } from "react-bootstrap";
 
+import { userAGForm } from "@/data/partner";
 const FormPage: React.FC = () => {
-  const [formData, setFormData] = useState({
-    userAG: '',
-  });
+  const initialFormData = userAGForm.reduce((acc: any, curr: any) => {
+    acc[curr.title] = '';
+    return acc;
+  }, {} as Record<string, string>);
+
+  const [formData, setFormData] = useState(initialFormData);
   const [checkIsValid, setCheckIsValid] = useState<boolean>(false);
 
-
-  const handleInputChange = (field: keyof typeof formData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev: Record<string, string>) => ({ ...prev, [field]: value }));
   };
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setCheckIsValid(true);
-
-    console.log('UserAG:', formData?.userAG);
+    console.log('FormData:', formData);
   };
+
   return (
     <div className="container mt-5">
       <Card>
         <Card.Body>
           <Form onSubmit={handleSubmit}>
-            <BasicInput
-            title="userAG"
-            labelShow="UserAG / ยูสเซอร์AG"
-             placeholderShow="Enter name" typeShow="text" 
-             valueShow={formData.userAG}
-              valueSet={(value) => handleInputChange('userAG', value)}
-              checkIsValid={checkIsValid}
-              rules={2}
-              invalidFeedback={"Name should be more than 2 characters."}
-            />
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
+            <Row>
+              {userAGForm.map((inputItem, index) => (
+                <Col md={3} key={index}>
+                  <BasicInput
+                    title={inputItem.title}
+                    labelShow={inputItem.labelShow}
+                    placeholderShow={inputItem.placeholderShow}
+                    typeShow={inputItem.typeShow}
+                    valueShow={formData[inputItem.title]}
+                    valueSet={(value: any) => handleInputChange(inputItem.title, value)}
+                    rules={(value: any) => value.length >= 3}
+                    checkIsValid={checkIsValid}
+                    invalidFeedback={inputItem.invalidFeedback}
+                  />
+
+                </Col>
+              ))}
+              <Col sm="12">
+                <Button variant="primary" type="submit">
+                  Submit
+                </Button>
+              </Col>
+            </Row>
           </Form>
         </Card.Body>
-
       </Card>
     </div>
   );

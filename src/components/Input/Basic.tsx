@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import Select from 'react-select';
-import { Col, FloatingLabel, Form } from "react-bootstrap";
+import React, { useState, useEffect } from 'react';
+import { Form } from "react-bootstrap";
 
 interface BasicInputProps {
     title: string;
@@ -10,14 +9,35 @@ interface BasicInputProps {
     valueShow: string;
     valueSet: (value: string) => void;
     checkIsValid: boolean;
+    rules?: (value: string) => boolean;
     invalidFeedback: string;
-    rules: any;
 }
+const BasicInput: React.FC<BasicInputProps> = ({
+    title,
+    labelShow,
+    placeholderShow,
+    typeShow,
+    valueShow,
+    valueSet,
+    rules,
+    checkIsValid,
+    invalidFeedback,
+}) => {
+    const [isValid, setIsValid] = useState<boolean | null>(null);
+    const [showValidation, setShowValidation] = useState(false);
 
-const BasicInput: React.FC<BasicInputProps> = ({ title, labelShow, placeholderShow, typeShow, valueShow, valueSet, checkIsValid, rules, invalidFeedback }) => {
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        valueSet(event.target.value);
+        const inputValue = event.target.value;
+        valueSet(inputValue);
     };
+
+    useEffect(() => {
+        if (checkIsValid && rules) {
+            setIsValid(rules(valueShow));
+            setShowValidation(true);
+        }
+    }, [checkIsValid, valueShow, rules]);
+
     return (
         <>
             <Form.Group className="mb-3" controlId={title}>
@@ -28,15 +48,14 @@ const BasicInput: React.FC<BasicInputProps> = ({ title, labelShow, placeholderSh
                     name={title}
                     value={valueShow}
                     onChange={handleInputChange}
-                    isValid={checkIsValid && (e.target.value > rules)}
-                    isInvalid={checkIsValid}
+                    isValid={showValidation && isValid === true}
+                    isInvalid={showValidation && isValid === false}
                 />
-                <Form.Control.Feedback type="invalid">
+                {showValidation && isValid === false && <Form.Control.Feedback type="invalid">
                     {invalidFeedback}
-                </Form.Control.Feedback>
+                </Form.Control.Feedback>}
             </Form.Group>
         </>
     );
 };
-
 export default BasicInput;
