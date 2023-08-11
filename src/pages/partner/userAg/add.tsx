@@ -38,24 +38,32 @@ const UserAGAdd: React.FC = () => {
   });
 
   useEffect(() => {
-    if (formData["originAG"] && formData["originAG"].length >= 3) {
-      partnerRefetchSearch();
-    }
-
-
-  }, [formData["originAG"]]);
-
-  useEffect(() => {
     if (formData["position"] === "master") {
       setSearchPosition("senior");
     } else if (formData["position"] === "agent") {
       setSearchPosition("master");
     }
   }, [formData["position"]]);
+
+  useEffect(() => {
+    setFormData((prev: Record<string, string>) => ({ ...prev, ["userAG"]: formData["originAG"] }));
+    if (formData["originAG"] && formData["originAG"].length >= 3) {
+      partnerRefetchSearch();
+    }
+  }, [formData["originAG"]]);
+
+
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev: Record<string, string>) => ({ ...prev, [field]: value }));
   };
-
+  const getValidationRule = (inputTitle: string, formData: Record<string, string>) => {
+    switch (inputTitle) {
+      case "userAG":
+        return (value: any) => value?.length > formData["originAG"].length;
+      default:
+        return (value: any) => value?.length >= 3;
+    }
+  }
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -63,14 +71,6 @@ const UserAGAdd: React.FC = () => {
     console.log('FormData:', formData);
   };
 
-  //   if (!originAG) missingFields.push("password");
-
-  //   if (missingFields.length > 0) {
-  //     setAlertForm("warning");
-  //     setInputForm(true);
-  //     setCheckBody(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
-  //   } else {
-  //     t
   return (
     <LayOut>
 
@@ -95,7 +95,7 @@ const UserAGAdd: React.FC = () => {
                       typeShow={inputItem.typeShow}
                       valueShow={formData[inputItem.title]}
                       valueSet={(value: any) => handleInputChange(inputItem.title, value)}
-                      rules={(value: any) => value?.length >= 3}
+                      rules={getValidationRule(inputItem.title, formData)}
                       checkIsValid={checkIsValid}
                       invalidFeedback={inputItem.invalidFeedback}
                     />
@@ -108,7 +108,7 @@ const UserAGAdd: React.FC = () => {
                       placeholderShow={inputItem.placeholderShow}
                       typeShow={inputItem.typeShow}
                       valueSet={(value: string) => handleInputChange(inputItem.title, value)}
-                      rules={(value: string) => value?.length >= 3}
+                      rules={getValidationRule(inputItem.title, formData)}
                       checkIsValid={checkIsValid}
                       invalidFeedback={inputItem.invalidFeedback}
                       list={inputItem.list || []}
@@ -123,7 +123,7 @@ const UserAGAdd: React.FC = () => {
                       typeShow={inputItem.typeShow}
                       valueShow={formData[inputItem.title]}
                       valueSet={(value: any) => handleInputChange(inputItem.title, value)}
-                      rules={(value: any) => value?.length >= 3}
+                      rules={getValidationRule(inputItem.title, formData)}
                       checkIsValid={checkIsValid}
                       invalidFeedback={inputItem.invalidFeedback}
                       listArray={partnerSearch?.data.map((partner: any) => ({
