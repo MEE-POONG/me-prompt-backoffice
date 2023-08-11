@@ -1,11 +1,11 @@
 export const userAGForm = [
-    { title: "positon", labelShow: "เลือกตำแหน่ง", placeholderShow: "กรุณาเลือก", typeShow: "dropdown", rules: 1, invalidFeedback: "ยังไม่ได้เลือกข้อมูล", list: [{ text: "agent" }, { text: "master" }, { text: "senior" },] },
-    { title: "originAG", labelShow: "OriginAG / ยูสต้นสาย", placeholderShow: "", typeShow: "search", rules: 2, invalidFeedback: "ระบบยูสต้นสาย" },
+    { title: "positon", labelShow: "เลือกตำแหน่ง", placeholderShow: "กรุณาเลือก", typeShow: "dropdown", rules: 1, invalidFeedback: "ต้องเลือกข้อมูล", list: [{ text: "agent" }, { text: "master" }, { text: "senior" },] },
+    { title: "originAG", labelShow: "OriginAG / ยูสต้นสาย", placeholderShow: "", typeShow: "search", rules: 2, invalidFeedback: "ระบบยูสต้นสาย" ,arraySearch:"partner"},
 
-    { title: "userAG", labelShow: "UserAG / ยูสเซอร์AG", placeholderShow: "Enter name", typeShow: "text", rules: 2, invalidFeedback: "กรอกข้อมูลอ้างอิงจากยูส" },
-    { title: "เลือกตำแหน่ง", labelShow: "UserAG / ยูสเซอร์AG", placeholderShow: "", typeShow: "dropdown", rules: 2, invalidFeedback: "กรอกข้อมูลอ้างอิงจากยูส", list: [{ text: "agent" }, { text: "master" }, { text: "senior" },] },
-    { title: "percen", labelShow: "เลือกเปอร์เซ็น", placeholderShow: "0.00 ถึง 0.40", typeShow: "select", rules: 2, invalidFeedback: "กรอกข้อมูลอ้างอิงจากยูส" },
-    { title: "recommender", labelShow: "Recommender / ผู้แนะนำ", placeholderShow: "เลือกยูสที่แนะนำ", typeShow: "search", rules: 2, invalidFeedback: "กรอกข้อมูล UserAG ผู้แนะนำ" },
+    // { title: "userAG", labelShow: "UserAG / ยูสเซอร์AG", placeholderShow: "Enter name", typeShow: "text", rules: 2, invalidFeedback: "กรอกข้อมูลอ้างอิงจากยูส" },
+    // { title: "เลือกตำแหน่ง", labelShow: "UserAG / ยูสเซอร์AG", placeholderShow: "", typeShow: "dropdown", rules: 2, invalidFeedback: "กรอกข้อมูลอ้างอิงจากยูส", list: [{ text: "agent" }, { text: "master" }, { text: "senior" },] },
+    // { title: "percen", labelShow: "เลือกเปอร์เซ็น", placeholderShow: "0.00 ถึง 0.40", typeShow: "select", rules: 2, invalidFeedback: "กรอกข้อมูลอ้างอิงจากยูส" },
+    // { title: "recommender", labelShow: "Recommender / ผู้แนะนำ", placeholderShow: "เลือกยูสที่แนะนำ", typeShow: "search", rules: 2, invalidFeedback: "กรอกข้อมูล UserAG ผู้แนะนำ" },
 ];
 export const memberForm = [
     { id: "1", value: 'กสิกรไทย', image: 'https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/446b4b9c-af1e-47aa-e475-784f42d5a300/100' },

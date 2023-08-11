@@ -6,67 +6,56 @@ import Link from "next/link";
 import LayOut from "@/components/RootPage/TheLayOut";
 import AddModal from "@/components/modal/AddModal";
 import InputWithSelect from "@/components/InputWithSelect";
+import BasicSearchInput from "@/components/Input/BasicSearch";
+import { userAGForm } from "@/data/partner";
+import BasicInput from "@/components/Input/Basic";
+import BasicDropdownInput from "@/components/Input/BasicDropdown";
 
-
+interface Params {
+  page: number;
+  pageSize: number;
+  searchTerm: string;
+  totalPages: number;
+}
 
 const UserAGAdd: React.FC = () => {
-  // const [{ data, loading, error }, executePartner] = useAxios({ url: '/api/partner', method: 'POST' }, { manual: true });
-  // const [searchTerm, setSearchTerm] = useState("");
-  // const [{ data: partnerData }, getSearchPartner,] = useAxios({
-  //   url: `/api/member?page=1&pageSize=9&searchTerm=${searchTerm}`,
-  //   method: "GET",
-  // });
-  // const [{ data: membersData }, getMember,] = useAxios({
-  //   url: `/api/member?page=1&pageSize=9&searchTerm=${searchTerm}`,
-  //   method: "GET",
-  // });
+  const initialFormData = userAGForm.reduce((acc: any, curr: any) => {
+    acc[curr.title] = '';
+    return acc;
+  }, {} as Record<string, string>);
+
+  const [formData, setFormData] = useState(initialFormData);
+  const [checkIsValid, setCheckIsValid] = useState<boolean>(false);
+
+  const [params, setParams] = useState<Params>({
+    page: 1,
+    pageSize: 10,
+    searchTerm: "",
+    totalPages: 1,
+  });
+  const [{ data: partnerSearch, loading, error }, refetchSearch] = useAxios({
+    url: `/api/partner?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${formData["originAG"]}`,
+    method: "GET",
+  });
+  
+  useEffect(() => {
+    if (formData["originAG"] && formData["originAG"].length >= 3) {
+        refetchSearch();
+    }
+}, [formData["originAG"]]);
 
 
-  const [userAG, setUserAG] = useState<string>("");
-  // const [originAG, setOriginAG] = useState<string>("");
-  // const [percent, setPercent] = useState<number>(0);
-  // const [commission, setCommission] = useState<boolean>(false);
-  // const [adjustPercentage, setAdjustPercentage] = useState<boolean>(false);
-  // const [pay, setPay] = useState<boolean>(false);
-  // const [overdue, setOverdue] = useState<boolean>(false);
-  // const [customerCommission, setCustomerCommission] = useState<boolean>(false);
-  // const [recommender, setRecommender] = useState<string>("");
-  // const [memberId, setMemberId] = useState<string>("");
-
-  // const [alertForm, setAlertForm] = useState<string>("not");
-  const [inputForm, setInputForm] = useState<boolean>(false);
-  // const [checkBody, setCheckBody] = useState<string>("");
-
-
-  // useEffect(() => {
-  //   console.log("partnersData : ", membersData)
-  // }, [membersData]);
-
-  const reloadPage = () => {
-    clear();
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev: Record<string, string>) => ({ ...prev, [field]: value }));
   };
 
-  const clear = () => {
-    setUserAG("");
-    //   setOriginAG("");
-    //   setPercent(0);
-    //   setOverdue(false);
-    //   setCommission(false);
-    //   setAdjustPercentage(false);
-    //   setPay(false);
-    //   setCustomerCommission(false);
-    //   setRecommender("");
-    //   setMemberId("");
-    //   setAlertForm("not");
-    //   setInputForm(false);
-    //   setCheckBody("");
-  }
 
-  // const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
-  //   event.preventDefault();
-  //   event.stopPropagation();
-  //   let missingFields = [];
-  //   if (!userAG) missingFields.push("userAG");
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    setCheckIsValid(true);
+    console.log('FormData:', formData);
+  };
+
   //   if (!originAG) missingFields.push("password");
 
   //   if (missingFields.length > 0) {
@@ -74,35 +63,7 @@ const UserAGAdd: React.FC = () => {
   //     setInputForm(true);
   //     setCheckBody(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
   //   } else {
-  //     try {
-  //       setAlertForm("primary");
-  //       const data = {
-  //         userAG,
-  //         originAG,
-  //         percent,
-  //         overdue,
-  //         commission,
-  //         adjustPercentage,
-  //         pay,
-  //         customerCommission,
-  //         recommender,
-  //         memberId,
-  //       };
-  //       const response = await executePartner({ data });
-  //       if (response && response.status === 201) {
-  //         setAlertForm("success");
-  //         setTimeout(() => {
-  //           clear();
-  //         }, 5000);
-  //       } else {
-  //         setAlertForm("danger");
-  //         throw new Error('Failed to send data');
-  //       }
-  //     } catch (error) {
-  //       setAlertForm("danger");
-  //     }
-  //   }
-  // };
+  //     t
   return (
     <LayOut>
 
@@ -116,134 +77,69 @@ const UserAGAdd: React.FC = () => {
           </Card.Header>
           <Card.Body>
             <Row>
-              <Col md={3}>
-                <FloatingLabel controlId="userAG" label="UserAG / ยูสเซอร์AG" className="mb-3">
-                  <Form.Control
-                    isValid={inputForm && userAG !== ""}
-                    isInvalid={inputForm && userAG === ""}
-                    type="text"
-                    value={userAG}
-                    onChange={e => setUserAG(e.target.value)}
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </Col>
-              {/* <Col md={12}>
-                <InputGroup className="mb-3" size="lg">
-                  <DropdownButton
-                    variant="outline-secondary"
-                    title="เลือกตำแหน่ง"
-                    id="input-group-dropdown-1"
-                  >
-                    <Dropdown.Item href="#">Agent</Dropdown.Item>
-                    <Dropdown.Item href="#">Master</Dropdown.Item>
-                    <Dropdown.Item href="#">Senior</Dropdown.Item>
-                  </DropdownButton>
-                  <InputWithSelect labelShow={"OriginAG / ยูสต้นสาย"} textShow={searchTerm} textSearch={setSearchTerm} setID={setMemberId} arrayData={membersData?.data} />
-                  <DropdownButton
-                    variant="outline-secondary"
-                    title="Dropdown"
-                    id="input-group-dropdown-1"
-                  >
-                    <Dropdown.Item href="#">Action</Dropdown.Item>
-                    <Dropdown.Item href="#">Another action</Dropdown.Item>
-                    <Dropdown.Item href="#">Something else here</Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item href="#">Separated link</Dropdown.Item>
-                  </DropdownButton>
-                </InputGroup>
-              </Col> */}
-              {/* <Col md={3}>
-                <FloatingLabel controlId="OriginAG" label="OriginAG / ยูสต้นสาย" className="mb-3">
-                  <Form.Control
-                    isValid={inputForm && originAG !== ""}
-                    isInvalid={inputForm && originAG === ""}
-                    type="text"
-                    value={originAG}
-                    onChange={e => setOriginAG(e.target.value)}
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </Col> */}
-              {/* <Col md={3}>
-                <FloatingLabel
-                  controlId="floatingSelectGrid"
-                  label="เลือกเปอร์เซ็น"
-                >
-                  <Form.Control
-                    isValid={inputForm}
-                    min={0}
-                    max={60}
-                    type="number"
-                    value={percent}
-                    onChange={e => setPercent(Number(e.target.value))}
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </Col> */}
-              {/* <Col md={3}>
-                <FloatingLabel controlId="recommender" label="recommender / ผู้แนะนำ" className="mb-3">
-                  <Form.Control
-                    isValid={inputForm && recommender !== ""}
-                    type="text"
-                    value={recommender}
-                    onChange={e => setRecommender(e.target.value)}
-                    placeholder="name@example.com"
-                  />
-                </FloatingLabel>
-              </Col> */}
+         
+              {userAGForm.map((inputItem, index) => (
+                <Col md={4} lg={3} key={index}>
+                  {inputItem.typeShow === "text" && (
+                    <BasicInput
+                      title={inputItem.title}
+                      labelShow={inputItem.labelShow}
+                      placeholderShow={inputItem.placeholderShow}
+                      typeShow={inputItem.typeShow}
+                      valueShow={formData[inputItem.title]}
+                      valueSet={(value: any) => handleInputChange(inputItem.title, value)}
+                      rules={(value: any) => value?.length >= 3}
+                      checkIsValid={checkIsValid}
+                      invalidFeedback={inputItem.invalidFeedback}
+                    />
+                  )}
+
+                  {inputItem.typeShow === "dropdown" && (
+                    <BasicDropdownInput
+                      title={inputItem.title}
+                      labelShow={inputItem.labelShow}
+                      placeholderShow={inputItem.placeholderShow}
+                      typeShow={inputItem.typeShow}
+                      valueSet={(value: string) => handleInputChange(inputItem.title, value)}
+                      rules={(value: string) => value?.length >= 3}
+                      checkIsValid={checkIsValid}
+                      invalidFeedback={inputItem.invalidFeedback}
+                      list={inputItem.list || []}
+                    />
+                  )}
+
+                  {inputItem.typeShow === "search" && (
+                    <BasicSearchInput
+                      title={inputItem.title}
+                      labelShow={inputItem.labelShow}
+                      placeholderShow={inputItem.placeholderShow}
+                      typeShow={inputItem.typeShow}
+                      valueShow={formData[inputItem.title]}
+                      valueSet={(value: any) => handleInputChange(inputItem.title, value)}
+                      rules={(value: any) => value?.length >= 3}
+                      checkIsValid={checkIsValid}
+                      invalidFeedback={inputItem.invalidFeedback}
+                      listArray={partnerSearch?.data.map((member: any) => ({
+                        id: member.id,
+                        textShow: member?.firstname + " " + member?.lastname
+                      }))}
+                    />
+                  )}
+                </Col>
+              ))}
             </Row>
-            {/* <div className="text-center mb-3">
-              <div>สิทธิประโยชน์</div>
-              <Button
-                bsPrefix="icon"
-                className={`ms-2 btn icon ${commission ? 'active' : ''}`}
-                onClick={() => setCommission(!commission)}
-              >
-                ค่าคอม
-              </Button>
-              <Button
-                bsPrefix="icon" className={`ms-2 btn icon ${overdue ? 'active' : ''}`}
-                onClick={() => setOverdue(!overdue)}
-              >
-                ค้างบวก
-              </Button>
-              <Button
-                bsPrefix="icon" className={`ms-2 btn icon ${adjustPercentage ? 'active' : ''}`}
-                onClick={() => setAdjustPercentage(!adjustPercentage)}
-              >
-                ปรับสู้ฟรี
-              </Button>
-              <Button
-                bsPrefix="icon" className={`ms-2 btn icon ${pay ? 'active' : ''}`}
-                onClick={() => setPay(!pay)}
-              >
-                จ่าย
-              </Button>
-              <Button
-                bsPrefix="icon" className={`ms-2 btn icon ${customerCommission ? 'active' : ''}`}
-                onClick={() => setCustomerCommission(!customerCommission)}
-              >
-                คืนลูกค้า
-              </Button>
-            </div> */}
-            {/* <Row>
-              <Col>
-                <InputWithSelect labelShow={"ยืนยัน Partner"} textShow={searchTerm} textSearch={setSearchTerm} setID={setMemberId} arrayData={membersData?.data} />
-              </Col>
-            </Row> */}
           </Card.Body>
-          {/* <Card.Footer className="text-end">
-            <Button variant="success mx-2" onClick={handleSubmit}>
+          <Card.Footer className="text-end">
+            <Button variant="primary" onClick={handleSubmit}>
               ยืนยัน
             </Button>
-            <Button variant="primary mx-2" onClick={reloadPage}>
+            {/* <Button variant="primary mx-2" onClick={reloadPage}>
               ล้าง
             </Button>
             <Link href="/partner" className="btn btn-danger mx-2">
               ย้อนกลับ
-            </Link>
-          </Card.Footer> */}
+            </Link> */}
+          </Card.Footer>
         </Card>
       </div>
     </LayOut >

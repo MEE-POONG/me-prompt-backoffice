@@ -1,8 +1,8 @@
-import BasicInput from "@/components/Input/Basic";
 import React, { useState, useEffect } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 
 import { userAGForm } from "@/data/partner";
+import BasicInput from "@/components/Input/Basic";
 import BasicDropdownInput from "@/components/Input/BasicDropdown";
 import BasicSearchInput from "@/components/Input/BasicSearch";
 import useAxios from "axios-hooks";
@@ -38,7 +38,7 @@ const FormPage: React.FC = () => {
     if (formData["recommender"] && formData["recommender"].length >= 3) {
       refetchSearch();
     }
-    console.log(memberSearch);
+    console.log("memberSearch : ", memberSearch);
   }, [formData["originAG"], refetchSearch]);
 
 
@@ -59,6 +59,7 @@ const FormPage: React.FC = () => {
         <Card.Body>
           <Form onSubmit={handleSubmit}>
             <Row>
+              
               {userAGForm.map((inputItem, index) => (
                 <Col md={4} lg={3} key={index}>
                   {inputItem.typeShow === "text" && (
