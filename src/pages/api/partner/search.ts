@@ -20,6 +20,7 @@ interface RequestQuery {
     page?: string;
     pageSize?: string;
     searchTerm?: string;
+    position?: string;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
@@ -32,22 +33,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 const page: number = parseInt(query.page || '1', 10);
                 const pageSize: number = parseInt(query.pageSize || '10', 10);
                 let searchTerm: string = decodeURIComponent(query.searchTerm || '');
+                let position: string = decodeURIComponent(query.position || '');
         
-                const searchName: Prisma.PartnerWhereInput = {
-                    userAG: {
+                const searchCriteria: Prisma.PartnerWhereInput = {};
+                
+                if (searchTerm) {
+                    searchCriteria.userAG = {
                         contains: searchTerm,
                         mode: 'insensitive'
-                    }
-                };
+                    };
+                }
+        
+                if (position) {
+                    searchCriteria.position = {
+                        contains: position,
+                        mode: 'insensitive'
+                    };
+                }
         
                 const partners = await prisma.partner.findMany({
-                    where: searchName,
+                    where: searchCriteria,
                     skip: (page - 1) * pageSize,
                     take: pageSize,
+                    orderBy: {
+                        userAG: 'asc'  // Order by userAG in ascending order (A-Z)
+                    }
                 });
         
                 const totalPartnersCount: number = await prisma.partner.count({
-                    where: searchName,
+                    where: searchCriteria,
                 });
         
                 const totalPages: number = Math.ceil(totalPartnersCount / pageSize);

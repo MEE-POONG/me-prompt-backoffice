@@ -14,7 +14,6 @@ import BasicDropdownInput from "@/components/Input/BasicDropdown";
 interface Params {
   page: number;
   pageSize: number;
-  searchTerm: string;
   totalPages: number;
 }
 
@@ -30,21 +29,29 @@ const UserAGAdd: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
-    searchTerm: "",
     totalPages: 1,
   });
-  const [{ data: partnerSearch, loading, error }, refetchSearch] = useAxios({
-    url: `/api/partner?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${formData["originAG"]}`,
+  const [searchPosition, setSearchPosition] = useState("");
+  const [{ data: partnerSearch, loading, error }, partnerRefetchSearch] = useAxios({
+    url: `/api/partner/search?page=${params.page}&pageSize=${params.pageSize}&position=${searchPosition}&searchTerm=${formData["originAG"]}`,
     method: "GET",
   });
-  
+
   useEffect(() => {
     if (formData["originAG"] && formData["originAG"].length >= 3) {
-        refetchSearch();
+      partnerRefetchSearch();
     }
-}, [formData["originAG"]]);
 
 
+  }, [formData["originAG"]]);
+
+  useEffect(() => {
+    if (formData["position"] === "master") {
+      setSearchPosition("senior");
+    } else if (formData["position"] === "agent") {
+      setSearchPosition("master");
+    }
+  }, [formData["position"]]);
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev: Record<string, string>) => ({ ...prev, [field]: value }));
   };
@@ -77,7 +84,7 @@ const UserAGAdd: React.FC = () => {
           </Card.Header>
           <Card.Body>
             <Row>
-         
+
               {userAGForm.map((inputItem, index) => (
                 <Col md={4} lg={3} key={index}>
                   {inputItem.typeShow === "text" && (
@@ -119,9 +126,9 @@ const UserAGAdd: React.FC = () => {
                       rules={(value: any) => value?.length >= 3}
                       checkIsValid={checkIsValid}
                       invalidFeedback={inputItem.invalidFeedback}
-                      listArray={partnerSearch?.data.map((member: any) => ({
-                        id: member.id,
-                        textShow: member?.firstname + " " + member?.lastname
+                      listArray={partnerSearch?.data.map((partner: any) => ({
+                        id: partner.id,
+                        textShow: partner.userAG
                       }))}
                     />
                   )}

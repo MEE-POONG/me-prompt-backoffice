@@ -1,5 +1,5 @@
 export const userAGForm = [
-    { title: "positon", labelShow: "เลือกตำแหน่ง", placeholderShow: "กรุณาเลือก", typeShow: "dropdown", rules: 1, invalidFeedback: "ต้องเลือกข้อมูล", list: [{ text: "agent" }, { text: "master" }, { text: "senior" },] },
+    { title: "position", labelShow: "เลือกตำแหน่ง", placeholderShow: "กรุณาเลือก", typeShow: "dropdown", rules: 1, invalidFeedback: "ต้องเลือกข้อมูล", list: [{ text: "agent" }, { text: "master" }, { text: "senior" },] },
     { title: "originAG", labelShow: "OriginAG / ยูสต้นสาย", placeholderShow: "", typeShow: "search", rules: 2, invalidFeedback: "ระบบยูสต้นสาย" ,arraySearch:"partner"},
 
     // { title: "userAG", labelShow: "UserAG / ยูสเซอร์AG", placeholderShow: "Enter name", typeShow: "text", rules: 2, invalidFeedback: "กรอกข้อมูลอ้างอิงจากยูส" },

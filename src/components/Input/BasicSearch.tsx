@@ -66,8 +66,6 @@ const BasicSearchInput: React.FC<BasicSearchInputProps> = ({
             <Dropdown.Menu show={isDropdownVisible} className='w-100'>
                 <Dropdown.Header>เลือกรายการ</Dropdown.Header>
                 {listArray?.map((item, index) => {
-                    console.log(item);
-                    
                     return (
                         <Dropdown.Item
                             key={index}
