@@ -1,9 +1,9 @@
 export const userAGForm = [
     { title: "position", labelShow: "เลือกตำแหน่ง", placeholderShow: "กรุณาเลือก", typeShow: "dropdown", rules: 1, invalidFeedback: "ต้องเลือกข้อมูล", list: [{ text: "agent" }, { text: "master" }, { text: "senior" },] },
-    { title: "originAG", labelShow: "OriginAG / ยูสต้นสาย", placeholderShow: "", typeShow: "search", rules: 2, invalidFeedback: "ระบบยูสต้นสาย", arraySearch: "partner" },
+    { title: "originAG", labelShow: "OriginAG / ยูสต้นสาย", placeholderShow: "เลือกยูสเต้นสาย", typeShow: "search", rules: 2, invalidFeedback: "ระบบยูสต้นสาย", arraySearch: "partner" },
     { title: "userAG", labelShow: "UserAG / ยูสเซอร์AG", placeholderShow: "ระบุยูสใหม่", typeShow: "text", rules: 2, invalidFeedback: "กรอก userAG ให้ถูกต้อง" },
+    { title: "percen", labelShow: "เลือกเปอร์เซ็น", placeholderShow: "เลือกเปอร์เซ็นจ่าย", typeShow: "select", rules: 2, invalidFeedback: "กรอกข้อมูลอ้างอิงจากยูส", min: 0.0, max: 0.50 },
     // { title: "เลือกตำแหน่ง", labelShow: "UserAG / ยูสเซอร์AG", placeholderShow: "", typeShow: "dropdown", rules: 2, invalidFeedback: "กรอกข้อมูลอ้างอิงจากยูส", list: [{ text: "agent" }, { text: "master" }, { text: "senior" },] },
-    // { title: "percen", labelShow: "เลือกเปอร์เซ็น", placeholderShow: "0.00 ถึง 0.40", typeShow: "select", rules: 2, invalidFeedback: "กรอกข้อมูลอ้างอิงจากยูส" },
     // { title: "recommender", labelShow: "Recommender / ผู้แนะนำ", placeholderShow: "เลือกยูสที่แนะนำ", typeShow: "search", rules: 2, invalidFeedback: "กรอกข้อมูล UserAG ผู้แนะนำ" },
 ];
 export const memberForm = [

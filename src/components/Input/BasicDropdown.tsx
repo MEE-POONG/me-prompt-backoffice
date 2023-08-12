@@ -37,7 +37,7 @@ const BasicDropdownInput: React.FC<BasicDropdownInputProps> = ({
                 <Dropdown.Toggle variant="success" id="dropdown-basic" className='w-100'>
                     {selectedValue || placeholderShow}
                 </Dropdown.Toggle>
-                <Dropdown.Menu className='w-100'>
+                <Dropdown.Menu className='w-100 text-center'>
                     {list.map((item, index) => (
                         <Dropdown.Item key={index} onClick={() => handleDropdownChange(item.text)}>
                             {item.text}

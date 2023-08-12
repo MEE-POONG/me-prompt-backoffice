@@ -10,6 +10,7 @@ import BasicSearchInput from "@/components/Input/BasicSearch";
 import { userAGForm } from "@/data/partner";
 import BasicInput from "@/components/Input/Basic";
 import BasicDropdownInput from "@/components/Input/BasicDropdown";
+import BasicSelectInput from "@/components/Input/BasicSelect";
 
 interface Params {
   page: number;
@@ -35,10 +36,12 @@ const UserAGAdd: React.FC = () => {
   const [{ data: partnerSearch, loading, error }, partnerRefetchSearch] = useAxios({
     url: `/api/partner/search?page=${params.page}&pageSize=${params.pageSize}&position=${searchPosition}&searchTerm=${formData["originAG"]}`,
     method: "GET",
-  });
+  }, { autoCancel: false });
 
   useEffect(() => {
-    if (formData["position"] === "master") {
+    if (formData["position"] === "senior") {
+      setSearchPosition("boss");
+    } else if (formData["position"] === "master") {
       setSearchPosition("senior");
     } else if (formData["position"] === "agent") {
       setSearchPosition("master");
@@ -64,7 +67,38 @@ const UserAGAdd: React.FC = () => {
         return (value: any) => value?.length >= 3;
     }
   }
+  const getListArray = (inputTitle: string, arrayLoop: any[]) => {
+    switch (inputTitle) {
+      case "originAG":
+        return arrayLoop?.map((partner: any) => ({
+          id: partner.id,
+          textShow: partner.userAG
+        }));
 
+      default:
+        return []; // default return value, modify as needed
+    }
+  }
+  const getListSelect = (inputTitle: string) => {
+    switch (inputTitle) {
+      case "percen":
+        const inputItem = userAGForm.find(item => item.title === "percen");
+        const minValue = inputItem?.min || 0.0;
+        const maxValue = inputItem?.max || 0.50;
+        const incrementValue = 0.05;
+        let options = [];
+
+        for (let i = minValue; i <= maxValue; i += incrementValue) {
+          options.push({
+            id: i.toString(),   // convert number to string
+            textShow: `${Math.round(i * 100)}%`
+          });
+        }
+        return options;
+      default:
+        return [];
+    }
+  }
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setCheckIsValid(true);
@@ -126,10 +160,21 @@ const UserAGAdd: React.FC = () => {
                       rules={getValidationRule(inputItem.title, formData)}
                       checkIsValid={checkIsValid}
                       invalidFeedback={inputItem.invalidFeedback}
-                      listArray={partnerSearch?.data.map((partner: any) => ({
-                        id: partner.id,
-                        textShow: partner.userAG
-                      }))}
+                      listArray={getListArray(inputItem.title, partnerSearch?.data)}
+                    />
+                  )}
+                  {inputItem.typeShow === "select" && (
+                    <BasicSelectInput
+                      title={inputItem.title}
+                      labelShow={inputItem.labelShow}
+                      placeholderShow={inputItem.placeholderShow}
+                      typeShow={inputItem.typeShow}
+                      valueShow={formData[inputItem.title]}
+                      valueSet={(value: any) => handleInputChange(inputItem.title, value)}
+                      rules={getValidationRule(inputItem.title, formData)}
+                      checkIsValid={checkIsValid}
+                      invalidFeedback={inputItem.invalidFeedback}
+                      listArray={getListSelect(inputItem.title)}
                     />
                   )}
                 </Col>
