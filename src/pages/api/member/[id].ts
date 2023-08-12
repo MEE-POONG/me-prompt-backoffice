@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
                 res.status(200).json({ success: true, data: member });
             } catch (error) {
-                console.error(error);
+                
                 res.status(500).json({ success: false, message: "An error occurred while fetching the member" });
             }
             break;
@@ -52,7 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
                 res.status(200).json({ success: false, data: member });
             } catch (error) {
-                console.error(error);
+                
                 res.status(500).json({ success: false, message: 'An error occurred while updating the member' });
             }
             break;

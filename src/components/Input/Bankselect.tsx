@@ -1,7 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
 import { Col, FloatingLabel, Form } from "react-bootstrap";
-import { bankMap } from '@/test';
+import { bankMap } from '@/data/test';
+
 
 // Your interfaces and options here...
 interface BankSelectProps {

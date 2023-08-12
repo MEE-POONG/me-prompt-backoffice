@@ -2,7 +2,13 @@ export const userAGForm = [
     { title: "position", labelShow: "เลือกตำแหน่ง", placeholderShow: "กรุณาเลือก", typeShow: "dropdown", rules: 1, invalidFeedback: "ต้องเลือกข้อมูล", list: [{ text: "agent" }, { text: "master" }, { text: "senior" },] },
     { title: "originAG", labelShow: "OriginAG / ยูสต้นสาย", placeholderShow: "เลือกยูสเต้นสาย", typeShow: "search", rules: 2, invalidFeedback: "ระบบยูสต้นสาย", arraySearch: "partner" },
     { title: "userAG", labelShow: "UserAG / ยูสเซอร์AG", placeholderShow: "ระบุยูสใหม่", typeShow: "text", rules: 2, invalidFeedback: "กรอก userAG ให้ถูกต้อง" },
-    { title: "percen", labelShow: "เลือกเปอร์เซ็น", placeholderShow: "เลือกเปอร์เซ็นจ่าย", typeShow: "select", rules: 2, invalidFeedback: "กรอกข้อมูลอ้างอิงจากยูส", min: 0.0, max: 0.50 },
+    { title: "percen", labelShow: "เลือกเปอร์เซ็น", placeholderShow: "เลือกเปอร์เซ็นจ่าย", typeShow: "select", rules: 2, invalidFeedback: "กำหนดเปอร์เซ็น", min: 0.0, max: 0.50 },
+    { title: "commission", labelShow: "รับค่าคอม", placeholderShow: "", typeShow: "onOff", rules: 2, invalidFeedback: "" },
+    { title: "overdue", labelShow: "รับค่าคอม", placeholderShow: "", typeShow: "onOff", rules: 2, invalidFeedback: "" },
+    { title: "adjustPercentage", labelShow: "รับค่าคอม", placeholderShow: "", typeShow: "onOff", rules: 2, invalidFeedback: "" },
+    { title: "pay", labelShow: "รับค่าคอม", placeholderShow: "", typeShow: "onOff", rules: 2, invalidFeedback: "" },
+    { title: "customerCommission", labelShow: "รับค่าคอม", placeholderShow: "", typeShow: "onOff", rules: 2, invalidFeedback: "" },
+
     // { title: "เลือกตำแหน่ง", labelShow: "UserAG / ยูสเซอร์AG", placeholderShow: "", typeShow: "dropdown", rules: 2, invalidFeedback: "กรอกข้อมูลอ้างอิงจากยูส", list: [{ text: "agent" }, { text: "master" }, { text: "senior" },] },
     // { title: "recommender", labelShow: "Recommender / ผู้แนะนำ", placeholderShow: "เลือกยูสที่แนะนำ", typeShow: "search", rules: 2, invalidFeedback: "กรอกข้อมูล UserAG ผู้แนะนำ" },
 ];

@@ -63,6 +63,8 @@ const UserAGAdd: React.FC = () => {
     switch (inputTitle) {
       case "userAG":
         return (value: any) => value?.length > formData["originAG"].length;
+      case "percen":
+        return (value: any) => value?.length > 1;
       default:
         return (value: any) => value?.length >= 3;
     }
@@ -91,7 +93,7 @@ const UserAGAdd: React.FC = () => {
         for (let i = minValue; i <= maxValue; i += incrementValue) {
           options.push({
             id: i.toString(),   // convert number to string
-            textShow: `${Math.round(i * 100)}%`
+            textShow: Math.round(i * 100).toString(),
           });
         }
         return options;
@@ -101,6 +103,8 @@ const UserAGAdd: React.FC = () => {
   }
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    console.log(formData);
+
     setCheckIsValid(true);
   };
 

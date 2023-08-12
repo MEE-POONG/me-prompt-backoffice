@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Dropdown, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
+
 interface ListItem {
     id: string;
     textShow: string;
 }
+
 interface BasicSelectInputProps {
     title: string;
     labelShow: string;
@@ -16,6 +18,7 @@ interface BasicSelectInputProps {
     invalidFeedback: string;
     listArray?: ListItem[];
 }
+
 const BasicSelectInput: React.FC<BasicSelectInputProps> = ({
     title,
     labelShow,
@@ -31,11 +34,6 @@ const BasicSelectInput: React.FC<BasicSelectInputProps> = ({
     const [isValid, setIsValid] = useState<boolean | null>(null);
     const [showValidation, setShowValidation] = useState(false);
 
-    // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     const inputValue = event.target.value;
-    //     valueSet(inputValue);
-    // };
-
     useEffect(() => {
         if (checkIsValid && rules) {
             setIsValid(rules(valueShow));
@@ -44,22 +42,24 @@ const BasicSelectInput: React.FC<BasicSelectInputProps> = ({
     }, [checkIsValid, valueShow, rules]);
 
     return (
-        <Form.Group className="mb-3 position-relative" controlId={title} >
+        <Form.Group className="mb-3 position-relative" controlId={title}>
             <Form.Label>{labelShow}</Form.Label>
-            <Form.Select aria-label="Default select example" className='text-center'>
-                <option disabled>เลือกรายการ</option>
-                {listArray?.map((item, index) => {
-                    return (
-                        <option
-                            key={index}
-                            onClick={() => {
-                                valueSet(item?.textShow);
-                            }}
-                        >
-                            {item?.textShow}
-                        </option>
-                    );
-                })}
+            <Form.Select 
+                aria-label="Default select example" 
+                className='text-center'
+                isValid={showValidation && isValid === true}
+                isInvalid={showValidation && isValid === false}
+                value={valueShow} // Bind the value here
+                onChange={(event: React.ChangeEvent<HTMLSelectElement>) => { // Use onChange here
+                    valueSet(event.target.value);
+                }}
+            >
+                <option disabled>{placeholderShow}</option>
+                {listArray?.map((item, index) => (
+                    <option key={index} value={item.textShow}>
+                        {item.textShow+" %"}
+                    </option>
+                ))}
             </Form.Select>
             {showValidation && isValid === false && <Form.Control.Feedback type="invalid">
                 {invalidFeedback}
@@ -67,4 +67,5 @@ const BasicSelectInput: React.FC<BasicSelectInputProps> = ({
         </Form.Group>
     );
 };
+
 export default BasicSelectInput;

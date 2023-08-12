@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 });
                 res.status(200).json(partner);
             } catch (error) {
-                console.error(error);
+                
                 res.status(500).json({ error: "An error occurred while fetching the partner" });
             }
             break;
@@ -38,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 });
                 res.status(200).json(updatedPartner);
             } catch (error) {
-                console.error(error);
+                
                 res.status(500).json({ error: "An error occurred while updating the partner" });
             }
             break;
@@ -49,7 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 });
                 res.status(200).json(deletedPartner);
             } catch (error) {
-                console.error(error);
+                
                 res.status(500).json({ error: "An error occurred while deleting the partner" });
             }
             break;
