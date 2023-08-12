@@ -13,7 +13,6 @@ const PartnerPage: React.FC = () => {
 
   useEffect(() => {
     // setFilteredPartnersData(data?.data ?? []);
-    console.log(settingsData?.data?.username);
     setUsername(settingsData?.data?.username)
 
   }, [settingsData]);

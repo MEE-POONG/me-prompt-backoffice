@@ -9,7 +9,6 @@ interface SearchDataProps {
     arrayData: any;
 }
 const InputWithSelect: React.FC<SearchDataProps> = ({ labelShow, textShow, textSearch, setID, arrayData }) => {
-    console.log("arrayData : ", arrayData);
 
     const [isDropdownVisible, setDropdownVisible] = useState(false);
 

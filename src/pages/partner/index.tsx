@@ -36,8 +36,6 @@ const MemberPage: React.FC = () => {
 
   useEffect(() => {
     setFilteredMembersData(membersData?.data ?? []);
-    console.log(membersData);
-
   }, [membersData]);
 
   const deleteMember = (id: string): Promise<any> => {

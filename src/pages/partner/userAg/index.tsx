@@ -116,7 +116,6 @@ const PartnerPage: React.FC = () => {
               </thead>
               <tbody className="text-center">
                 {filteredPartnersData.map((partner: Partner, index: number) => {
-                  console.log(partner);
                   return (
                     <tr key={partner?.id}>
                       <td>{index + 1}</td>

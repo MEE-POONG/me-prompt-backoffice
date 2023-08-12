@@ -38,7 +38,6 @@ const FormPage: React.FC = () => {
     if (formData["recommender"] && formData["recommender"].length >= 3) {
       refetchSearch();
     }
-    console.log("memberSearch : ", memberSearch);
   }, [formData["originAG"], refetchSearch]);
 
 
@@ -50,7 +49,6 @@ const FormPage: React.FC = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setCheckIsValid(true);
-    console.log('FormData:', formData);
   };
 
   return (

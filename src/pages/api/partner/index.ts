@@ -42,7 +42,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
                 res.status(200).json({ success: true, data: partners, pagination: { total: totalPages, page: page, pageSize: pageSize } });
             } catch (error) {
-                console.log(error);
 
                 res.status(500).json({ success: false, message: "An error occurred while fetching the partners" });
             }
