@@ -11,6 +11,7 @@ import { userAGForm } from "@/data/partner";
 import BasicInput from "@/components/Input/Basic";
 import BasicDropdownInput from "@/components/Input/BasicDropdown";
 import BasicSelectInput from "@/components/Input/BasicSelect";
+import BasicToggleButton from "@/components/Button/BasicToggle";
 
 interface Params {
   page: number;
@@ -20,11 +21,11 @@ interface Params {
 
 const UserAGAdd: React.FC = () => {
   const initialFormData = userAGForm.reduce((acc: any, curr: any) => {
-    acc[curr.title] = '';
+    acc[curr.title] = curr.typeShow === "onOff" ? false : '';
     return acc;
-  }, {} as Record<string, string>);
+  }, {} as Record<string, any>);
 
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState<any>(initialFormData);
   const [checkIsValid, setCheckIsValid] = useState<boolean>(false);
 
   const [params, setParams] = useState<Params>({
@@ -56,9 +57,12 @@ const UserAGAdd: React.FC = () => {
   }, [formData["originAG"]]);
 
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData((prev: Record<string, string>) => ({ ...prev, [field]: value }));
-  };
+  const handleInputChange = (title: string, value: any) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      [title]: value
+    }));
+  }
   const getValidationRule = (inputTitle: string, formData: Record<string, string>) => {
     switch (inputTitle) {
       case "userAG":
@@ -178,6 +182,18 @@ const UserAGAdd: React.FC = () => {
                       checkIsValid={checkIsValid}
                       invalidFeedback={inputItem.invalidFeedback}
                       listArray={getListSelect(inputItem.title)}
+                    />
+                  )}
+                  {inputItem.typeShow === "onOff" && (
+                    <BasicToggleButton
+                      title={inputItem.title}
+                      labelShow={inputItem.labelShow}
+                      typeShow={inputItem.typeShow}
+                      valueShow={!!formData[inputItem.title]}  // Convert to boolean, but ideally, formData should already store boolean values for these fields.
+                      valueSet={(value: boolean) => handleInputChange(inputItem.title, value ? "true" : "false")}  // Convert boolean back to string if necessary.
+                      rules={getValidationRule(inputItem.title, formData)}
+                      checkIsValid={checkIsValid}
+                      invalidFeedback={inputItem.invalidFeedback}
                     />
                   )}
                 </Col>

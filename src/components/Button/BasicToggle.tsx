@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 
-interface BasicInputProps {
+interface BasicToggleButtonProps {
     title: string;
     labelShow: string;
-    placeholderShow: string;
     typeShow: string;
-    valueShow: string;
-    valueSet: (value: string) => void;
+    valueShow: boolean;
+    valueSet: (value: boolean) => void;
     checkIsValid: boolean;
     rules?: (value: string) => boolean;
     invalidFeedback: string;
 }
-const BasicInput: React.FC<BasicInputProps> = ({
+const BasicToggleButton: React.FC<BasicToggleButtonProps> = ({
     title,
     labelShow,
-    placeholderShow,
     typeShow,
     valueShow,
     valueSet,
@@ -26,14 +24,14 @@ const BasicInput: React.FC<BasicInputProps> = ({
     const [isValid, setIsValid] = useState<boolean | null>(null);
     const [showValidation, setShowValidation] = useState(false);
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const inputValue = event.target.value;
-        valueSet(inputValue);
-    };
+    // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     const inputValue = event.target.value;
+    //     valueSet(inputValue);
+    // };
 
     useEffect(() => {
         if (checkIsValid && rules) {
-            setIsValid(rules(valueShow));
+            // setIsValid(rules(valueShow));
             setShowValidation(true);
         }
     }, [checkIsValid, valueShow, rules]);
@@ -42,15 +40,13 @@ const BasicInput: React.FC<BasicInputProps> = ({
         <>
             <Form.Group className="mb-3" controlId={title}>
                 <Form.Label>{labelShow}</Form.Label>
-                <Form.Control
-                    type={typeShow}
-                    placeholder={placeholderShow}
-                    name={title}
-                    value={valueShow}
-                    onChange={handleInputChange}
-                    isValid={showValidation && isValid === true}
-                    isInvalid={showValidation && isValid === false}
-                />
+                <Button
+                    bsPrefix="icon"
+                    className={`w-100 ms-2 btn icon ${valueShow ? 'active' : ''}`}
+                    onClick={() => valueSet(!valueShow)}
+                >
+                    ค่าคอม
+                </Button>
                 {showValidation && isValid === false && <Form.Control.Feedback type="invalid">
                     {invalidFeedback}
                 </Form.Control.Feedback>}
@@ -58,4 +54,4 @@ const BasicInput: React.FC<BasicInputProps> = ({
         </>
     );
 };
-export default BasicInput;
+export default BasicToggleButton;
