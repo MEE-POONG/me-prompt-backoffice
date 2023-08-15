@@ -4,6 +4,7 @@ import { Button, Form } from "react-bootstrap";
 interface BasicToggleButtonProps {
     title: string;
     labelShow: string;
+    placeholderShow: string;
     typeShow: string;
     valueShow: boolean;
     valueSet: (value: boolean) => void;
@@ -14,7 +15,7 @@ interface BasicToggleButtonProps {
 const BasicToggleButton: React.FC<BasicToggleButtonProps> = ({
     title,
     labelShow,
-    typeShow,
+    placeholderShow,
     valueShow,
     valueSet,
     rules,
@@ -24,14 +25,8 @@ const BasicToggleButton: React.FC<BasicToggleButtonProps> = ({
     const [isValid, setIsValid] = useState<boolean | null>(null);
     const [showValidation, setShowValidation] = useState(false);
 
-    // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     const inputValue = event.target.value;
-    //     valueSet(inputValue);
-    // };
-
     useEffect(() => {
         if (checkIsValid && rules) {
-            // setIsValid(rules(valueShow));
             setShowValidation(true);
         }
     }, [checkIsValid, valueShow, rules]);
@@ -45,7 +40,7 @@ const BasicToggleButton: React.FC<BasicToggleButtonProps> = ({
                     className={`w-100 ms-2 btn icon ${valueShow ? 'active' : ''}`}
                     onClick={() => valueSet(!valueShow)}
                 >
-                    ค่าคอม
+                    {valueShow ? labelShow : placeholderShow}
                 </Button>
                 {showValidation && isValid === false && <Form.Control.Feedback type="invalid">
                     {invalidFeedback}

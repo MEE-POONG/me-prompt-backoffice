@@ -67,8 +67,16 @@ const UserAGAdd: React.FC = () => {
     switch (inputTitle) {
       case "userAG":
         return (value: any) => value?.length > formData["originAG"].length;
+      case "originAG":
+        if (formData["position"] === "senior") {
+          return (value: any) => value === '';
+        } else {
+          return (value: any) => value?.length >= 5;
+        }
       case "percen":
         return (value: any) => value?.length > 1;
+      case "recommender":
+        return (value: any) => value?.length >= 0;
       default:
         return (value: any) => value?.length >= 3;
     }
@@ -188,9 +196,10 @@ const UserAGAdd: React.FC = () => {
                     <BasicToggleButton
                       title={inputItem.title}
                       labelShow={inputItem.labelShow}
+                      placeholderShow={inputItem.placeholderShow}
                       typeShow={inputItem.typeShow}
-                      valueShow={!!formData[inputItem.title]}  // Convert to boolean, but ideally, formData should already store boolean values for these fields.
-                      valueSet={(value: boolean) => handleInputChange(inputItem.title, value ? "true" : "false")}  // Convert boolean back to string if necessary.
+                      valueShow={formData[inputItem.title]}
+                      valueSet={() => handleInputChange(inputItem.title, !formData[inputItem.title])}  // Convert boolean back to string if necessary.
                       rules={getValidationRule(inputItem.title, formData)}
                       checkIsValid={checkIsValid}
                       invalidFeedback={inputItem.invalidFeedback}

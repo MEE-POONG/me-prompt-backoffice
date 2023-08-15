@@ -108,6 +108,7 @@ model Partner {
   adjustPercentage   Boolean?  @default(false)
   pay                Boolean?  @default(false)
   customerCommission Boolean?  @default(false)
+  actuallypaid       Boolean?  @default(false)
   recommender        String?
   createdAt          DateTime? @default(now())
   updatedAt          DateTime? @updatedAt
