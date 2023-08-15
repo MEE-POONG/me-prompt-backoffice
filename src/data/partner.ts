@@ -10,7 +10,6 @@ export const userAGForm = [
     { title: "customerCommission", labelShow: "ให้ค่าคอมลูกค้า", placeholderShow: "ไม่ให้ค่าคอมลูกค้า", typeShow: "onOff", rules: 2, invalidFeedback: "", rowForm: 2 },
     { title: "actuallypaid", labelShow: "จ่ายยอดเต็ม", placeholderShow: "จ่ายยอดจริง", typeShow: "onOff", rules: 2, invalidFeedback: "", rowForm: 2 },
     { title: "recommender", labelShow: "Recommender / ผู้แนะนำ", placeholderShow: "เลือกยูสที่แนะนำ", typeShow: "text", rules: 0, invalidFeedback: "ระบุผู้แนะนำที่จะได้รับยอดแนะนำ", rowForm: 3 },
-    
 ];
 export const memberForm = [
     { id: "1", value: 'กสิกรไทย', image: 'https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/446b4b9c-af1e-47aa-e475-784f42d5a300/100' },

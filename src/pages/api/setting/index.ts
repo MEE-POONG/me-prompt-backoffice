@@ -19,7 +19,7 @@ type Pagination = {
 interface RequestQuery {
     page?: string;
     pageSize?: string;
-    searchTerm?: string;
+    searchTeam?: string;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {

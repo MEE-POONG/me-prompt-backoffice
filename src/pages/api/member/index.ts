@@ -19,7 +19,7 @@ type Pagination = {
 interface RequestQuery {
     page?: string;
     pageSize?: string;
-    searchTerm?: string;
+    searchTeam?: string;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
@@ -31,20 +31,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 const query: RequestQuery = req.query as unknown as RequestQuery;
                 const page: number = parseInt(query.page || '1', 10);
                 const pageSize: number = parseInt(query.pageSize || '10', 10);
-                let searchTerm: string = decodeURIComponent(query.searchTerm || '');
+                let searchTeam: string = decodeURIComponent(query.searchTeam || '');
 
-                const searchTerms = searchTerm.split(' ');
+                const searchTeams = searchTeam.split(' ');
                 const searchName: Prisma.MemberWhereInput = {
-                    OR: searchTerms.length > 1 ? [
+                    OR: searchTeams.length > 1 ? [
                         {
                             AND: [
-                                { firstname: { contains: searchTerms[0], mode: 'insensitive' } },
-                                { lastname: { contains: searchTerms[1], mode: 'insensitive' } },
+                                { firstname: { contains: searchTeams[0], mode: 'insensitive' } },
+                                { lastname: { contains: searchTeams[1], mode: 'insensitive' } },
                             ]
                         }
                     ] : [
-                        { firstname: { contains: searchTerms[0], mode: 'insensitive' } },
-                        { lastname: { contains: searchTerms[0], mode: 'insensitive' } },
+                        { firstname: { contains: searchTeams[0], mode: 'insensitive' } },
+                        { lastname: { contains: searchTeams[0], mode: 'insensitive' } },
                     ]
                 };
                 const members = await prisma.member.findMany({

@@ -11,7 +11,7 @@ import { Member } from "@prisma/client";
 interface Params {
   page: number;
   pageSize: number;
-  searchTerm: string;
+  searchTeam: string;
   totalPages: number;
 }
 const FormPage: React.FC = () => {
@@ -26,11 +26,11 @@ const FormPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
-    searchTerm: "",
+    searchTeam: "",
     totalPages: 1,
   });
   const [{ data: memberSearch, loading, error }, refetchSearch] = useAxios({
-    url: `/api/member?page=${params.page}&pageSize=${params.pageSize}&searchTerm=${formData["originAG"]}`,
+    url: `/api/member?page=${params.page}&pageSize=${params.pageSize}&searchTeam=${formData["originAG"]}`,
     method: "GET",
   });
 

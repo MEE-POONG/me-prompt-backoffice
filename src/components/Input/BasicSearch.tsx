@@ -15,6 +15,7 @@ interface BasicSearchInputProps {
     rules?: (value: string) => boolean;
     invalidFeedback: string;
     listArray?: ListItem[];
+    disabled: boolean;
 }
 const BasicSearchInput: React.FC<BasicSearchInputProps> = ({
     title,
@@ -27,6 +28,7 @@ const BasicSearchInput: React.FC<BasicSearchInputProps> = ({
     checkIsValid,
     invalidFeedback,
     listArray,
+    disabled,
 }) => {
     const [isValid, setIsValid] = useState<boolean | null>(null);
     const [showValidation, setShowValidation] = useState(false);
@@ -62,24 +64,27 @@ const BasicSearchInput: React.FC<BasicSearchInputProps> = ({
                 isValid={showValidation && isValid === true}
                 isInvalid={showValidation && isValid === false}
                 autoComplete={"off"}
+                disabled={disabled}
             />
-            <Dropdown.Menu show={isDropdownVisible} className='w-100'>
-                <Dropdown.Header>เลือกรายการ</Dropdown.Header>
-                {listArray?.map((item, index) => {
-                    return (
-                        <Dropdown.Item
-                            key={index}
-                            onClick={() => {
-                                valueSet(item?.textShow);
-                                handleMouseLeave();
-                            }}
-                            eventKey={item.id}
-                        >
-                            {item?.textShow}
-                        </Dropdown.Item>
-                    );
-                })}
-            </Dropdown.Menu>
+            {!disabled ?
+                <Dropdown.Menu show={isDropdownVisible} className='w-100'>
+                    <Dropdown.Header>เลือกรายการ</Dropdown.Header>
+                    {listArray?.map((item, index) => {
+                        return (
+                            <Dropdown.Item
+                                key={index}
+                                onClick={() => {
+                                    valueSet(item?.textShow);
+                                    handleMouseLeave();
+                                }}
+                                eventKey={item.id}
+                            >
+                                {item?.textShow}
+                            </Dropdown.Item>
+                        );
+                    })}
+                </Dropdown.Menu>
+                : null}
             {showValidation && isValid === false && <Form.Control.Feedback type="invalid">
                 {invalidFeedback}
             </Form.Control.Feedback>}

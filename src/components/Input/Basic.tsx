@@ -11,6 +11,7 @@ interface BasicInputProps {
     checkIsValid: boolean;
     rules?: (value: string) => boolean;
     invalidFeedback: string;
+    disabled: boolean;
 }
 const BasicInput: React.FC<BasicInputProps> = ({
     title,
@@ -22,6 +23,7 @@ const BasicInput: React.FC<BasicInputProps> = ({
     rules,
     checkIsValid,
     invalidFeedback,
+    disabled,
 }) => {
     const [isValid, setIsValid] = useState<boolean | null>(null);
     const [showValidation, setShowValidation] = useState(false);
@@ -50,6 +52,7 @@ const BasicInput: React.FC<BasicInputProps> = ({
                     onChange={handleInputChange}
                     isValid={showValidation && isValid === true}
                     isInvalid={showValidation && isValid === false}
+                    disabled={disabled}
                 />
                 {showValidation && isValid === false && <Form.Control.Feedback type="invalid">
                     {invalidFeedback}

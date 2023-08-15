@@ -20,10 +20,12 @@ interface Params {
 }
 
 const UserAGAdd: React.FC = () => {
+  // const { data, error, loading, get, post } = useApi();
   const initialFormData = userAGForm.reduce((acc: any, curr: any) => {
     acc[curr.title] = curr.typeShow === "onOff" ? false : '';
     return acc;
   }, {} as Record<string, any>);
+  const [isFormDisabled, setIsFormDisabled] = useState(false);
 
   const [formData, setFormData] = useState<any>(initialFormData);
   const [checkIsValid, setCheckIsValid] = useState<boolean>(false);
@@ -35,18 +37,24 @@ const UserAGAdd: React.FC = () => {
   });
   const [searchPosition, setSearchPosition] = useState("");
   const [{ data: partnerSearch, loading, error }, partnerRefetchSearch] = useAxios({
-    url: `/api/partner/search?page=${params.page}&pageSize=${params.pageSize}&position=${searchPosition}&searchTerm=${formData["originAG"]}`,
+    url: `/api/partner/search?page=${params.page}&pageSize=${params.pageSize}&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
     method: "GET",
   }, { autoCancel: false });
 
   useEffect(() => {
-    if (formData["position"] === "senior") {
-      setSearchPosition("boss");
-    } else if (formData["position"] === "master") {
-      setSearchPosition("senior");
-    } else if (formData["position"] === "agent") {
-      setSearchPosition("master");
+    if (formData["position"]) {
+      setIsFormDisabled(false);
+      if (formData["position"] === "senior") {
+        setSearchPosition("boss");
+      } else if (formData["position"] === "master") {
+        setSearchPosition("senior");
+      } else if (formData["position"] === "agent") {
+        setSearchPosition("master");
+      }
+    } else {
+      setIsFormDisabled(true);
     }
+
   }, [formData["position"]]);
 
   useEffect(() => {
@@ -63,6 +71,10 @@ const UserAGAdd: React.FC = () => {
       [title]: value
     }));
   }
+  const isInputDisabled = (inputTitle: string) => {
+    if (inputTitle === "position") return false;
+    return isFormDisabled;
+  };
   const getValidationRule = (inputTitle: string, formData: Record<string, string>) => {
     switch (inputTitle) {
       case "userAG":
@@ -74,9 +86,22 @@ const UserAGAdd: React.FC = () => {
           return (value: any) => value?.length >= 5;
         }
       case "percen":
-        return (value: any) => value?.length > 1;
+        return (value: any) => value?.length > 0;
+      case "overdue":
+        return (value: any) => value === true || value === false;
+      case "commission":
+        return (value: any) => value === true || value === false;
+      case "adjustPercentage":
+        return (value: any) => value === true || value === false;
+      case "pay":
+        return (value: any) => value === true || value === false;
+      case "customerCommission":
+        return (value: any) => value === true || value === false;
+      case "actuallypaid":
+        return (value: any) => value === true || value === false;
       case "recommender":
         return (value: any) => value?.length >= 0;
+
       default:
         return (value: any) => value?.length >= 3;
     }
@@ -115,10 +140,38 @@ const UserAGAdd: React.FC = () => {
   }
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log(formData);
-
     setCheckIsValid(true);
+    const validationResult = userAGForm.reduce((acc, curr: any) => {
+      const value = formData[curr.title];
+      const rule = getValidationRule(curr.title, formData);
+
+      if (!rule(value)) {
+        acc.isValid = false;
+        acc.invalidFields[curr.title] = curr.invalidFeedback;
+      }
+
+      return acc;
+    }, { isValid: true, invalidFields: {} as Record<string, string> });
+
+    if (validationResult.isValid) {
+      console.log("good :", formData);
+      // useAxios({
+      //   url: `/api/partner/`,
+      //   method: "post",
+      //   data: formData,
+      // }).then((response : any) => {
+      //   if (response.status === 200) {
+      //     console.log("Post data successfully written to API");
+      //   } else {
+      //     console.log("Error writing post data to API");
+      //   }
+      // });
+    } else {
+      console.log("Fields that failed validation:", validationResult.invalidFields);
+    }
   };
+
+
 
   return (
     <LayOut>
@@ -147,6 +200,8 @@ const UserAGAdd: React.FC = () => {
                       rules={getValidationRule(inputItem.title, formData)}
                       checkIsValid={checkIsValid}
                       invalidFeedback={inputItem.invalidFeedback}
+                      disabled={isInputDisabled(inputItem.title)}
+
                     />
                   )}
 
@@ -176,6 +231,8 @@ const UserAGAdd: React.FC = () => {
                       checkIsValid={checkIsValid}
                       invalidFeedback={inputItem.invalidFeedback}
                       listArray={getListArray(inputItem.title, partnerSearch?.data)}
+                      disabled={isInputDisabled(inputItem.title)}
+
                     />
                   )}
                   {inputItem.typeShow === "select" && (

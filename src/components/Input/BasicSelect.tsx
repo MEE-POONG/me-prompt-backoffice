@@ -44,8 +44,8 @@ const BasicSelectInput: React.FC<BasicSelectInputProps> = ({
     return (
         <Form.Group className="mb-3 position-relative" controlId={title}>
             <Form.Label>{labelShow}</Form.Label>
-            <Form.Select 
-                aria-label="Default select example" 
+            <Form.Select
+                aria-label="Default select example"
                 className='text-center'
                 isValid={showValidation && isValid === true}
                 isInvalid={showValidation && isValid === false}
@@ -54,10 +54,10 @@ const BasicSelectInput: React.FC<BasicSelectInputProps> = ({
                     valueSet(event.target.value);
                 }}
             >
-                <option disabled>{placeholderShow}</option>
+                <option disabled >{placeholderShow}</option>
                 {listArray?.map((item, index) => (
                     <option key={index} value={item.textShow}>
-                        {item.textShow+" %"}
+                        {item.textShow + " %"}
                     </option>
                 ))}
             </Form.Select>

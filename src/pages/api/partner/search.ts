@@ -19,7 +19,7 @@ type Pagination = {
 interface RequestQuery {
     page?: string;
     pageSize?: string;
-    searchTerm?: string;
+    searchTeam?: string;
     position?: string;
 }
 
@@ -32,14 +32,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 const query: RequestQuery = req.query as unknown as RequestQuery;
                 const page: number = parseInt(query.page || '1', 10);
                 const pageSize: number = parseInt(query.pageSize || '10', 10);
-                let searchTerm: string = decodeURIComponent(query.searchTerm || '');
+                let searchTeam: string = decodeURIComponent(query.searchTeam || '');
                 let position: string = decodeURIComponent(query.position || '');
         
                 const searchCriteria: Prisma.PartnerWhereInput = {};
                 
-                if (searchTerm) {
+                if (searchTeam) {
                     searchCriteria.userAG = {
-                        contains: searchTerm,
+                        contains: searchTeam,
                         mode: 'insensitive'
                     };
                 }
