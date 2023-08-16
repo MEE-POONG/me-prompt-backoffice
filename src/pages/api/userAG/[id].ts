@@ -10,22 +10,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     switch (method) {
         case 'GET':
             try {
-                const partner = await prisma.partner.findUnique({
+                const userAG = await prisma.userAG.findUnique({
                     where: { id: String(id) },
                 });
-                res.status(200).json(partner);
+                res.status(200).json(userAG);
             } catch (error) {
                 
-                res.status(500).json({ error: "An error occurred while fetching the partner" });
+                res.status(500).json({ error: "An error occurred while fetching the userAG" });
             }
             break;
         case 'PUT':
-            const { userAG, originAG, percent, commission, overdue, adjustPercentage, pay, customerCommission, recommender } = req.body;
+            const { username, originAG, percent, commission, overdue, adjustPercentage, pay, customerCommission, recommender } = req.body;
             try {
-                const updatedPartner = await prisma.partner.update({
+                const updatedPartner = await prisma.userAG.update({
                     where: { id: String(id) },
                     data: {
-                        userAG,
+                        username,
                         originAG,
                         percent,
                         commission,
@@ -39,18 +39,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 res.status(200).json(updatedPartner);
             } catch (error) {
                 
-                res.status(500).json({ error: "An error occurred while updating the partner" });
+                res.status(500).json({ error: "An error occurred while updating the userAG" });
             }
             break;
         case 'DELETE':
             try {
-                const deletedPartner = await prisma.partner.delete({
+                const deletedPartner = await prisma.userAG.delete({
                     where: { id: String(id) },
                 });
                 res.status(200).json(deletedPartner);
             } catch (error) {
                 
-                res.status(500).json({ error: "An error occurred while deleting the partner" });
+                res.status(500).json({ error: "An error occurred while deleting the userAG" });
             }
             break;
         default:

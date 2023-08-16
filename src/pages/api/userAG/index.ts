@@ -29,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 const page: number = parseInt(query.page || '1', 10);
                 const pageSize: number = parseInt(query.pageSize || '10', 10);
 
-                const partners = await prisma.partner.findMany({
+                const userAGs = await prisma.userAG.findMany({
                     skip: (page - 1) * pageSize,
                     take: pageSize,
                     include: {
@@ -37,21 +37,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     },
                 });
 
-                const totalPartnersCount: number = await prisma.partner.count();
-                const totalPages: number = Math.ceil(totalPartnersCount / pageSize);
+                const totalUserAGsCount: number = await prisma.userAG.count();
+                const totalPages: number = Math.ceil(totalUserAGsCount / pageSize);
 
-                res.status(200).json({ success: true, data: partners, pagination: { total: totalPages, page: page, pageSize: pageSize } });
+                res.status(200).json({ success: true, data: userAGs, pagination: { total: totalPages, page: page, pageSize: pageSize } });
             } catch (error) {
 
-                res.status(500).json({ success: false, message: "An error occurred while fetching the partners" });
+                res.status(500).json({ success: false, message: "An error occurred while fetching the userAGs" });
             }
             break;
         case 'POST':
-            const { userAG, originAG, percent, commission, overdue, adjustPercentage, pay, customerCommission, recommender } = req.body;
+            const { username, originAG, percent, commission, overdue, adjustPercentage, pay, customerCommission, recommender } = req.body;
             try {
-                const newPartner = await prisma.partner.create({
+                const newUserAG = await prisma.userAG.create({
                     data: {
-                        userAG,
+                        username,
                         originAG,
                         percent,
                         commission,
@@ -62,9 +62,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                         recommender
                     },
                 });
-                res.status(201).json({ success: true, data: newPartner });
+                res.status(201).json({ success: true, data: newUserAG });
             } catch (error) {
-                res.status(500).json({ success: true, message: "An error occurred while creating the partner" });
+                res.status(500).json({ success: true, message: "An error occurred while creating the userAG" });
             }
             break;
 

@@ -46,7 +46,7 @@ const PartnerPage: React.FC = () => {
 
   const deletePartner = (id: string): Promise<any> => {
     return executePartnerDelete({
-      url: "/api/partner/" + id,
+      url: "/api/userAG/" + id,
       method: "DELETE",
     }).then(() => {
       setFilteredPartnersData(prevPartners => prevPartners.filter(partner => partner?.id !== id));
