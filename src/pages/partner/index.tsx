@@ -15,18 +15,18 @@ import { bankMap } from "@/data/test";
 interface Params {
   page: number;
   pageSize: number;
-  searchTeam: string;
+  searchKey: string;
   totalPages: number;
 }
 const MemberPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
-    searchTeam: "",
+    searchKey: "",
     totalPages: 1,
   });
   const [{ data: membersData }, getMember,] = useAxios({
-    url: `/api/member?page=${params.page}&pageSize=${params.pageSize}&searchTeam=${params.searchTeam}`,
+    url: `/api/member?page=${params.page}&pageSize=${params.pageSize}&searchKey=${params.searchKey}`,
     method: "GET",
   });
 
@@ -63,10 +63,10 @@ const MemberPage: React.FC = () => {
     }));
   };
 
-  const handleChangesearchTeam = (search: string) => {
+  const handleChangesearchKey = (search: string) => {
     setParams(prevParams => ({
       ...prevParams,
-      searchTeam: search,
+      searchKey: search,
     }));
   };
 
@@ -83,7 +83,7 @@ const MemberPage: React.FC = () => {
                 <FaSearch />
               </InputGroup.Text>
               <Form.Control
-                onChange={e => handleChangesearchTeam(e.target.value)}
+                onChange={e => handleChangesearchKey(e.target.value)}
                 placeholder="ค้นหาผู้ใช้"
                 aria-label="Fullname"
                 aria-describedby="basic-addon1"

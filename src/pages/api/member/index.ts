@@ -19,7 +19,7 @@ type Pagination = {
 interface RequestQuery {
     page?: string;
     pageSize?: string;
-    searchTeam?: string;
+    searchKey?: string;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
@@ -31,20 +31,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 const query: RequestQuery = req.query as unknown as RequestQuery;
                 const page: number = parseInt(query.page || '1', 10);
                 const pageSize: number = parseInt(query.pageSize || '10', 10);
-                let searchTeam: string = decodeURIComponent(query.searchTeam || '');
+                let searchKey: string = decodeURIComponent(query.searchKey || '');
 
-                const searchTeams = searchTeam.split(' ');
+                const searchKeys = searchKey.split(' ');
                 const searchName: Prisma.MemberWhereInput = {
-                    OR: searchTeams.length > 1 ? [
+                    OR: searchKeys.length > 1 ? [
                         {
                             AND: [
-                                { firstname: { contains: searchTeams[0], mode: 'insensitive' } },
-                                { lastname: { contains: searchTeams[1], mode: 'insensitive' } },
+                                { firstname: { contains: searchKeys[0], mode: 'insensitive' } },
+                                { lastname: { contains: searchKeys[1], mode: 'insensitive' } },
                             ]
                         }
                     ] : [
-                        { firstname: { contains: searchTeams[0], mode: 'insensitive' } },
-                        { lastname: { contains: searchTeams[0], mode: 'insensitive' } },
+                        { firstname: { contains: searchKeys[0], mode: 'insensitive' } },
+                        { lastname: { contains: searchKeys[0], mode: 'insensitive' } },
                     ]
                 };
                 const members = await prisma.member.findMany({

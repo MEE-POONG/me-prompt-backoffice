@@ -20,18 +20,18 @@ interface Partner extends PrismaPartner {
 interface Params {
   page: number;
   pageSize: number;
-  searchTeam: string;
+  searchKey: string;
   totalPages: number;
 }
 const PartnerPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
-    searchTeam: "",
+    searchKey: "",
     totalPages: 1,
   });
   const [{ data, loading, error }, getPartner,] = useAxios({
-    url: `/api/partner?page=${params.page}&pageSize=${params.pageSize}&searchTeam=${params.searchTeam}`,
+    url: `/api/partner?page=${params.page}&pageSize=${params.pageSize}&searchKey=${params.searchKey}`,
     method: "GET",
   });
 
@@ -69,10 +69,10 @@ const PartnerPage: React.FC = () => {
     }));
   };
 
-  const handleChangesearchTeam = (search: string) => {
+  const handleChangesearchKey = (search: string) => {
     setParams(prevParams => ({
       ...prevParams,
-      searchTeam: search,
+      searchKey: search,
     }));
   };
   if (loading) return <p>Loading...</p>;
@@ -91,7 +91,7 @@ const PartnerPage: React.FC = () => {
                 <FaSearch />
               </InputGroup.Text>
               <Form.Control
-                onChange={e => handleChangesearchTeam(e.target.value)}
+                onChange={e => handleChangesearchKey(e.target.value)}
                 placeholder="ค้นหาผู้ใช้"
                 aria-label="Fullname"
                 aria-describedby="basic-addon1"

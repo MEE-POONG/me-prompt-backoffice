@@ -37,7 +37,7 @@ const UserAGAdd: React.FC = () => {
   });
   const [searchPosition, setSearchPosition] = useState("");
   const [{ data: partnerSearch, loading, error }, partnerRefetchSearch] = useAxios({
-    url: `/api/partner/search?page=${params.page}&pageSize=${params.pageSize}&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
+    url: `/api/partner/search?page=${params.page}&pageSize=${params.pageSize}&position=${searchPosition}&searchKey=${formData["originAG"]}`,
     method: "GET",
   }, { autoCancel: false });
 

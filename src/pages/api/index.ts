@@ -1,25 +1,37 @@
 import useAxios from "axios-hooks";
+interface GetAPIParams {
+  page: number;
+  pageSize: number;
+}
 
-const BASE_URL = '/api/partner';
+interface FormData {
+  selectType: string;
+  [key: string]: string | number;
+}
+interface urlData {
+  pathTable: string;
+  pathPlus: string;
+}
 
-export const useGetAPI = (page: number, pageSize: number, searchKey: string, selectTitle: string) => {
-  const url = `${BASE_URL}/search?page=${page}&pageSize=${pageSize}&searchTeam=${selectTitle}&position=${searchKey}`;
-  const [{ data, loading, error }, refetch] = useAxios(url);
+
+export const useGetAPI = (urlData: urlData, params: GetAPIParams, formData: FormData) => {
+  const url = `${urlData.pathTable}/search?page=${params.page}&pageSize=${params.pageSize}&position=${formData.selectType}&searchKey=${formData.key}`;
+  const [{ data, loading, error }, refetch] = useAxios(`api/${url}`);
 
   return [{ data, loading, error }, refetch];
 }
 
-export const usePostAPI = (data: any) => {  // if you're not sure about the data's shape, 'any' is okay, but it's better to use a specific type
-  const [{ loading, error }, sendPost] = useAxios({ url: BASE_URL, method: 'POST', data }, { manual: true });
+export const usePostAPI = (urlData: urlData, data: any) => {  // if you're not sure about the data's shape, 'any' is okay, but it's better to use a specific type
+  const [{ loading, error }, sendPost] = useAxios({ url: `api/${urlData.pathTable}`, method: 'POST', data }, { manual: true });
   return [{ loading, error }, sendPost];
 }
 
-export const usePutAPI = (id: string | number, data: any) => {
-  const [{ loading, error }, sendPut] = useAxios({ url: `${BASE_URL}/${id}`, method: 'PUT', data }, { manual: true });
+export const usePutAPI = (urlData: urlData, id: string | number, data: any) => {
+  const [{ loading, error }, sendPut] = useAxios({ url: `api/${urlData.pathTable}/${id}`, method: 'PUT', data }, { manual: true });
   return [{ loading, error }, sendPut];
 }
 
-export const useDeleteAPI = (id: string | number) => {
-  const [{ loading, error }, sendDelete] = useAxios({ url: `${BASE_URL}/${id}`, method: 'DELETE' }, { manual: true });
+export const useDeleteAPI = (urlData: urlData, id: string | number) => {
+  const [{ loading, error }, sendDelete] = useAxios({ url: `api/${urlData.pathTable}/${id}`, method: 'DELETE' }, { manual: true });
   return [{ loading, error }, sendDelete];
 }
