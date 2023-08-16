@@ -10,12 +10,15 @@ interface FormData {
 }
 interface urlData {
   pathTable: string;
-  pathPlus: string;
+  pathPlusOne: string;
+  pathPlusTwo: string;
+  pathPlusThree: string;
+  pathPlusFour: string;
 }
 
 
 export const useGetAPI = (urlData: urlData, params: GetAPIParams, formData: FormData) => {
-  const url = `${urlData.pathTable}/search?page=${params.page}&pageSize=${params.pageSize}&position=${formData.selectType}&searchKey=${formData.key}`;
+  const url = `${urlData.pathTable}/search?page=${params.page}&pageSize=${params.pageSize}&${urlData.pathPlusOne}=${formData.selectType}&searchKey=${formData.key}`;
   const [{ data, loading, error }, refetch] = useAxios(`api/${url}`);
 
   return [{ data, loading, error }, refetch];
