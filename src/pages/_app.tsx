@@ -1,8 +1,8 @@
-import React,{ useEffect } from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import type { AppProps } from 'next/app'
 import { useRouter } from "next/router";
-
+import { APIContextProvider } from "@/components/APIContext";
 import '../scss/globals.scss'
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -14,7 +14,8 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [router.events]);
 
   return (
-      <React.Fragment>
+    <React.Fragment>
+      <APIContextProvider>
         <Head>
           <meta
             name="viewport"
@@ -22,7 +23,8 @@ export default function App({ Component, pageProps }: AppProps) {
           />
           <title>PSD-MeBack</title>
         </Head>
-          <Component {...pageProps} />
-      </React.Fragment>
+        <Component {...pageProps} />
+      </APIContextProvider>
+    </React.Fragment>
   )
 }
