@@ -2,6 +2,7 @@ import useAxios from "axios-hooks";
 interface GetAPIParams {
   page: number;
   pageSize: number;
+  total:number;
 }
 
 interface FormData {
