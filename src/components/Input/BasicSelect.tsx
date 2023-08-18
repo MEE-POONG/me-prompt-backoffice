@@ -49,21 +49,19 @@ const BasicSelectInput: React.FC<BasicSelectInputProps> = ({
                 className='text-center'
                 isValid={showValidation && isValid === true}
                 isInvalid={showValidation && isValid === false}
-                value={valueShow} // Bind the value here
                 onChange={(event: React.ChangeEvent<HTMLSelectElement>) => { // Use onChange here
                     valueSet(event.target.value);
                 }}
             >
-                <option disabled >{placeholderShow}</option>
                 {listArray?.map((item, index) => (
                     <option key={index} value={item.textShow}>
                         {item.textShow + " %"}
                     </option>
                 ))}
             </Form.Select>
-            {showValidation && isValid === false && <Form.Control.Feedback type="invalid">
+            {/* {showValidation && isValid === false && <Form.Control.Feedback type="invalid">
                 {invalidFeedback}
-            </Form.Control.Feedback>}
+            </Form.Control.Feedback>} */}
         </Form.Group>
     );
 };

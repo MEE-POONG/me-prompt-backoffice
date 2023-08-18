@@ -7,14 +7,14 @@ import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
 
-import { Partner as PrismaPartner, Member as PrismaMember } from '@prisma/client';
-import PartnerAddPartnerModal from "@/container/Partner/AddPartnerModal";
-import PartnerViewPartnerModal from "@/container/Partner/ViewModal";
+import { UserAG as PrismaUserAG, Member as PrismaMember } from '@prisma/client';
+// import UserAGAddUserAGModal from "@/container/UserAG/AddUserAGModal";
+// import UserAGViewUserAGModal from "@/container/UserAG/ViewModal";
 import DeleteModal from "@/components/modal/DeleteModal";
 interface Member extends PrismaMember {
 }
 
-interface Partner extends PrismaPartner {
+interface UserAG extends PrismaUserAG {
   member: Member;
 }
 interface Params {
@@ -23,33 +23,33 @@ interface Params {
   searchKey: string;
   totalPages: number;
 }
-const PartnerPage: React.FC = () => {
+const UserAGPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
     searchKey: "",
     totalPages: 1,
   });
-  const [{ data, loading, error }, getPartner,] = useAxios({
-    url: `/api/partner?page=${params.page}&pageSize=${params.pageSize}&searchKey=${params.searchKey}`,
+  const [{ data, loading, error }, getUserAG,] = useAxios({
+    url: `/api/userAG?page=${params.page}&pageSize=${params.pageSize}&searchKey=${params.searchKey}`,
     method: "GET",
   });
 
-  const [{ }, executePartnerDelete,] = useAxios({}, { manual: true });
+  const [{ }, executeUserAGDelete,] = useAxios({}, { manual: true });
 
-  const [filteredPartnersData, setFilteredPartnersData] = useState<Partner[]>([]);
+  const [filteredUserAGsData, setFilteredUserAGsData] = useState<UserAG[]>([]);
 
   useEffect(() => {
-    setFilteredPartnersData(data?.data ?? []);
+    setFilteredUserAGsData(data?.data ?? []);
 
   }, [data]);
 
-  const deletePartner = (id: string): Promise<any> => {
-    return executePartnerDelete({
+  const deleteUserAG = (id: string): Promise<any> => {
+    return executeUserAGDelete({
       url: "/api/userAG/" + id,
       method: "DELETE",
     }).then(() => {
-      setFilteredPartnersData(prevPartners => prevPartners.filter(partner => partner?.id !== id));
+      setFilteredUserAGsData(prevUserAGs => prevUserAGs.filter(userAG => userAG?.id !== id));
     });
   };
 
@@ -80,11 +80,11 @@ const PartnerPage: React.FC = () => {
   return (
     <LayOut>
 
-      <div className='partner-page h-100'>
+      <div className='userAG-page h-100'>
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              Partner - Master
+              UserAG - Master
             </h4>
             <InputGroup className="w-auto" bsPrefix="input-icon">
               <InputGroup.Text id="basic-addon1">
@@ -109,47 +109,47 @@ const PartnerPage: React.FC = () => {
                   <th className="first">No.</th>
                   <th >userAG</th>
                   <th >ผู้ใช้</th>
-                  <th>Partner</th>
+                  <th>UserAG</th>
                   <th>Benefit</th>
                   <th>จัดการ</th>
                 </tr>
               </thead>
               <tbody className="text-center">
-                {filteredPartnersData.map((partner: Partner, index: number) => {
+                {filteredUserAGsData.map((userAG: UserAG, index: number) => {
                   return (
-                    <tr key={partner?.id}>
+                    <tr key={userAG?.id}>
                       <td>{index + 1}</td>
-                      <td>{partner?.userAG}</td>
+                      <td>{userAG?.username}</td>
                       <td>
-                        {/* {partner?.member[0].firstname} */}
-                        {partner?.member ? (
+                        {/* {userAG?.member[0].firstname} */}
+                        {userAG?.member ? (
                           <div>
-                            {partner.member.firstname} {partner.member.lastname}
+                            {userAG.member.firstname} {userAG.member.lastname}
                           </div>
                         ) : (
                           <div>ไม่มีผู้ใช้</div>
                         )}
                       </td>
-                      <td>{partner?.percent}%</td>
+                      <td>{userAG?.percent}%</td>
                       <td>
                         <Button
-                          bsPrefix="icon" className={`ms-2 btn ${partner?.commission ? 'active' : ''}`}>
+                          bsPrefix="icon" className={`ms-2 btn ${userAG?.commission ? 'active' : ''}`}>
                           ค่าคอม
                         </Button>
                         <Button
-                          bsPrefix="icon" className={`ms-2 btn ${partner?.overdue ? 'active' : ''}`}>
+                          bsPrefix="icon" className={`ms-2 btn ${userAG?.overdue ? 'active' : ''}`}>
                           ค้างบวก
                         </Button>
                         <Button
-                          bsPrefix="icon" className={`ms-2 btn ${partner?.adjustPercentage ? 'active' : ''}`}>
+                          bsPrefix="icon" className={`ms-2 btn ${userAG?.adjustPercentage ? 'active' : ''}`}>
                           ปรับสู้ฟรี
                         </Button>
                         <Button
-                          bsPrefix="icon" className={`ms-2 btn ${partner?.pay ? 'active' : ''}`}>
+                          bsPrefix="icon" className={`ms-2 btn ${userAG?.pay ? 'active' : ''}`}>
                           จ่าย
                         </Button>
                         <Button
-                          bsPrefix="icon" className={`ms-2 btn ${partner?.customerCommission ? 'active' : ''}`}>
+                          bsPrefix="icon" className={`ms-2 btn ${userAG?.customerCommission ? 'active' : ''}`}>
                           คืนลูกค้า
                         </Button>
                       </td>
@@ -160,7 +160,7 @@ const PartnerPage: React.FC = () => {
                         <Button className="ms-2 btn" bsPrefix="icon">
                           <FaPen />
                         </Button>
-                        <DeleteModal data={partner} apiDelete={() => deletePartner(partner.id)} />
+                        <DeleteModal data={userAG} apiDelete={() => deleteUserAG(userAG.id)} />
                       </td>
                     </tr>
                   )
@@ -178,4 +178,4 @@ const PartnerPage: React.FC = () => {
     </LayOut>
   );
 }
-export default PartnerPage;
+export default UserAGPage;

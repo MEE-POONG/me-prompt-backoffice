@@ -37,7 +37,7 @@ const UserAGAdd: React.FC = () => {
   });
   const [searchPosition, setSearchPosition] = useState("");
   const [{ data: partnerSearch, loading, error }, partnerRefetchSearch] = useAxios({
-    url: `/api/partner/search?page=${params.page}&pageSize=${params.pageSize}&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
+    url: `/api/userAG/search?page=${params.page}&pageSize=${params.pageSize}&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
     method: "GET",
   }, { autoCancel: false });
 
@@ -86,7 +86,7 @@ const UserAGAdd: React.FC = () => {
           return (value: any) => value?.length >= 5;
         }
       case "percen":
-        return (value: any) => value?.length > 0;
+        return (value: any) => value?.length >= 0;
       case "overdue":
         return (value: any) => value === true || value === false;
       case "commission":
@@ -155,17 +155,7 @@ const UserAGAdd: React.FC = () => {
 
     if (validationResult.isValid) {
       console.log("good :", formData);
-      // useAxios({
-      //   url: `/api/partner/`,
-      //   method: "post",
-      //   data: formData,
-      // }).then((response : any) => {
-      //   if (response.status === 200) {
-      //     console.log("Post data successfully written to API");
-      //   } else {
-      //     console.log("Error writing post data to API");
-      //   }
-      // });
+
     } else {
       console.log("Fields that failed validation:", validationResult.invalidFields);
     }

@@ -1,11 +1,11 @@
-// components/APIContext.tsx
-
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
+import { APIParams, AppFormData } from './type';
 
 type APIContextType = {
-    logObjects: (obj1: object, obj2: object, obj3: object) => void;
+    logObjects: (apiParams: APIParams, formData: AppFormData) => void;
+    setObjects: (apiParams: APIParams, formData: AppFormData) => void;
+    storedObjects: [APIParams, AppFormData] | null;
 };
-
 const APIContext = createContext<APIContextType | undefined>(undefined);
 
 export const useAPIContext = () => {
@@ -21,14 +21,19 @@ type Props = {
 };
 
 export const APIContextProvider: React.FC<Props> = ({ children }) => {
-    const logObjects = (obj1: object, obj2: object, obj3: object) => {
-        console.log("Object 1:", obj1);
-        console.log("Object 2:", obj2);
-        console.log("Object 3:", obj3);
+    const [storedObjects, setStoredObjects] = useState<[APIParams, AppFormData] | null>(null);
+
+    const logObjects = (apiParams: APIParams, formData: AppFormData) => {
+        console.log("API Params:", apiParams);
+        console.log("Form Data:", formData);
     };
 
+    const setObjects = (apiParams: APIParams, formData: AppFormData) => {
+        setStoredObjects([apiParams, formData]);
+        logObjects(apiParams, formData);  // Optionally log them immediately
+    };
     return (
-        <APIContext.Provider value={{ logObjects }}>
+        <APIContext.Provider value={{ logObjects, setObjects, storedObjects }}>
             {children}
         </APIContext.Provider>
     );
