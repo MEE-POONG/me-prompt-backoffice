@@ -80,7 +80,7 @@ const UserAGPage: React.FC = () => {
   return (
     <LayOut>
 
-      <div className='userAG-page h-100'>
+      <div className='userAG-page h-91'>
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">

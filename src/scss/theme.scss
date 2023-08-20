@@ -14,7 +14,7 @@
 
 .paper {
     transition: margin-left 0.5s ease-in-out 0s, width 0.5s ease-in-out 0s;
-    padding: 1rem;
+    padding: 1rem 1rem 0 1rem;
     height: calc(100vh - 55px);
 }
 button,
@@ -358,8 +358,8 @@ button.bar-slide {
     margin: 0;
     tbody {
         display: block;
-        height: calc(90vh - 185px);
-        overflow-y: auto;
+        height: calc(90vh - 209px);
+        overflow-y: scroll;
     }
     thead,
     tbody tr {

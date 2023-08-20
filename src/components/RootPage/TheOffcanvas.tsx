@@ -18,7 +18,31 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
         setCheckClickPath(asPath);
     }, [asPath])
     const handlePath = (valPath: string): void => { checkClickPath === valPath ? setCheckClickPath('') : setCheckClickPath(valPath) };
-
+    const navItems = [
+        {
+            id: "partner",
+            label: "Partner",
+            icon: <FaTachometerAlt />,
+            path: "/partner",
+            subItems: [
+                { label: "พันธมิตร", path: "/partner" },
+                { label: "UserAg", path: "/partner/userAG" }
+            ]
+        },
+        {
+            id: "bot-auto",
+            label: "Bot Auto",
+            icon: <FaTachometerAlt />,
+            path: "/bot",
+            subItems: [
+                { label: "คำสั่งบอท", path: "/bot" },
+                { label: "ลูกค้า", path: "/bot/customer" },
+                { label: "เอเย่น", path: "/bot/agent" },
+                { label: "มาสเตอร์", path: "/bot/master" }
+            ]
+        },
+        // ... Add other sections similarly
+    ];
     return (
         <>
             <Offcanvas show={show} onHide={handleClose} placement="start" backdrop={false} scroll={true} >

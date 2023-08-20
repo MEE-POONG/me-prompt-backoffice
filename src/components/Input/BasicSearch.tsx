@@ -68,21 +68,24 @@ const BasicSearchInput: React.FC<BasicSearchInputProps> = ({
             />
             {!disabled ?
                 <Dropdown.Menu show={isDropdownVisible} className='w-100'>
-                    <Dropdown.Header>เลือกรายการ</Dropdown.Header>
-                    {listArray?.map((item, index) => {
-                        return (
-                            <Dropdown.Item
-                                key={index}
-                                onClick={() => {
-                                    valueSet(item?.textShow);
-                                    handleMouseLeave();
-                                }}
-                                eventKey={item.id}
-                            >
-                                {item?.textShow}
-                            </Dropdown.Item>
-                        );
-                    })}
+                    {
+                        listArray && listArray.length > 0 ? (
+                            listArray.map((item, index) => (
+                                <Dropdown.Item
+                                    key={index}
+                                    onClick={() => {
+                                        valueSet(item?.textShow);
+                                        handleMouseLeave();
+                                    }}
+                                    eventKey={item.id}
+                                >
+                                    {item?.textShow}
+                                </Dropdown.Item>
+                            ))
+                        ) : (
+                            <Dropdown.Item>Not found data</Dropdown.Item>
+                        )
+                    }
                 </Dropdown.Menu>
                 : null}
             {showValidation && isValid === false && <Form.Control.Feedback type="invalid">

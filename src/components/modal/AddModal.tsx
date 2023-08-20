@@ -8,7 +8,6 @@ interface AddModalProps {
     checkAlertShow: string;
     setCheckAlertShow: React.Dispatch<React.SetStateAction<string>>;
     checkBody: string;
-
 }
 
 const AddModal: React.FC<AddModalProps> = ({ checkAlertShow, setCheckAlertShow, checkBody }) => {

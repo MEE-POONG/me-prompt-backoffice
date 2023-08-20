@@ -9,7 +9,7 @@ const TheFooter: React.FC = () => {
 
   return (
       <footer className="pt-4">
-        <div className="bg-white rounded-top p-4">
+        <div className="bg-white rounded-top p-3">
           <div className="row">
             <div className="col-12 col-sm-6 text-center text-sm-start">
               &copy; <a href="#">Your Site Name</a>, All Right Reserved.

@@ -20,7 +20,6 @@ interface Params {
 }
 
 const UserAGAdd: React.FC = () => {
-  // const { data, error, loading, get, post } = useApi();
   const initialFormData = userAGForm.reduce((acc: any, curr: any) => {
     acc[curr.title] = curr.typeShow === "onOff" ? false : '';
     return acc;
@@ -36,10 +35,11 @@ const UserAGAdd: React.FC = () => {
     totalPages: 1,
   });
   const [searchPosition, setSearchPosition] = useState("");
-  const [{ data: partnerSearch, loading, error }, partnerRefetchSearch] = useAxios({
-    url: `/api/userAG/search?page=${params.page}&pageSize=${params.pageSize}&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
+  const [{ data: searchData, loading: searchLoadding, error: searchError }, userAGSearch] = useAxios({
+    url: `/api/userAG/search?page=1&pageSize=10&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
     method: "GET",
   }, { autoCancel: false });
+  const [{ loading: postLoadding, error: postError }, userAGPost] = useAxios({ url: '/api/userAG', method: 'POST' }, { manual: true });
 
   useEffect(() => {
     if (formData["position"]) {
@@ -60,7 +60,7 @@ const UserAGAdd: React.FC = () => {
   useEffect(() => {
     setFormData((prev: Record<string, string>) => ({ ...prev, ["userAG"]: formData["originAG"] }));
     if (formData["originAG"] && formData["originAG"].length >= 3) {
-      partnerRefetchSearch();
+      userAGSearch();
     }
   }, [formData["originAG"]]);
 
@@ -109,9 +109,9 @@ const UserAGAdd: React.FC = () => {
   const getListArray = (inputTitle: string, arrayLoop: any[]) => {
     switch (inputTitle) {
       case "originAG":
-        return arrayLoop?.map((partner: any) => ({
-          id: partner.id,
-          textShow: partner.userAG
+        return arrayLoop?.map((userAG: any) => ({
+          id: userAG.id,
+          textShow: userAG.username
         }));
 
       default:
@@ -154,18 +154,17 @@ const UserAGAdd: React.FC = () => {
     }, { isValid: true, invalidFields: {} as Record<string, string> });
 
     if (validationResult.isValid) {
-      console.log("good :", formData);
-
+      userAGPost({ data: formData });
     } else {
       console.log("Fields that failed validation:", validationResult.invalidFields);
     }
   };
 
 
-
+  if (postLoadding) return <p>Loading...</p>;
+  if (postError) return <p>Error!</p>;
   return (
     <LayOut>
-
       <div className='member-page'>
         <Card>
           {/* <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} /> */}
@@ -220,7 +219,7 @@ const UserAGAdd: React.FC = () => {
                       rules={getValidationRule(inputItem.title, formData)}
                       checkIsValid={checkIsValid}
                       invalidFeedback={inputItem.invalidFeedback}
-                      listArray={getListArray(inputItem.title, partnerSearch?.data)}
+                      listArray={getListArray(inputItem.title, searchData?.data)}
                       disabled={isInputDisabled(inputItem.title)}
 
                     />
