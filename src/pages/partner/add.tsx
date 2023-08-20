@@ -23,7 +23,7 @@ const MemberAdd: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
-  const [checkBody, setCheckBody] = useState<string>("");
+  const [checkBody, setCheckBody] = useState<string>(""); 
 
   const handleInputChange = (setter: any) => (event: any) => {
     const newValue = event.target.value;
