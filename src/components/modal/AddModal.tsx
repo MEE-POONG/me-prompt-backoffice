@@ -34,6 +34,13 @@ const AddModal: React.FC<AddModalProps> = ({ checkAlertShow, setCheckAlertShow, 
         case 'danger':
             variant = 'danger';
             heading = 'Error เพิ่มข้อมูลไม่สำเร็จ';
+            boding = (
+                <ul>
+                    {checkBody && Object.entries(checkBody).map(([key, value]) => (
+                        <li key={key}><strong>{value}</strong></li>
+                    ))}
+                </ul>
+            );
             break;
         case 'warning':
             variant = 'warning';

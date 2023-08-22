@@ -37,6 +37,7 @@ const UserAGAdd: React.FC = () => {
     method: "GET",
   }, { autoCancel: false });
   const [{ loading: postLoadding, error: postError }, userAGPost] = useAxios({ url: '/api/userAG', method: 'POST' }, { manual: true });
+  const [usernameExists, setUsernameExists] = useState(false);
 
   useEffect(() => {
     if (formData["position"]) {
@@ -61,17 +62,12 @@ const UserAGAdd: React.FC = () => {
     }
   }, [formData["originAG"]]);
 
-
   const handleInputChange = (title: string, value: any) => {
     setFormData((prev: any) => ({
       ...prev,
       [title]: value
     }));
   }
-  // const isInputDisabled = (inputTitle: string) => {
-  //   if (inputTitle === "position") return false;
-  //   return isFormDisabled;
-  // };
   const isInputDisabled = (inputTitle: string) => {
     switch (inputTitle) {
       case "position":
@@ -84,8 +80,8 @@ const UserAGAdd: React.FC = () => {
   };
   const getValidationRule = (inputTitle: string, formData: Record<string, string>) => {
     switch (inputTitle) {
-      case "userAG":
-        return (value: any) => value?.length > formData["originAG"].length;
+      case "username":
+        return (value: any) => value?.length > formData["originAG"].length || !usernameExists;
       case "originAG":
         if (formData["position"] === "senior") {
           return (value: any) => value === '';
@@ -97,8 +93,8 @@ const UserAGAdd: React.FC = () => {
       case "overdue":
         return (value: any) => value === true || value === false;
       case "commission":
-        return (value: any) => value === true || value === false;
-      case "adjustPercentage":
+          return (value: any) => value === true || value === false;
+        case "adjustPercentage":
         return (value: any) => value === true || value === false;
       case "pay":
         return (value: any) => value === true || value === false;
@@ -165,15 +161,21 @@ const UserAGAdd: React.FC = () => {
       setCheckBody(validationResult.invalidFields);
     } else {
       try {
-        setAlertForm("primary"); 
+        setAlertForm("primary");
         const response = await userAGPost({ data: formData });
         if (response && response.status === 201) {
           setAlertForm("success");
-          setTimeout(() => {
-            // clear();
-          }, 5000);
-        } else {
+          // setTimeout(() => {
+          //   // clear();
+          // }, 5000);
+        } else if (response?.status === 203) {
           setAlertForm("danger");
+          if (response.data.message === "Username already exists") {
+            setCheckBody({ username: `ยูส ${formData.username} มีแล้ว` });
+            setUsernameExists(false);
+
+          }
+        } else {
           throw new Error('Failed to send data');
         }
       } catch (error) {

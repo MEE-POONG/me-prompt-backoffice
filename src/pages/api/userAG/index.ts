@@ -49,6 +49,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         case 'POST':
             const { username, originAG, percent, commission, overdue, adjustPercentage, pay, customerCommission, recommender } = req.body;
             try {
+                const existingUserAG = await prisma.userAG.findFirst({
+                    where: {
+                        username: username
+                    }
+                });
+
+                if (existingUserAG) {
+                    res.status(203).json({ success: false, message: "Username already exists" });
+                    return; // Exit the function to prevent further execution
+                }
                 const newUserAG = await prisma.userAG.create({
                     data: {
                         username,
@@ -64,7 +74,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 });
                 res.status(201).json({ success: true, data: newUserAG });
             } catch (error) {
-                res.status(500).json({ success: true, message: "An error occurred while creating the userAG" });
+                res.status(500).json({ success: false, message: "An error occurred while creating the userAG" });
             }
             break;
 
