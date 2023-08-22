@@ -83,7 +83,7 @@ model Member {
   createdAt     DateTime? @default(now())
   updatedAt     DateTime? @updatedAt
   deleted_at    DateTime? @map("deleted_at")
-  UserAG        UserAG[]
+  userAG        UserAG[]
 }
 
 model MinusIncome {
@@ -102,7 +102,7 @@ model UserAG {
   username           String?
   originAG           String?
   position           String?
-  percent            Int?      @default(0)
+  percent            Float?    @default(0)
   commission         Boolean?  @default(false)
   overdue            Boolean?  @default(false)
   adjustPercentage   Boolean?  @default(false)

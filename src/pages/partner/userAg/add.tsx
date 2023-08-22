@@ -81,7 +81,7 @@ const UserAGAdd: React.FC = () => {
   const getValidationRule = (inputTitle: string, formData: Record<string, string>) => {
     switch (inputTitle) {
       case "username":
-        return (value: any) => value?.length > formData["originAG"].length || !usernameExists;
+        return (value: any) => value?.length > formData["originAG"].length && !usernameExists;
       case "originAG":
         if (formData["position"] === "senior") {
           return (value: any) => value === '';
@@ -93,8 +93,8 @@ const UserAGAdd: React.FC = () => {
       case "overdue":
         return (value: any) => value === true || value === false;
       case "commission":
-          return (value: any) => value === true || value === false;
-        case "adjustPercentage":
+        return (value: any) => value === true || value === false;
+      case "adjustPercentage":
         return (value: any) => value === true || value === false;
       case "pay":
         return (value: any) => value === true || value === false;
@@ -125,15 +125,15 @@ const UserAGAdd: React.FC = () => {
     switch (inputTitle) {
       case "percen":
         const inputItem = userAGForm.find(item => item.title === "percen");
-        const minValue = inputItem?.min || 0.0;
-        const maxValue = inputItem?.max || 0.50;
-        const incrementValue = 0.05;
+        const minValue = inputItem?.min || 0;
+        const maxValue = inputItem?.max || 20;
+        const incrementValue = 5;  // Set this to 5
         let options = [];
 
         for (let i = minValue; i <= maxValue; i += incrementValue) {
           options.push({
             id: i.toString(),   // convert number to string
-            textShow: Math.round(i * 100).toString(),
+            textShow: Math.round(i).toString(),
           });
         }
         return options;
@@ -147,7 +147,6 @@ const UserAGAdd: React.FC = () => {
     const validationResult = userAGForm.reduce((acc, curr: any) => {
       const value = formData[curr.title];
       const rule = getValidationRule(curr.title, formData);
-
       if (!rule(value)) {
         acc.isValid = false;
         acc.invalidFields[curr.title] = curr.invalidFeedback;
@@ -160,20 +159,17 @@ const UserAGAdd: React.FC = () => {
       setAlertForm("warning");
       setCheckBody(validationResult.invalidFields);
     } else {
+      console.log("formData : ", formData);
       try {
         setAlertForm("primary");
         const response = await userAGPost({ data: formData });
         if (response && response.status === 201) {
           setAlertForm("success");
-          // setTimeout(() => {
-          //   // clear();
-          // }, 5000);
         } else if (response?.status === 203) {
           setAlertForm("danger");
           if (response.data.message === "Username already exists") {
             setCheckBody({ username: `ยูส ${formData.username} มีแล้ว` });
             setUsernameExists(false);
-
           }
         } else {
           throw new Error('Failed to send data');
@@ -183,10 +179,13 @@ const UserAGAdd: React.FC = () => {
       }
     }
   };
+  const handleReload = () => {
+    window.location.reload();
+  };
 
-
-  // if (postLoadding) return <p>Loading...</p>;
-  // if (postError) return <p>Error!</p>;
+  const handleGoBack = () => {
+    window.history.back();
+  };
   return (
     <LayOut>
       <div className='member-page'>
@@ -283,15 +282,15 @@ const UserAGAdd: React.FC = () => {
             </Row>
           </Card.Body>
           <Card.Footer className="text-end">
+            <Button variant="danger mx-2" onClick={handleGoBack}>
+              ย้อนกลับ
+            </Button>
+            <Button variant="secondary mx-2" onClick={handleReload}>
+              ล้าง
+            </Button>
             <Button variant="primary" onClick={handleSubmit}>
               ยืนยัน
             </Button>
-            {/* <Button variant="primary mx-2" onClick={reloadPage}>
-              ล้าง
-            </Button>
-            <Link href="/partner" className="btn btn-danger mx-2">
-              ย้อนกลับ
-            </Link> */}
           </Card.Footer>
         </Card>
       </div>

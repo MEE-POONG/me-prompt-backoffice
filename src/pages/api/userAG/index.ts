@@ -47,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             }
             break;
         case 'POST':
-            const { username, originAG, percent, commission, overdue, adjustPercentage, pay, customerCommission, recommender } = req.body;
+            const { username, originAG, position, percent, commission, overdue, adjustPercentage, pay, customerCommission, recommender } = req.body;
             try {
                 const existingUserAG = await prisma.userAG.findFirst({
                     where: {
@@ -63,6 +63,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     data: {
                         username,
                         originAG,
+                        position,
                         percent,
                         commission,
                         overdue,
