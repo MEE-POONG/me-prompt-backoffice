@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 interface AddModalProps {
     checkAlertShow: string;
     setCheckAlertShow: React.Dispatch<React.SetStateAction<string>>;
-    checkBody: string;
+    checkBody: Record<string, string> | null | undefined;
 }
 
 const AddModal: React.FC<AddModalProps> = ({ checkAlertShow, setCheckAlertShow, checkBody }) => {
@@ -17,23 +17,37 @@ const AddModal: React.FC<AddModalProps> = ({ checkAlertShow, setCheckAlertShow, 
     let variant;
     let heading;
     let boding;
-    if (checkAlertShow === 'success') {
-        variant = 'success';
-        heading = 'เพิ่มข้อมูลสำเร็จ';
-    } else if (checkAlertShow === 'primary') {
-        variant = 'primary';
-        heading = (
-            <>
-                <Spinner animation="border" variant="primary" />
-                {'กำลังเพิ่มข้อมูล'}
-            </>);
-    } else if (checkAlertShow === 'danger') {
-        variant = 'danger';
-        heading = 'Error เพิ่มข้อมูลไม่สำเร็จ';
-    } else if (checkAlertShow === 'warning') {
-        variant = 'warning';
-        heading = 'กรอกข้อมูลไม่ครบ';
-        boding = checkBody;
+    switch (checkAlertShow) {
+        case 'success':
+            variant = 'success';
+            heading = 'เพิ่มข้อมูลสำเร็จ';
+            break;
+        case 'primary':
+            variant = 'primary';
+            heading = (
+                <>
+                    <Spinner animation="border" variant="primary" />
+                    {'กำลังเพิ่มข้อมูล'}
+                </>
+            );
+            break;
+        case 'danger':
+            variant = 'danger';
+            heading = 'Error เพิ่มข้อมูลไม่สำเร็จ';
+            break;
+        case 'warning':
+            variant = 'warning';
+            heading = 'กรอกข้อมูลไม่ครบ';
+            boding = (
+                <ul>
+                    {Object.entries(checkBody || {}).map(([field, errorMsg]) => (
+                        <li key={field}><strong>{field}:</strong> {errorMsg}</li>
+                    ))}
+                </ul>
+            );
+            break;
+        default:
+            break;
     }
     const handleClickReload = () => {
         setCheckAlertShow('not')
@@ -46,7 +60,7 @@ const AddModal: React.FC<AddModalProps> = ({ checkAlertShow, setCheckAlertShow, 
     return (
         <>
             {checkAlertShow !== 'not' && (
-                <Modal show={true}  onHide={checkAlertShow === 'success' ? handleClickReload : handleClose} centered>
+                <Modal show={true} onHide={checkAlertShow === 'success' ? handleClickReload : handleClose} centered>
                     <Alert variant={variant} onClose={checkAlertShow === 'success' ? handleClickReload : handleClose} className='m-0' dismissible>
                         <Alert.Heading className='m-0'>{heading}</Alert.Heading>
                         <p className='m-0'>{boding}</p>

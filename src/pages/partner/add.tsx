@@ -105,7 +105,7 @@ const MemberAdd: React.FC = () => {
 
       <div className='member-page'>
         <Card>
-          <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
+          {/* <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} /> */}
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
               Member - เพิ่มข้อมูล

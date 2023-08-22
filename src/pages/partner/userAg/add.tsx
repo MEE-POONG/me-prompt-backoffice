@@ -28,12 +28,9 @@ const UserAGAdd: React.FC = () => {
 
   const [formData, setFormData] = useState<any>(initialFormData);
   const [checkIsValid, setCheckIsValid] = useState<boolean>(false);
+  const [alertForm, setAlertForm] = useState<string>("not");
+  const [checkBody, setCheckBody] = useState<Record<string, string> | null>();
 
-  const [params, setParams] = useState<Params>({
-    page: 1,
-    pageSize: 10,
-    totalPages: 1,
-  });
   const [searchPosition, setSearchPosition] = useState("");
   const [{ data: searchData, loading: searchLoadding, error: searchError }, userAGSearch] = useAxios({
     url: `/api/userAG/search?page=1&pageSize=10&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
@@ -71,9 +68,19 @@ const UserAGAdd: React.FC = () => {
       [title]: value
     }));
   }
+  // const isInputDisabled = (inputTitle: string) => {
+  //   if (inputTitle === "position") return false;
+  //   return isFormDisabled;
+  // };
   const isInputDisabled = (inputTitle: string) => {
-    if (inputTitle === "position") return false;
-    return isFormDisabled;
+    switch (inputTitle) {
+      case "position":
+        return false;
+      case "originAG":
+        return formData["position"] === "senior" || !formData["position"];
+      default:
+        return isFormDisabled;
+    }
   };
   const getValidationRule = (inputTitle: string, formData: Record<string, string>) => {
     switch (inputTitle) {
@@ -138,7 +145,7 @@ const UserAGAdd: React.FC = () => {
         return [];
     }
   }
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setCheckIsValid(true);
     const validationResult = userAGForm.reduce((acc, curr: any) => {
@@ -153,21 +160,40 @@ const UserAGAdd: React.FC = () => {
       return acc;
     }, { isValid: true, invalidFields: {} as Record<string, string> });
 
-    if (validationResult.isValid) {
-      userAGPost({ data: formData });
+    if (!validationResult.isValid) {
+      setAlertForm("warning");
+      setCheckBody(validationResult.invalidFields);
     } else {
-      console.log("Fields that failed validation:", validationResult.invalidFields);
+      try {
+        setAlertForm("primary"); 
+        const response = await userAGPost({ data: formData });
+        if (response && response.status === 201) {
+          setAlertForm("success");
+          setTimeout(() => {
+            // clear();
+          }, 5000);
+        } else {
+          setAlertForm("danger");
+          throw new Error('Failed to send data');
+        }
+      } catch (error) {
+        setAlertForm("danger");
+      }
     }
   };
 
 
-  if (postLoadding) return <p>Loading...</p>;
-  if (postError) return <p>Error!</p>;
+  // if (postLoadding) return <p>Loading...</p>;
+  // if (postError) return <p>Error!</p>;
   return (
     <LayOut>
       <div className='member-page'>
+        <AddModal
+          checkAlertShow={alertForm}
+          setCheckAlertShow={setAlertForm}
+          checkBody={checkBody ?? null}
+        />
         <Card>
-          {/* <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} /> */}
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
               UserAG - เพิ่มข้อมูล
@@ -175,7 +201,6 @@ const UserAGAdd: React.FC = () => {
           </Card.Header>
           <Card.Body>
             <Row>
-
               {userAGForm.map((inputItem, index) => (
                 <Col md={4} lg={3} key={index}>
                   {inputItem.typeShow === "text" && (
