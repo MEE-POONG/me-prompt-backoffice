@@ -26,7 +26,7 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
             path: "/partner",
             subItems: [
                 { label: "พันธมิตร", path: "/partner" },
-                { label: "UserAg", path: "/partner/userAG" }
+                { label: "UserAg", path: "/partner/user-ag" }
             ]
         },
         {
