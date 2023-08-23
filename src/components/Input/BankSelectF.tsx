@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Dropdown, FloatingLabel, Form, Image } from "react-bootstrap";
-import { bankMap } from '@/test';
+import { bankMap } from '@/data/test';
 
 interface BankSelectProps {
     handleInputChange: (field: string, value: string) => void;

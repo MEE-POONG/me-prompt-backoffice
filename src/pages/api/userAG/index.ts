@@ -48,6 +48,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             break;
         case 'POST':
             const { username, originAG, position, percent, commission, overdue, adjustPercentage, pay, customerCommission, recommender } = req.body;
+            console.log(percent);
+            
             try {
                 const existingUserAG = await prisma.userAG.findFirst({
                     where: {
@@ -59,12 +61,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     res.status(203).json({ success: false, message: "Username already exists" });
                     return; // Exit the function to prevent further execution
                 }
+
+                const numericPercent = Number(percent); // Convert percent to number
+
+                if (isNaN(numericPercent)) {
+                    res.status(400).json({ success: false, message: "Invalid percent value" });
+                    return; // Exit the function to prevent further execution
+                }
+
                 const newUserAG = await prisma.userAG.create({
                     data: {
                         username,
                         originAG,
                         position,
-                        percent,
+                        percent: numericPercent, // Use the numeric value
                         commission,
                         overdue,
                         adjustPercentage,
@@ -78,6 +88,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 res.status(500).json({ success: false, message: "An error occurred while creating the userAG" });
             }
             break;
+
 
         default:
             res.setHeader('Allow', ['GET', 'POST']);

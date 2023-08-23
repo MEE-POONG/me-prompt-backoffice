@@ -88,7 +88,7 @@ const UserAGAdd: React.FC = () => {
         } else {
           return (value: any) => value?.length >= 5;
         }
-      case "percen":
+      case "percent":
         return (value: any) => value?.length >= 0;
       case "overdue":
         return (value: any) => value === true || value === false;
@@ -123,8 +123,8 @@ const UserAGAdd: React.FC = () => {
   }
   const getListSelect = (inputTitle: string) => {
     switch (inputTitle) {
-      case "percen":
-        const inputItem = userAGForm.find(item => item.title === "percen");
+      case "percent":
+        const inputItem = userAGForm.find(item => item.title === "percent");
         const minValue = inputItem?.min || 0;
         const maxValue = inputItem?.max || 20;
         const incrementValue = 5;  // Set this to 5

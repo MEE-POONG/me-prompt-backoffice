@@ -6,7 +6,7 @@ import AddModal from "@/components/modal/AddModal";
 import useAxios from "axios-hooks";
 import BankAccount from "@/components/Input/BankAccount";
 import Link from "next/link";
-import { bankMap } from '@/test';
+import { bankMap } from '@/data/test';
 
 const MemberAdd: React.FC = () => {
   const [{ error: errorMessage, loading: memberLoading }, executeMember] = useAxios({ url: '/api/member', method: 'POST' }, { manual: true });
@@ -103,7 +103,7 @@ const MemberAdd: React.FC = () => {
 
       <div className='member-page'>
         <Card>
-          <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
+          {/* <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} /> */}
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
               Member - เพิ่มข้อมูล

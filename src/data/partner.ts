@@ -2,7 +2,7 @@ export const userAGForm = [
     { title: "position", labelShow: "เลือกตำแหน่ง", placeholderShow: "กรุณาเลือก", typeShow: "dropdown", rules: 1, invalidFeedback: "ต้องเลือกข้อมูล", list: [{ text: "agent" }, { text: "master" }, { text: "senior" },], rowForm: 1 },
     { title: "originAG", labelShow: "OriginAG / ยูสต้นสาย", placeholderShow: "เลือกยูสเต้นสาย", typeShow: "search", rules: 2, invalidFeedback: "ระบบยูสต้นสาย", arraySearch: "partner", rowForm: 1 },
     { title: "username", labelShow: "usernameAG / ยูสเซอร์AG", placeholderShow: "ระบุยูสใหม่", typeShow: "text", rules: 2, invalidFeedback: "กรอก usernameAG ให้ถูกต้อง", rowForm: 1 },
-    { title: "percen", labelShow: "เลือกเปอร์เซ็น", placeholderShow: "เลือกเปอร์เซ็นจ่าย", typeShow: "select", rules: 2, invalidFeedback: "กำหนดเปอร์เซ็น", min: 0, max: 50, rowForm: 1 },
+    { title: "percent", labelShow: "เลือกเปอร์เซ็น", placeholderShow: "เลือกเปอร์เซ็นจ่าย", typeShow: "select", rules: 2, invalidFeedback: "กำหนดเปอร์เซ็น", min: 0, max: 50, rowForm: 1 },
     { title: "overdue", labelShow: "มีค้างบวก", placeholderShow: "ไม่มีค้างบวก", typeShow: "onOff", rules: 2, invalidFeedback: "", rowForm: 2 },
     { title: "commission", labelShow: "รับค่าคอม", placeholderShow: "ไม่รับค่าคอม", typeShow: "onOff", rules: 2, invalidFeedback: "", rowForm: 2 },
     { title: "adjustPercentage", labelShow: "ปรับเปอร์เซ็น", placeholderShow: "ไม่ปรับเปอร์เซ็น", typeShow: "onOff", rules: 2, invalidFeedback: "", rowForm: 2 },

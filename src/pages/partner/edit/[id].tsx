@@ -8,7 +8,7 @@ import EditModal from "@/components/modal/EditModal";
 import useAxios from "axios-hooks";
 import BankAccount from "@/components/Input/BankAccount";
 import Link from "next/link";
-import { bankMap } from '@/test';
+import { bankMap } from '@/data/test';
 import { Member } from "@prisma/client";
 
 
