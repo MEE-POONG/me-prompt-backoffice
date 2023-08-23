@@ -98,7 +98,7 @@ const UserAGPage: React.FC = () => {
               />
             </InputGroup>
             {/* <AddListName /> */}
-            <Link href="/partner/userAG/add" className="ms-2 btn icon icofn-primary">
+            <Link href="/partner/user-ag/add" className="ms-2 btn icon icofn-primary">
               เพิ่มพาร์ทเนอร์
             </Link>
           </Card.Header>
@@ -157,9 +157,9 @@ const UserAGPage: React.FC = () => {
                         <Button className="ms-2 btn" bsPrefix="icon">
                           <FaRegEye />
                         </Button>
-                        <Button className="ms-2 btn" bsPrefix="icon">
+                        <Link href={"/partner/user-ag/edit/"} className="ms-2 btn icon icofn-primary">
                           <FaPen />
-                        </Button>
+                        </Link>
                         <DeleteModal data={userAG} apiDelete={() => deleteUserAG(userAG.id)} />
                       </td>
                     </tr>

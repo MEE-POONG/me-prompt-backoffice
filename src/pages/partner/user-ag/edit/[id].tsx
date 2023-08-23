@@ -19,7 +19,7 @@ interface Params {
   totalPages: number;
 }
 
-const UserAGAdd: React.FC = () => {
+const UserAGEdit: React.FC = () => {
   const initialFormData = userAGForm.reduce((acc: any, curr: any) => {
     acc[curr.title] = curr.typeShow === "onOff" ? false : '';
     return acc;
@@ -297,4 +297,4 @@ const UserAGAdd: React.FC = () => {
     </LayOut >
   );
 }
-export default UserAGAdd;
+export default UserAGEdit;
