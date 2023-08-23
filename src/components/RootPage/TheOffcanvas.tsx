@@ -54,18 +54,18 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                         <span className="ms-2">Home</span>
                     </Link>
                     <div id="partner" className='select-page'>
-                        <Dropdown.Toggle onClick={() => handlePath('/partner')} className={asPath === "/partner" || asPath === "/partner/add" || asPath === "/partner/userAG" || asPath === "/partner/userAG" || asPath.startsWith("/partner/edit/") ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
+                        <Dropdown.Toggle onClick={() => handlePath('/partner')} className={asPath === "/partner" || asPath === "/partner/add" || asPath === "/partner/user-ag" || asPath.startsWith("/partner/edit/") ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
                             <i >
                                 <FaTachometerAlt />
                             </i>
                             <span className="ms-2">Partner</span>
                         </Dropdown.Toggle>
 
-                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/partner" || checkClickPath === "/partner/userAG" || checkClickPath === "/partner" || asPath === "/partner/add" || asPath.startsWith("/partner/edit/")} >
+                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/partner" || checkClickPath === "/partner/user-ag" || checkClickPath === "/partner" || asPath === "/partner/add" || asPath.startsWith("/partner/edit/")} >
                             <Link href="/partner" className={asPath === "/partner" || asPath === "/partner/add" || asPath.startsWith("/partner/edit/") ? "nav-link active" : "nav-link"}>
                                 <span>พันธมิตร</span>
                             </Link>
-                            <Link href="/partner/userAG" className={asPath === "/partner/userAG" ? "nav-link active" : "nav-link"}>
+                            <Link href="/partner/user-ag" className={asPath === "/partner/user-ag" ? "nav-link active" : "nav-link"}>
                                 <span>UserAg</span>
                             </Link>
                         </Dropdown.Menu>

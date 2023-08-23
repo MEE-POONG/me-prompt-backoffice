@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
                 <Card className="text-primary">
                     <Card.Body>
                         <Form>
-                            <Image src="/images/logo.png" className="w-100 p-2" />
+                            <Image src={`${process.env.ImageBase_URL}/QZ6TuL-3r02W7wQjQrv5DA/907bdcd3-565b-4ae1-045b-c4d966eaa600/250`} className="w-100 p-2" />
                             <FloatingLabel
                                 controlId="floatingInput"
                                 label="Username"

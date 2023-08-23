@@ -39,7 +39,14 @@ const UserAGAdd: React.FC = () => {
   const [{ loading: postLoadding, error: postError }, userAGPost] = useAxios({ url: '/api/userAG', method: 'POST' }, { manual: true });
   const [usernameExists, setUsernameExists] = useState(false);
 
+
+  const searchTeam = formData["originAG"];  // Extract complex expression
+
   useEffect(() => {
+    setFormData((prev: Record<string, string>) => ({ ...prev, ["userAG"]: formData["originAG"] }));
+    if (searchTeam && searchTeam.length >= 3) {
+      userAGSearch();
+    }
     if (formData["position"]) {
       setIsFormDisabled(false);
       if (formData["position"] === "senior") {
@@ -52,15 +59,7 @@ const UserAGAdd: React.FC = () => {
     } else {
       setIsFormDisabled(true);
     }
-
-  }, [formData["position"]]);
-
-  useEffect(() => {
-    setFormData((prev: Record<string, string>) => ({ ...prev, ["userAG"]: formData["originAG"] }));
-    if (formData["originAG"] && formData["originAG"].length >= 3) {
-      userAGSearch();
-    }
-  }, [formData["originAG"]]);
+  }, [formData, userAGSearch, searchTeam])
 
   const handleInputChange = (title: string, value: any) => {
     setFormData((prev: any) => ({

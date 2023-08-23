@@ -47,8 +47,7 @@ const MemberAdd: React.FC = () => {
     url: `/api/member/${id}`,
     method: "GET",
   }, { autoCancel: false, manual: true });
-
-  useEffect(() => {
+useEffect(() => {
     if (id) {
       executeMemberID().then(({ data }) => {
         if (data?.data) {
@@ -64,7 +63,7 @@ const MemberAdd: React.FC = () => {
         }
       });
     }
-  }, [id]);
+  }, [id, executeMemberID]);
 
   const reloadPage = () => {
     executeMemberID().then(({ data }) => {
