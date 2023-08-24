@@ -8,7 +8,7 @@ const PartnerPage: React.FC = () => {
   const [{ data: settingsData }, getMember,] = useAxios({
     url: `/api/setting`,
     method: "GET",
-  });
+  }, { autoCancel: false });
   const [username, setUsername] = useState<string>("");
 
   useEffect(() => {

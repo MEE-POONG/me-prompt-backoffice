@@ -28,7 +28,7 @@ const MemberPage: React.FC = () => {
   const [{ data: membersData }, getMember,] = useAxios({
     url: `/api/member?page=${params.page}&pageSize=${params.pageSize}&searchKey=${params.searchKey}`,
     method: "GET",
-  });
+  }, { autoCancel: false });
 
   const [{ loading: deleteMemberLoading, error: deleteMemberError }, executeMemberDelete,] = useAxios({}, { manual: true });
 

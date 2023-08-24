@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/RootPage/TheLayOut";
 import { Badge, Button, Card, Form, InputGroup, Table } from "react-bootstrap";
-import { FaPen, FaRegEye, FaSearch } from "react-icons/fa";
+import { FaPen, FaPencilRuler, FaRegEye, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
@@ -33,7 +33,7 @@ const UserAGPage: React.FC = () => {
   const [{ data, loading, error }, getUserAG,] = useAxios({
     url: `/api/userAG?page=${params.page}&pageSize=${params.pageSize}&searchKey=${params.searchKey}`,
     method: "GET",
-  });
+  }, { autoCancel: false });
 
   const [{ }, executeUserAGDelete,] = useAxios({}, { manual: true });
 
@@ -121,14 +121,10 @@ const UserAGPage: React.FC = () => {
                       <td className="text-end">{index + 1}</td>
                       <td>{userAG?.username}</td>
                       <td>
-                        {/* {userAG?.member[0].firstname} */}
-                        {userAG?.member ? (
-                          <div>
-                            {userAG.member.firstname} {userAG.member.lastname}
-                          </div>
-                        ) : (
-                          <div>ไม่มีผู้ใช้</div>
-                        )}
+                        {userAG?.member ? <>{userAG.member.firstname} {userAG.member.lastname}</> : <> ไม่มีผู้ใช้ </>}
+                        <Button className="ms-2 btn" bsPrefix="icon">
+                         <FaPencilRuler/>
+                        </Button>
                       </td>
                       <td>{userAG?.percent}%</td>
                       <td>
@@ -154,9 +150,7 @@ const UserAGPage: React.FC = () => {
                         </Button>
                       </td>
                       <td>
-                        <Button className="ms-2 btn" bsPrefix="icon">
-                          <FaRegEye />
-                        </Button>
+
                         <Link href={`/partner/user-ag/edit/${userAG?.id}`} className="ms-2 btn icon icofn-primary">
                           <FaPen />
                         </Link>

@@ -31,7 +31,7 @@ const UserAGEdit: React.FC = () => {
   const [{ data: userAGID, loading: userAGIDLoading, error: userAGIDError }, userAGGetID,] = useAxios({
     url: `/api/userAG/${router.query.id}`,
     method: "GET",
-  });
+  }, { autoCancel: false });
   const [{ data: searchData, loading: searchLoadding, error: searchError }, userAGSearch] = useAxios({
     url: `/api/userAG/search?page=1&pageSize=10&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
     method: "GET",
