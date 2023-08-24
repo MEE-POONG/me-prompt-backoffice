@@ -12,14 +12,10 @@ import BasicInput from "@/components/Input/Basic";
 import BasicDropdownInput from "@/components/Input/BasicDropdown";
 import BasicSelectInput from "@/components/Input/BasicSelect";
 import BasicToggleButton from "@/components/Button/BasicToggle";
-
-interface Params {
-  page: number;
-  pageSize: number;
-  totalPages: number;
-}
+import { useRouter } from "next/router";
 
 const UserAGEdit: React.FC = () => {
+  const router = useRouter();
   const initialFormData = userAGForm.reduce((acc: any, curr: any) => {
     acc[curr.title] = curr.typeShow === "onOff" ? false : '';
     return acc;
@@ -32,12 +28,28 @@ const UserAGEdit: React.FC = () => {
   const [checkBody, setCheckBody] = useState<Record<string, string> | null>();
 
   const [searchPosition, setSearchPosition] = useState("");
+  const [{ data: userAGID, loading: userAGIDLoading, error: userAGIDError }, userAGGetID,] = useAxios({
+    url: `/api/userAG/${router.query.id}`,
+    method: "GET",
+  });
   const [{ data: searchData, loading: searchLoadding, error: searchError }, userAGSearch] = useAxios({
     url: `/api/userAG/search?page=1&pageSize=10&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
     method: "GET",
   }, { autoCancel: false });
   const [{ loading: postLoadding, error: postError }, userAGPost] = useAxios({ url: '/api/userAG', method: 'POST' }, { manual: true });
   const [usernameExists, setUsernameExists] = useState(false);
+  useEffect(() => {
+    const updateFormData = async () => {
+      if (userAGID) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setFormData((prev: typeof initialFormData) => ({
+          ...prev, ...userAGID
+        }));
+      }
+    };
+
+    updateFormData();
+  }, [userAGID]);
 
   useEffect(() => {
     if (formData["position"]) {
@@ -52,6 +64,7 @@ const UserAGEdit: React.FC = () => {
     } else {
       setIsFormDisabled(true);
     }
+    console.log("67 ", formData);
 
   }, [formData]);
 
@@ -297,4 +310,4 @@ const UserAGEdit: React.FC = () => {
     </LayOut >
   );
 }
-export default UserAGEdit;
+export default UserAGEdit;   

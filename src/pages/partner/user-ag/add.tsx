@@ -13,12 +13,6 @@ import BasicDropdownInput from "@/components/Input/BasicDropdown";
 import BasicSelectInput from "@/components/Input/BasicSelect";
 import BasicToggleButton from "@/components/Button/BasicToggle";
 
-interface Params {
-  page: number;
-  pageSize: number;
-  totalPages: number;
-}
-
 const UserAGAdd: React.FC = () => {
   const initialFormData = userAGForm.reduce((acc: any, curr: any) => {
     acc[curr.title] = curr.typeShow === "onOff" ? false : '';

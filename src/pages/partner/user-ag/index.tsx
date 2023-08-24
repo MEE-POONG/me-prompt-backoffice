@@ -109,7 +109,7 @@ const UserAGPage: React.FC = () => {
                   <th className="first">No.</th>
                   <th >userAG</th>
                   <th >ผู้ใช้</th>
-                  <th>UserAG</th>
+                  <th>สู้ฟรี</th>
                   <th>Benefit</th>
                   <th>จัดการ</th>
                 </tr>
@@ -118,7 +118,7 @@ const UserAGPage: React.FC = () => {
                 {filteredUserAGsData.map((userAG: UserAG, index: number) => {
                   return (
                     <tr key={userAG?.id}>
-                      <td>{index + 1}</td>
+                      <td className="text-end">{index + 1}</td>
                       <td>{userAG?.username}</td>
                       <td>
                         {/* {userAG?.member[0].firstname} */}
@@ -157,7 +157,7 @@ const UserAGPage: React.FC = () => {
                         <Button className="ms-2 btn" bsPrefix="icon">
                           <FaRegEye />
                         </Button>
-                        <Link href={"/partner/user-ag/edit/"} className="ms-2 btn icon icofn-primary">
+                        <Link href={`/partner/user-ag/edit/${userAG?.id}`} className="ms-2 btn icon icofn-primary">
                           <FaPen />
                         </Link>
                         <DeleteModal data={userAG} apiDelete={() => deleteUserAG(userAG.id)} />
