@@ -64,7 +64,6 @@ const UserAGEdit: React.FC = () => {
     } else {
       setIsFormDisabled(true);
     }
-    console.log("67 ", formData);
 
   }, [formData]);
 
@@ -238,7 +237,7 @@ const UserAGEdit: React.FC = () => {
                       title={inputItem.title}
                       labelShow={inputItem.labelShow}
                       placeholderShow={inputItem.placeholderShow}
-                      typeShow={inputItem.typeShow}
+                      valueShow={formData[inputItem.title]}
                       valueSet={(value: string) => handleInputChange(inputItem.title, value)}
                       rules={getValidationRule(inputItem.title, formData)}
                       checkIsValid={checkIsValid}

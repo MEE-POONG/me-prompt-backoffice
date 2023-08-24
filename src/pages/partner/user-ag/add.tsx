@@ -127,7 +127,7 @@ const UserAGAdd: React.FC = () => {
         for (let i = minValue; i <= maxValue; i += incrementValue) {
           options.push({
             id: i.toString(),   // convert number to string
-            textShow: Math.round(i).toString(),
+            textShow: Math.round(i),
           });
         }
         return options;
@@ -219,7 +219,7 @@ const UserAGAdd: React.FC = () => {
                       title={inputItem.title}
                       labelShow={inputItem.labelShow}
                       placeholderShow={inputItem.placeholderShow}
-                      typeShow={inputItem.typeShow}
+                      valueShow={formData[inputItem.title]}
                       valueSet={(value: string) => handleInputChange(inputItem.title, value)}
                       rules={getValidationRule(inputItem.title, formData)}
                       checkIsValid={checkIsValid}

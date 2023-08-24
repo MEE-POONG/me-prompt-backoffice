@@ -5,7 +5,7 @@ interface BasicDropdownInputProps {
     title: string;
     labelShow: string;
     placeholderShow: string;
-    typeShow: string;
+    valueShow: string;
     rules: (value: string) => boolean;
     valueSet: (value: string) => void;
     checkIsValid: boolean;
@@ -17,6 +17,7 @@ const BasicDropdownInput: React.FC<BasicDropdownInputProps> = ({
     title,
     labelShow,
     placeholderShow,
+    valueShow,
     rules,
     valueSet,
     checkIsValid,
@@ -35,7 +36,7 @@ const BasicDropdownInput: React.FC<BasicDropdownInputProps> = ({
             <Form.Label htmlFor={title}>{labelShow}</Form.Label>
             <Dropdown id={title} className='w-100'>
                 <Dropdown.Toggle variant="success" id="dropdown-basic" className='w-100'>
-                    {selectedValue || placeholderShow}
+                    {selectedValue || valueShow || placeholderShow}
                 </Dropdown.Toggle>
                 <Dropdown.Menu className='w-100 text-center'>
                     {list.map((item, index) => (

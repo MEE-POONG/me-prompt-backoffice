@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Form } from "react-bootstrap";
 
-interface ListItem {
+type ListItem = {
     id: string;
-    textShow: string;
-}
+    textShow: string | number;
+};
 
 interface BasicSelectInputProps {
     title: string;
     labelShow: string;
     placeholderShow: string;
     typeShow: string;
-    valueShow: string;
+    valueShow: string | number;
     valueSet: (value: string) => void;
     checkIsValid: boolean;
     rules?: (value: string) => boolean;
@@ -36,7 +36,7 @@ const BasicSelectInput: React.FC<BasicSelectInputProps> = ({
 
     useEffect(() => {
         if (checkIsValid && rules) {
-            setIsValid(rules(valueShow));
+            setIsValid(rules(valueShow.toString()));
             setShowValidation(true);
         }
     }, [checkIsValid, valueShow, rules]);
@@ -49,9 +49,10 @@ const BasicSelectInput: React.FC<BasicSelectInputProps> = ({
                 className='text-center'
                 isValid={showValidation && isValid === true}
                 isInvalid={showValidation && isValid === false}
-                onChange={(event: React.ChangeEvent<HTMLSelectElement>) => { // Use onChange here
+                onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                     valueSet(event.target.value);
                 }}
+                value={valueShow.toString()} 
             >
                 {listArray?.map((item, index) => (
                     <option key={index} value={item.textShow}>
