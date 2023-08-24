@@ -38,6 +38,18 @@ const UserAGEdit: React.FC = () => {
   }, { autoCancel: false });
   const [{ loading: postLoadding, error: postError }, userAGPost] = useAxios({ url: '/api/userAG', method: 'POST' }, { manual: true });
   const [usernameExists, setUsernameExists] = useState(false);
+  const [delayCompleted, setDelayCompleted] = useState(false);
+
+  useEffect(() => {
+    if (!userAGIDLoading) {
+      const timer = setTimeout(() => {
+        setDelayCompleted(true);
+      }, 1000); // 3 seconds delay
+
+      return () => clearTimeout(timer); // Cleanup on unmount
+    }
+  }, [userAGIDLoading]);
+
   useEffect(() => {
     const updateFormData = async () => {
       if (userAGID) {
@@ -198,6 +210,26 @@ const UserAGEdit: React.FC = () => {
   const handleGoBack = () => {
     window.history.back();
   };
+  if (userAGIDLoading || !delayCompleted) {
+    return (
+      <LayOut>
+        <div className='member-page'>
+          <p>Loading...</p> {/* You can replace this with a spinner or any other loading indicator */}
+        </div>
+      </LayOut>
+    );
+  }
+
+  // If there's an error, you can also handle it:
+  if (userAGIDError) {
+    return (
+      <LayOut>
+        <div className='member-page'>
+          <p>Error loading data. Please try again later.</p>
+        </div>
+      </LayOut>
+    );
+  }
   return (
     <LayOut>
       <div className='member-page'>
