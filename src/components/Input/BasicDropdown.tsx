@@ -11,6 +11,8 @@ interface BasicDropdownInputProps {
     checkIsValid: boolean;
     invalidFeedback: string;
     list: { text: string }[];
+    disabled: boolean;
+
 }
 
 const BasicDropdownInput: React.FC<BasicDropdownInputProps> = ({
@@ -22,7 +24,9 @@ const BasicDropdownInput: React.FC<BasicDropdownInputProps> = ({
     valueSet,
     checkIsValid,
     invalidFeedback,
-    list
+    list,
+    disabled
+
 }) => {
     const [selectedValue, setSelectedValue] = useState<string | null>(null);
 
@@ -35,7 +39,9 @@ const BasicDropdownInput: React.FC<BasicDropdownInputProps> = ({
         <>
             <Form.Label htmlFor={title}>{labelShow}</Form.Label>
             <Dropdown id={title} className='w-100'>
-                <Dropdown.Toggle variant="success" id="dropdown-basic" className='w-100'>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" className='w-100'
+                    disabled={disabled}
+                >
                     {selectedValue || valueShow || placeholderShow}
                 </Dropdown.Toggle>
                 <Dropdown.Menu className='w-100 text-center'>

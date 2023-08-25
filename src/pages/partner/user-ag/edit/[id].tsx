@@ -4,7 +4,7 @@ import { Button, Card, Col, Dropdown, DropdownButton, FloatingLabel, Form, Image
 import useAxios from "axios-hooks";
 import Link from "next/link";
 import LayOut from "@/components/RootPage/TheLayOut";
-import AddModal from "@/components/modal/AddModal";
+import EditModal from "@/components/modal/EditModal";
 import InputWithSelect from "@/components/InputWithSelect";
 import BasicSearchInput from "@/components/Input/BasicSearch";
 import { userAGForm } from "@/data/partner";
@@ -29,24 +29,29 @@ const UserAGEdit: React.FC = () => {
 
   const [searchPosition, setSearchPosition] = useState("");
   const [{ data: userAGID, loading: userAGIDLoading, error: userAGIDError }, userAGGetID,] = useAxios({
-    url: `/api/userAG/${router.query.id}`,
-    method: "GET",
+
   }, { autoCancel: false });
-  const [{ data: searchData, loading: searchLoadding, error: searchError }, userAGSearch] = useAxios({
-    url: `/api/userAG/search?page=1&pageSize=10&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
-    method: "GET",
+  const [{ data: searchData, loading: searchLoediting, error: searchError }, userAGSearch] = useAxios({
+
   }, { autoCancel: false });
-  const [{ loading: postLoadding, error: postError }, userAGPost] = useAxios({ url: '/api/userAG', method: 'POST' }, { manual: true });
+  const [{ loading: postLoediting, error: postError }, userAGPost] = useAxios({ url: '/api/userAG', method: 'POST' }, { manual: true });
   const [usernameExists, setUsernameExists] = useState(false);
   const [delayCompleted, setDelayCompleted] = useState(false);
-
+  useEffect(() => {
+    if (router.query.id) {
+      userAGGetID({
+        url: `/api/userAG/${router.query.id}`,
+        method: "GET"
+      });
+    }
+  }, [router.query.id, userAGGetID]);
   useEffect(() => {
     if (!userAGIDLoading) {
       const timer = setTimeout(() => {
         setDelayCompleted(true);
-      }, 1000); // 3 seconds delay
+      }, 1000); 
 
-      return () => clearTimeout(timer); // Cleanup on unmount
+      return () => clearTimeout(timer);
     }
   }, [userAGIDLoading]);
 
@@ -59,7 +64,6 @@ const UserAGEdit: React.FC = () => {
         }));
       }
     };
-
     updateFormData();
   }, [userAGID]);
 
@@ -82,7 +86,10 @@ const UserAGEdit: React.FC = () => {
   useEffect(() => {
     setFormData((prev: Record<string, string>) => ({ ...prev, ["userAG"]: formData["originAG"] }));
     if (formData["originAG"] && formData["originAG"].length >= 3) {
-      userAGSearch();
+      userAGSearch({
+        url: `/api/userAG/search?page=1&pageSize=10&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
+        method: "GET",
+      });
     }
   }, [formData["originAG"]]);
 
@@ -94,10 +101,12 @@ const UserAGEdit: React.FC = () => {
   }
   const isInputDisabled = (inputTitle: string) => {
     switch (inputTitle) {
+      case "username":
+        return true;
       case "position":
-        return false;
+        return true;
       case "originAG":
-        return formData["position"] === "senior" || !formData["position"];
+        return true;
       default:
         return isFormDisabled;
     }
@@ -233,7 +242,7 @@ const UserAGEdit: React.FC = () => {
   return (
     <LayOut>
       <div className='member-page'>
-        <AddModal
+        <EditModal
           checkAlertShow={alertForm}
           setCheckAlertShow={setAlertForm}
           checkBody={checkBody ?? null}
@@ -241,7 +250,7 @@ const UserAGEdit: React.FC = () => {
         <Card>
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              UserAG - เพิ่มข้อมูล
+              UserAG - แก้ไขข้อมูล
             </h4>
           </Card.Header>
           <Card.Body>
@@ -275,6 +284,8 @@ const UserAGEdit: React.FC = () => {
                       checkIsValid={checkIsValid}
                       invalidFeedback={inputItem.invalidFeedback}
                       list={inputItem.list || []}
+                      disabled={isInputDisabled(inputItem.title)}
+                      
                     />
                   )}
 
@@ -306,6 +317,7 @@ const UserAGEdit: React.FC = () => {
                       checkIsValid={checkIsValid}
                       invalidFeedback={inputItem.invalidFeedback}
                       listArray={getListSelect(inputItem.title)}
+                      disabled={isInputDisabled(inputItem.title)}
                     />
                   )}
                   {inputItem.typeShow === "onOff" && (

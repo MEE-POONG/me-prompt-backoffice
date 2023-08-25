@@ -6,8 +6,8 @@ import Link from "next/link";
 import LayOut from "@/components/RootPage/TheLayOut";
 import AddModal from "@/components/modal/AddModal";
 import InputWithSelect from "@/components/InputWithSelect";
-import BasicSearchInput from "@/components/Input/BasicSearch";
 import { userAGForm } from "@/data/partner";
+import BasicSearchInput from "@/components/Input/BasicSearch";
 import BasicInput from "@/components/Input/Basic";
 import BasicDropdownInput from "@/components/Input/BasicDropdown";
 import BasicSelectInput from "@/components/Input/BasicSelect";
@@ -30,7 +30,7 @@ const UserAGAdd: React.FC = () => {
     url: `/api/userAG/search?page=1&pageSize=10&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
     method: "GET",
   }, { autoCancel: false });
-  const [{ loading: postLoadding, error: postError }, userAGPost] = useAxios({ url: '/api/userAG', method: 'POST' }, { manual: true });
+  const [{ loading: postLoadding, error: postError }, userAGPost] = useAxios({ url: '/api/userAG', method: 'PUT' }, { manual: true });
   const [usernameExists, setUsernameExists] = useState(false);
 
   useEffect(() => {
@@ -38,6 +38,7 @@ const UserAGAdd: React.FC = () => {
       setIsFormDisabled(false);
       if (formData["position"] === "senior") {
         setSearchPosition("boss");
+        setFormData((prev: Record<string, string>) => ({ ...prev, ["originAG"]: "" }));
       } else if (formData["position"] === "master") {
         setSearchPosition("senior");
       } else if (formData["position"] === "agent") {
@@ -61,9 +62,12 @@ const UserAGAdd: React.FC = () => {
       ...prev,
       [title]: value
     }));
+
   }
   const isInputDisabled = (inputTitle: string) => {
     switch (inputTitle) {
+      case "username":
+        return true;
       case "position":
         return false;
       case "originAG":
@@ -176,7 +180,6 @@ const UserAGAdd: React.FC = () => {
   const handleReload = () => {
     window.location.reload();
   };
-
   const handleGoBack = () => {
     window.history.back();
   };
@@ -225,6 +228,7 @@ const UserAGAdd: React.FC = () => {
                       checkIsValid={checkIsValid}
                       invalidFeedback={inputItem.invalidFeedback}
                       list={inputItem.list || []}
+                      disabled={isInputDisabled(inputItem.title)}
                     />
                   )}
 
@@ -256,6 +260,7 @@ const UserAGAdd: React.FC = () => {
                       checkIsValid={checkIsValid}
                       invalidFeedback={inputItem.invalidFeedback}
                       listArray={getListSelect(inputItem.title)}
+                      disabled={isInputDisabled(inputItem.title)}
                     />
                   )}
                   {inputItem.typeShow === "onOff" && (

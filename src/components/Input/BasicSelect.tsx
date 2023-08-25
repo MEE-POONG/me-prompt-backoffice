@@ -17,6 +17,7 @@ interface BasicSelectInputProps {
     rules?: (value: string) => boolean;
     invalidFeedback: string;
     listArray?: ListItem[];
+    disabled: boolean;
 }
 
 const BasicSelectInput: React.FC<BasicSelectInputProps> = ({
@@ -30,6 +31,7 @@ const BasicSelectInput: React.FC<BasicSelectInputProps> = ({
     checkIsValid,
     invalidFeedback,
     listArray,
+    disabled,
 }) => {
     const [isValid, setIsValid] = useState<boolean | null>(null);
     const [showValidation, setShowValidation] = useState(false);
@@ -53,6 +55,7 @@ const BasicSelectInput: React.FC<BasicSelectInputProps> = ({
                     valueSet(event.target.value);
                 }}
                 value={valueShow.toString()} 
+                disabled={disabled}
             >
                 {listArray?.map((item, index) => (
                     <option key={index} value={item.textShow}>
