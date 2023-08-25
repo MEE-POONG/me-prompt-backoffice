@@ -68,7 +68,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                         recommender
                     },
                 });
-                res.status(201).json({ success: true, data: newUserAG });
+                res.status(200).json({ success: true, data: newUserAG });
                 break;
             default:
                 res.setHeader('Allow', ['GET', 'POST']);

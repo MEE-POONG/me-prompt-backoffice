@@ -60,10 +60,13 @@ const EditModal: React.FC<EditModalProps> = ({ checkAlertShow, setCheckAlertShow
         setCheckAlertShow('not')
         router.reload();
     };
-    const handleClickฺBack = () => {
+    const handleClickBack = () => {
         router.back();
+    
+        setTimeout(() => {
+            window.location.reload();
+        }, 100); 
     };
-
     return (
         <>
             {checkAlertShow !== 'not' && (
@@ -72,8 +75,7 @@ const EditModal: React.FC<EditModalProps> = ({ checkAlertShow, setCheckAlertShow
                         <Alert.Heading className='m-0'>{heading}</Alert.Heading>
                         <p className='m-0'>{boding}</p>
                         <div className='d-flex justify-content-around'>
-                            <Button onClick={handleClickReload} className={checkAlertShow === 'success' ? "my-2" : "d-none"}>แก้ไขต่อ</Button>
-                            <Button onClick={handleClickฺBack} className={checkAlertShow === 'success' ? "my-2" : "d-none"}>กลับหน้าสมาชิก</Button>
+                            <Button onClick={handleClickBack} className={checkAlertShow === 'success' ? "my-2" : "d-none"}>กลับหน้าสมาชิก</Button>
                         </div>
                     </Alert>
                 </Modal>

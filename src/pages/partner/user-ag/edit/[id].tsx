@@ -35,17 +35,17 @@ const UserAGEdit: React.FC = () => {
   const [{ data: searchData, loading: searchLoediting, error: searchError }, userAGSearch] = useAxios({
 
   }, { autoCancel: false });
-  const [{ loading: postLoediting, error: postError }, userAGPost] = useAxios({  }, { manual: true });
+  const [{ loading: putLoediting, error: putError }, userAGPut] = useAxios({}, { manual: true });
   const [usernameExists, setUsernameExists] = useState(false);
   const [delayCompleted, setDelayCompleted] = useState(false);
   useEffect(() => {
-    if (router.query.id) {
+    if (router?.query?.id) {
       userAGGetID({
-        url: `/api/userAG/${router.query.id}`,
+        url: `/api/userAG/${router?.query?.id}`,
         method: "GET"
       });
     }
-  }, [router.query.id, userAGGetID]);
+  }, [router?.query?.id, userAGGetID]);
   useEffect(() => {
     if (!userAGIDLoading) {
       const timer = setTimeout(() => {
@@ -89,7 +89,6 @@ const UserAGEdit: React.FC = () => {
   }, [formData]);
 
   useEffect(() => {
-    setFormData((prev: Record<string, string>) => ({ ...prev, ["username"]: formData["originAG"] }));
     if (formData["originAG"] && formData["originAG"].length >= 3) {
       userAGSearch({
         url: `/api/userAG/search?page=1&pageSize=10&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
@@ -200,8 +199,12 @@ const UserAGEdit: React.FC = () => {
       console.log("formData : ", formData);
       try {
         setAlertForm("primary");
-        const response = await userAGPost({ data: formData });
-        if (response && response.status === 201) {
+        const response = await userAGPut({
+          url: "/api/userAG/" + router?.query?.id,
+          method: "PUT",
+          data: formData
+        });
+        if (response && response.status === 200) {
           setAlertForm("success");
         } else if (response?.status === 203) {
           setAlertForm("danger");

@@ -154,7 +154,7 @@ const UserAGAdd: React.FC = () => {
       try {
         setAlertForm("primary");
         const response = await userAGPost({ data: formData });
-        if (response && response.status === 201) {
+        if (response && response.status === 200) {
           setAlertForm("success");
         } else if (response?.status === 203) {
           setAlertForm("danger");

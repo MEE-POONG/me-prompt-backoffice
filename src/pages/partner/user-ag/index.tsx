@@ -123,7 +123,7 @@ const UserAGPage: React.FC = () => {
                       <td>
                         {userAG?.member ? <>{userAG.member.firstname} {userAG.member.lastname}</> : <> ไม่มีผู้ใช้ </>}
                         <Button className="ms-2 btn" bsPrefix="icon">
-                         <FaPencilRuler/>
+                          <FaPencilRuler />
                         </Button>
                       </td>
                       <td>{userAG?.percent}%</td>
@@ -141,18 +141,19 @@ const UserAGPage: React.FC = () => {
                           ปรับสู้ฟรี
                         </Button>
                         <Button
-                          bsPrefix="icon" className={`ms-2 btn ${userAG?.pay ? 'active' : ''}`}>
-                          จ่าย
-                        </Button>
-                        <Button
                           bsPrefix="icon" className={`ms-2 btn ${userAG?.customerCommission ? 'active' : ''}`}>
                           คืนลูกค้า
+                        </Button>
+                        <Button
+                          bsPrefix="icon" className={`ms-2 btn ${userAG?.pay ? 'active' : ''}`}>
+                          จ่าย
                         </Button>
                       </td>
                       <td>
 
                         <Link href={`/partner/user-ag/edit/${userAG?.id}`} className="ms-2 btn icon icofn-primary">
                           <FaPen />
+                          <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                         </Link>
                         <DeleteModal data={userAG} apiDelete={() => deleteUserAG(userAG.id)} />
                       </td>

@@ -6,31 +6,28 @@ const prisma = new PrismaClient();
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { method } = req;
     const { id } = req.query; // assuming id is passed as a query param
-    try {
-        switch (method) {
 
-            case 'GET':
-
+    switch (method) {
+        case 'GET':
+            try {
                 const userAG = await prisma.userAG.findUnique({
                     where: { id: String(id) },
                 });
                 res.status(200).json(userAG);
-
-                break;
-            case 'PUT':
-                const { username, originAG, position, percent, commission, overdue, adjustPercentage, pay, customerCommission, recommender } = req.body;
-                const numericPercent = Number(percent); // Convert percent to number
-                if (isNaN(numericPercent)) {
-                    res.status(400).json({ success: false, message: "Invalid percent value" });
-                    return; // Exit the function to prevent further execution
-                }
+            } catch (error) {
+                
+                res.status(500).json({ error: "An error occurred while fetching the userAG" });
+            }
+            break;
+        case 'PUT':
+            const { username, originAG, percent, commission, overdue, adjustPercentage, pay, customerCommission, recommender } = req.body;
+            try {
                 const updatedPartner = await prisma.userAG.update({
                     where: { id: String(id) },
                     data: {
                         username,
                         originAG,
-                        position,
-                        percent: numericPercent, // Use the numeric value
+                        percent,
                         commission,
                         overdue,
                         adjustPercentage,
@@ -40,22 +37,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     },
                 });
                 res.status(200).json(updatedPartner);
-
-                break;
-            case 'DELETE':
+            } catch (error) {
+                
+                res.status(500).json({ error: "An error occurred while updating the userAG" });
+            }
+            break;
+        case 'DELETE':
+            try {
                 const deletedPartner = await prisma.userAG.delete({
                     where: { id: String(id) },
                 });
                 res.status(200).json(deletedPartner);
-
-                break;
-            default:
-                res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
-                res.status(405).end(`Method ${method} Not Allowed`);
-        }
-
-    } catch (error) {
-        console.error("An unexpected error occurred:", error); // Log the actual error
-        res.status(500).json({ success: false, message: "An unexpected error occurred" });
+            } catch (error) {
+                
+                res.status(500).json({ error: "An error occurred while deleting the userAG" });
+            }
+            break;
+        default:
+            res.setHeader('Allow', ['GET','PUT', 'DELETE']);
+            res.status(405).end(`Method ${method} Not Allowed`);
     }
 }
