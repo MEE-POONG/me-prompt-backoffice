@@ -6,7 +6,7 @@ import Link from "next/link";
 import LayOut from "@/components/RootPage/TheLayOut";
 import AddModal from "@/components/modal/AddModal";
 import InputWithSelect from "@/components/InputWithSelect";
-import { userAGForm } from "@/data/partner";
+import { userAGForm } from "@/data/formData";
 import BasicSearchInput from "@/components/Input/BasicSearch";
 import BasicInput from "@/components/Input/Basic";
 import BasicDropdownInput from "@/components/Input/BasicDropdown";
@@ -30,28 +30,23 @@ const UserAGAdd: React.FC = () => {
     url: `/api/userAG/search?page=1&pageSize=10&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
     method: "GET",
   }, { autoCancel: false });
-  const [{ loading: postLoadding, error: postError }, userAGPost] = useAxios({ url: '/api/userAG', method: 'PUT' }, { manual: true });
+  const [{ loading: postLoadding, error: postError }, userAGPost] = useAxios({ url: '/api/userAG', method: 'POST' }, { manual: true });
   const [usernameExists, setUsernameExists] = useState(false);
 
   useEffect(() => {
-    if (formData["position"]) {
-      setIsFormDisabled(false);
-      if (formData["position"] === "senior") {
-        setSearchPosition("boss");
-        setFormData((prev: Record<string, string>) => ({ ...prev, ["originAG"]: "" }));
-      } else if (formData["position"] === "master") {
-        setSearchPosition("senior");
-      } else if (formData["position"] === "agent") {
-        setSearchPosition("master");
-      }
-    } else {
-      setIsFormDisabled(true);
+    if (formData["position"] === "senior") {
+      setSearchPosition("boss");
+      setFormData((prev: Record<string, string>) => ({ ...prev, ["originAG"]: "" }));
+    } else if (formData["position"] === "master") {
+      setSearchPosition("senior");
+    } else if (formData["position"] === "agent") {
+      setSearchPosition("master");
     }
 
-  }, [formData]);
+  }, [formData["position"]]);
 
   useEffect(() => {
-    setFormData((prev: Record<string, string>) => ({ ...prev, ["userAG"]: formData["originAG"] }));
+    setFormData((prev: Record<string, string>) => ({ ...prev, ["username"]: formData["originAG"] }));
     if (formData["originAG"] && formData["originAG"].length >= 3) {
       userAGSearch();
     }
@@ -66,8 +61,6 @@ const UserAGAdd: React.FC = () => {
   }
   const isInputDisabled = (inputTitle: string) => {
     switch (inputTitle) {
-      case "username":
-        return true;
       case "position":
         return false;
       case "originAG":

@@ -7,7 +7,7 @@ import LayOut from "@/components/RootPage/TheLayOut";
 import EditModal from "@/components/modal/EditModal";
 import InputWithSelect from "@/components/InputWithSelect";
 import BasicSearchInput from "@/components/Input/BasicSearch";
-import { userAGForm } from "@/data/partner";
+import { userAGForm } from "@/data/formData";
 import BasicInput from "@/components/Input/Basic";
 import BasicDropdownInput from "@/components/Input/BasicDropdown";
 import BasicSelectInput from "@/components/Input/BasicSelect";
@@ -20,6 +20,7 @@ const UserAGEdit: React.FC = () => {
     acc[curr.title] = curr.typeShow === "onOff" ? false : '';
     return acc;
   }, {} as Record<string, any>);
+
   const [isFormDisabled, setIsFormDisabled] = useState(false);
 
   const [formData, setFormData] = useState<any>(initialFormData);
@@ -49,23 +50,27 @@ const UserAGEdit: React.FC = () => {
     if (!userAGIDLoading) {
       const timer = setTimeout(() => {
         setDelayCompleted(true);
-      }, 1000); 
+      }, 1000);
 
       return () => clearTimeout(timer);
     }
   }, [userAGIDLoading]);
 
   useEffect(() => {
-    const updateFormData = async () => {
+    const populateFormData = async () => {
       if (userAGID) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setFormData((prev: typeof initialFormData) => ({
-          ...prev, ...userAGID
-        }));
+        // If there's any asynchronous operation you want to perform, do it here.
+        // For now, I'll just set the formData.
+        setFormData(userAGID);
       }
     };
-    updateFormData();
+
+    populateFormData();
+
+    console.log(formData);
+
   }, [userAGID]);
+
 
   useEffect(() => {
     if (formData["position"]) {
@@ -84,7 +89,7 @@ const UserAGEdit: React.FC = () => {
   }, [formData]);
 
   useEffect(() => {
-    setFormData((prev: Record<string, string>) => ({ ...prev, ["userAG"]: formData["originAG"] }));
+    setFormData((prev: Record<string, string>) => ({ ...prev, ["username"]: formData["originAG"] }));
     if (formData["originAG"] && formData["originAG"].length >= 3) {
       userAGSearch({
         url: `/api/userAG/search?page=1&pageSize=10&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
@@ -122,7 +127,7 @@ const UserAGEdit: React.FC = () => {
           return (value: any) => value?.length >= 5;
         }
       case "percent":
-        return (value: any) => value?.length >= 0;
+        return (value: any) => value?.length >= 0 || value >= 0;
       case "overdue":
         return (value: any) => value === true || value === false;
       case "commission":
@@ -139,7 +144,7 @@ const UserAGEdit: React.FC = () => {
         return (value: any) => value?.length >= 0;
 
       default:
-        return (value: any) => value?.length >= 3;
+        return (value: any) => true;
     }
   }
   const getListArray = (inputTitle: string, arrayLoop: any[]) => {
@@ -285,7 +290,7 @@ const UserAGEdit: React.FC = () => {
                       invalidFeedback={inputItem.invalidFeedback}
                       list={inputItem.list || []}
                       disabled={isInputDisabled(inputItem.title)}
-                      
+
                     />
                   )}
 
