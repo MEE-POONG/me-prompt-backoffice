@@ -35,7 +35,7 @@ const UserAGEdit: React.FC = () => {
   const [{ data: searchData, loading: searchLoediting, error: searchError }, userAGSearch] = useAxios({
 
   }, { autoCancel: false });
-  const [{ loading: postLoediting, error: postError }, userAGPost] = useAxios({ url: '/api/userAG', method: 'POST' }, { manual: true });
+  const [{ loading: postLoediting, error: postError }, userAGPost] = useAxios({  }, { manual: true });
   const [usernameExists, setUsernameExists] = useState(false);
   const [delayCompleted, setDelayCompleted] = useState(false);
   useEffect(() => {
