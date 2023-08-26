@@ -54,7 +54,7 @@ const BasicSelectInput: React.FC<BasicSelectInputProps> = ({
                 onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                     valueSet(event.target.value);
                 }}
-                value={valueShow.toString()} 
+                value={valueShow} 
                 disabled={disabled}
             >
                 {listArray?.map((item, index) => (

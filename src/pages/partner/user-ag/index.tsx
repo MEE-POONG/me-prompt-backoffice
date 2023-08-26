@@ -11,6 +11,7 @@ import { UserAG as PrismaUserAG, Member as PrismaMember } from '@prisma/client';
 // import UserAGAddUserAGModal from "@/container/UserAG/AddUserAGModal";
 // import UserAGViewUserAGModal from "@/container/UserAG/ViewModal";
 import DeleteModal from "@/components/modal/DeleteModal";
+import AddPartner from "@/container/userAG/AddPartner";
 interface Member extends PrismaMember {
 }
 
@@ -20,18 +21,18 @@ interface UserAG extends PrismaUserAG {
 interface Params {
   page: number;
   pageSize: number;
-  searchKey: string;
+  keyword: string;
   totalPages: number;
 }
 const UserAGPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
-    searchKey: "",
+    keyword: "",
     totalPages: 1,
   });
   const [{ data, loading, error }, getUserAG,] = useAxios({
-    url: `/api/userAG?page=${params.page}&pageSize=${params.pageSize}&searchKey=${params.searchKey}`,
+    url: `/api/userAG/search?page=${params.page}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
     method: "GET",
   }, { autoCancel: false });
 
@@ -40,6 +41,8 @@ const UserAGPage: React.FC = () => {
   const [filteredUserAGsData, setFilteredUserAGsData] = useState<UserAG[]>([]);
 
   useEffect(() => {
+    console.log(data);
+    
     setFilteredUserAGsData(data?.data ?? []);
 
   }, [data]);
@@ -69,14 +72,14 @@ const UserAGPage: React.FC = () => {
     }));
   };
 
-  const handleChangesearchKey = (search: string) => {
+  const handleChangekeyword = (search: string) => {
     setParams(prevParams => ({
       ...prevParams,
-      searchKey: search,
+      keyword: search,
     }));
   };
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error!</p>;
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error!</p>;
   return (
     <LayOut>
 
@@ -91,7 +94,7 @@ const UserAGPage: React.FC = () => {
                 <FaSearch />
               </InputGroup.Text>
               <Form.Control
-                onChange={e => handleChangesearchKey(e.target.value)}
+                onChange={e => handleChangekeyword(e.target.value)}
                 placeholder="ค้นหาผู้ใช้"
                 aria-label="Fullname"
                 aria-describedby="basic-addon1"
@@ -122,9 +125,10 @@ const UserAGPage: React.FC = () => {
                       <td>{userAG?.username}</td>
                       <td>
                         {userAG?.member ? <>{userAG.member.firstname} {userAG.member.lastname}</> : <> ไม่มีผู้ใช้ </>}
-                        <Button className="ms-2 btn" bsPrefix="icon">
+                        {/* <Button className="ms-2 btn" bsPrefix="icon">
                           <FaPencilRuler />
-                        </Button>
+                        </Button> */}
+                        <AddPartner setID={userAG?.id} />
                       </td>
                       <td>{userAG?.percent}%</td>
                       <td>

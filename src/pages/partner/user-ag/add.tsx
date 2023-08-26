@@ -27,7 +27,7 @@ const UserAGAdd: React.FC = () => {
 
   const [searchPosition, setSearchPosition] = useState("");
   const [{ data: searchData, loading: searchLoadding, error: searchError }, userAGSearch] = useAxios({
-    url: `/api/userAG/search?page=1&pageSize=10&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
+    url: `/api/userAG/search?page=1&pageSize=10&position=${searchPosition}&keyword=${formData["originAG"]}`,
     method: "GET",
   }, { autoCancel: false });
   const [{ loading: postLoadding, error: postError }, userAGPost] = useAxios({ url: '/api/userAG', method: 'POST' }, { manual: true });
@@ -95,7 +95,6 @@ const UserAGAdd: React.FC = () => {
         return (value: any) => value === true || value === false;
       case "recommender":
         return (value: any) => value?.length >= 0;
-
       default:
         return (value: any) => value?.length >= 3;
     }

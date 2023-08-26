@@ -11,14 +11,17 @@ export const userAGForm = [
     { title: "actuallypaid", labelShow: "จ่ายยอดเต็ม", placeholderShow: "จ่ายยอดจริง", typeShow: "onOff", rules: 2, invalidFeedback: "", rowForm: 2 },
     { title: "recommender", labelShow: "Recommender / ผู้แนะนำ", placeholderShow: "เลือกยูสที่แนะนำ", typeShow: "text", rules: 0, invalidFeedback: "ระบุผู้แนะนำที่จะได้รับยอดแนะนำ", rowForm: 3 },
 ];
+export const userAGAddPartner = [
+    { title: "memberID", labelShow: "memberID / เลือกผู้ใช้", placeholderShow: "เลือกยูสที่ต้องใช้", typeShow: "search", rules: 2, invalidFeedback: "ระบุผู้ใช้", arraySearch: "member", rowForm: 1 },
+];
 export const testForm = [
     { title: "position", labelShow: "คำนำหน้า", placeholderShow: "กรุณาเลือก", typeShow: "dropdown", rules: 1, invalidFeedback: "ต้องเลือกข้อมูล", list: [{ text: "นาย" }, { text: "นาง" }, { text: "นางสาว" },], rowForm: 1 },
-    { title: "firstname", labelShow: "ชื่อจริง", placeholderShow: "กรุณากรอกข้อมูล", typeShow: "text", rules: 0, invalidFeedback: "ระบุผู้แนะนำที่จะได้รับยอดแนะนำ", rowForm: 1},
+    { title: "firstname", labelShow: "ชื่อจริง", placeholderShow: "กรุณากรอกข้อมูล", typeShow: "text", rules: 0, invalidFeedback: "ระบุผู้แนะนำที่จะได้รับยอดแนะนำ", rowForm: 1 },
     { title: "lastname", labelShow: "นามสกุล", placeholderShow: "กรุณากรอกข้อมูล", typeShow: "text", rules: 0, invalidFeedback: "ระบุผู้แนะนำที่จะได้รับยอดแนะนำ", rowForm: 1 },
     // { title: "originAG", labelShow: "OriginAG / ยูสต้นสาย", placeholderShow: "เลือกยูสเต้นสาย", typeShow: "search", rules: 2, invalidFeedback: "ระบบยูสต้นสาย", arraySearch: "partner", rowForm: 1 },
     { title: "nickname", labelShow: "ชื่อเล่น", placeholderShow: "กรุณากรอกข้อมูล", typeShow: "text", rules: 2, invalidFeedback: "กรอก usernameAG ให้ถูกต้อง", rowForm: 1 },
-    {title:"date", labelShow: "วัน/เดือน/ปีเกิด", typeShow: "text ",rules: 1, invalidFeedback: "ต้องเลือกข้อมูล", minDate: new Date(), maxDate: new Date(2023, 12, 31), format: "dd/MM/yyyy", rowForm: 1,},
-    { title: "phone",  labelShow: "เบอร์โทรศัพท์", placeholderShow: "กรุณากรอกข้อมูล", typeShow: "text", rules: 2, invalidFeedback: "กรอก usernameAG ให้ถูกต้อง", rowForm: 1 },
+    { title: "date", labelShow: "วัน/เดือน/ปีเกิด", typeShow: "text ", rules: 1, invalidFeedback: "ต้องเลือกข้อมูล", minDate: new Date(), maxDate: new Date(2023, 12, 31), format: "dd/MM/yyyy", rowForm: 1, },
+    { title: "phone", labelShow: "เบอร์โทรศัพท์", placeholderShow: "กรุณากรอกข้อมูล", typeShow: "text", rules: 2, invalidFeedback: "กรอก usernameAG ให้ถูกต้อง", rowForm: 1 },
     { title: "email", labelShow: "อีเมล", placeholderShow: "กรุณากรอกข้อมูล", typeShow: "text", rules: 2, invalidFeedback: "กรอก usernameAG ให้ถูกต้อง", rowForm: 1 },
     { title: "address", labelShow: "ที่อยู่", placeholderShow: "กรุณากรอกข้อมูล", typeShow: "text", rules: 2, invalidFeedback: "กรอก usernameAG ให้ถูกต้อง", rowForm: 1 },
     { title: "zipcode", labelShow: "รหัสไปรษณีย์", placeholderShow: "กรุณากรอกข้อมูล", typeShow: "text", rules: 2, invalidFeedback: "กรอก usernameAG ให้ถูกต้อง", rowForm: 1 },

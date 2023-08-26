@@ -24,7 +24,6 @@ interface RequestQuery {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     const { method } = req;
-
     switch (method) {
         case 'GET':
             try {
@@ -64,34 +63,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 res.status(500).json({ success: false, message: "An error occurred while fetching the members" });
             }
             break;
-
-        case 'POST':
-            try {
-                const { username, password, firstname, lastname, bankAccount, bank, phone, line, email } = req.body;
-
-                if (!username || !password || !firstname || !lastname || !bankAccount || !bank || !phone || !line) {
-                    return res.status(400).json({ success: false, message: "All fields are required" });
-                }
-                const newMember = await prisma.member.create({
-                    data: {
-                        username,
-                        password,
-                        firstname,
-                        lastname,
-                        bankAccount,
-                        bank,
-                        phone,
-                        line,
-                        email,
-                    },
-                });
-
-                res.status(201).json({ success: true, data: newMember });
-            } catch (error) {
-                res.status(500).json({ success: true, message: "An error occurred while creating the member" });
-            }
-            break;
-
         default:
             res.setHeader('Allow', ['GET', 'POST']);
             res.status(405).end(`Method ${method} Not Allowed`);

@@ -19,7 +19,7 @@ type Pagination = {
 interface RequestQuery {
     page?: string;
     pageSize?: string;
-    searchKey?: string;
+    keyword?: string;
     position?: string;
 }
 
@@ -32,14 +32,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 const query: RequestQuery = req.query as unknown as RequestQuery;
                 const page: number = parseInt(query.page || '1', 10);
                 const pageSize: number = parseInt(query.pageSize || '10', 10);
-                let searchKey: string = decodeURIComponent(query.searchKey || '');
+                let keyword: string = decodeURIComponent(query.keyword || '');
                 let position: string = decodeURIComponent(query.position || '');
         
                 const searchCriteria: Prisma.UserAGWhereInput = {};
                 
-                if (searchKey) {
+                if (keyword) {
                     searchCriteria.username = {
-                        contains: searchKey,
+                        contains: keyword,
                         mode: 'insensitive'
                     };
                 }

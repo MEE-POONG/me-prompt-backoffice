@@ -91,7 +91,7 @@ const UserAGEdit: React.FC = () => {
   useEffect(() => {
     if (formData["originAG"] && formData["originAG"].length >= 3) {
       userAGSearch({
-        url: `/api/userAG/search?page=1&pageSize=10&position=${searchPosition}&searchTeam=${formData["originAG"]}`,
+        url: `/api/userAG/search?page=1&pageSize=10&position=${searchPosition}&keyword=${formData["originAG"]}`,
         method: "GET",
       });
     }
