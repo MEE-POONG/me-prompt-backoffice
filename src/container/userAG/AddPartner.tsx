@@ -95,7 +95,7 @@ const AddPartner: React.FC<AddPartnerProps> = ({ setID }) => {
                         {filteredMembersData.map((members: Member, index: number) => {
                             return (
                                 <Col lg={6} key={index}>
-                                    <Button onClick={() => { setSelectMember(members?.id), setNameKey(members?.firstname + " " + members?.lastname) }} bsPrefix="icon" className={`w-100 btn ${selectMeber === members?.id ? 'active' : ''}`}>
+                                    <Button onClick={() => { setSelectMember(members?.id), setNameKey(members?.firstname + " " + members?.lastname) }} bsPrefix="icon" className={`w-100 my-2 btn ${selectMeber === members?.id ? 'active' : ''}`}>
                                         {members?.firstname + " " + members?.lastname}
                                     </Button>
                                 </Col>
