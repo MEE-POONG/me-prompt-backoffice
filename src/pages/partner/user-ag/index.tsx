@@ -37,6 +37,7 @@ const UserAGPage: React.FC = () => {
   const [{ }, executeUserAGDelete,] = useAxios({}, { manual: true });
 
   const [filteredUserAGsData, setFilteredUserAGsData] = useState<UserAG[]>([]);
+
   useEffect(() => {
     userAGSearch({
       url: `/api/userAG/search?page=${params.page}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
@@ -45,10 +46,9 @@ const UserAGPage: React.FC = () => {
   }, [params]);
 
   useEffect(() => {
-    console.log(data);
-
-    setFilteredUserAGsData(data?.data ?? []);
-
+    if (data?.success) {
+      setFilteredUserAGsData(data?.data ?? []);
+    }
   }, [data]);
 
   const deleteUserAG = (id: string): Promise<any> => {
@@ -84,7 +84,6 @@ const UserAGPage: React.FC = () => {
   };
   return (
     <LayOut>
-
       <div className='userAG-page h-91'>
         <Card className="h-100">
           <Card.Header className="d-flex space-between">

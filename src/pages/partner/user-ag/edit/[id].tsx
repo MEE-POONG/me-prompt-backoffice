@@ -196,7 +196,6 @@ const UserAGEdit: React.FC = () => {
       setAlertForm("warning");
       setCheckBody(validationResult.invalidFields);
     } else {
-      console.log("formData : ", formData);
       try {
         setAlertForm("primary");
         const response = await userAGPut({

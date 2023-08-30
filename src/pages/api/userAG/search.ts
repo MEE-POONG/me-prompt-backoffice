@@ -53,6 +53,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         
                 const userAGs = await prisma.userAG.findMany({
                     where: searchCriteria,
+                    include: {
+                        member: {
+                          select: {
+                            firstname: true,
+                            lastname: true
+                          }
+                        }
+                      },
                     skip: (page - 1) * pageSize,
                     take: pageSize,
                     orderBy: {
