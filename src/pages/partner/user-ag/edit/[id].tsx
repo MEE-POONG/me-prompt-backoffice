@@ -123,7 +123,7 @@ const UserAGEdit: React.FC = () => {
         if (formData["position"] === "senior") {
           return (value: any) => value === '';
         } else {
-          return (value: any) => value?.length >= 5;
+          return (value: any) => value?.length >= 0;
         }
       case "percent":
         return (value: any) => value?.length >= 0 || value >= 0;

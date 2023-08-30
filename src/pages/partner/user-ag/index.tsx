@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/RootPage/TheLayOut";
-import { Badge, Button, Card, Form, InputGroup, Table } from "react-bootstrap";
+import { Badge, Button, Card, Col, Form, InputGroup, Row, Table } from "react-bootstrap";
 import { FaPen, FaPencilRuler, FaRegEye, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
@@ -25,6 +25,7 @@ interface Params {
   totalPages: number;
 }
 const UserAGPage: React.FC = () => {
+  const [memberUpdate, setMemberUpdate] = useState(false);
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
@@ -39,12 +40,16 @@ const UserAGPage: React.FC = () => {
   const [filteredUserAGsData, setFilteredUserAGsData] = useState<UserAG[]>([]);
 
   useEffect(() => {
-    userAGSearch({
-      url: `/api/userAG/search?page=${params.page}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
-      method: "GET",
-    })
-  }, [params]);
-
+    if (params || memberUpdate) {
+      userAGSearch({
+        url: `/api/userAG/search?page=${params.page}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
+        method: "GET",
+      });
+      if (memberUpdate) {
+        setMemberUpdate(false);
+      }
+    }
+  }, [params, memberUpdate]);
   useEffect(() => {
     if (data?.success) {
       setFilteredUserAGsData(data?.data ?? []);
@@ -82,6 +87,7 @@ const UserAGPage: React.FC = () => {
       keyword: search,
     }));
   };
+
   return (
     <LayOut>
       <div className='userAG-page h-91'>
@@ -111,7 +117,7 @@ const UserAGPage: React.FC = () => {
               <thead>
                 <tr>
                   <th className="first">No.</th>
-                  <th >userAG</th>
+                  <th  >userAG</th>
                   <th >ผู้ใช้</th>
                   <th>สู้ฟรี</th>
                   <th>Benefit</th>
@@ -125,11 +131,10 @@ const UserAGPage: React.FC = () => {
                       <td className="text-end">{index + 1}</td>
                       <td>{userAG?.username}</td>
                       <td>
-                        {userAG?.member ? <>{userAG.member.firstname} {userAG.member.lastname}</> : <> ไม่มีผู้ใช้ </>}
-                        {/* <Button className="ms-2 btn" bsPrefix="icon">
-                          <FaPencilRuler />
-                        </Button> */}
-                        <AddPartner setID={userAG?.id} />
+                        <span className="me-3">
+                          {userAG?.member ? <>{userAG.member.firstname} {userAG.member.lastname}</> : <> ไม่มีผู้ใช้ </>}
+                        </span>
+                        <AddPartner setID={userAG?.id} onUpdateSuccess={setMemberUpdate} />
                       </td>
                       <td>{userAG?.percent}%</td>
                       <td>
