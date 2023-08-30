@@ -23,7 +23,7 @@ const MemberAdd: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [alertForm, setAlertForm] = useState<string>("not");
   const [inputForm, setInputForm] = useState<boolean>(false);
-  const [checkBody, setCheckBody] = useState<string>(""); 
+  const [checkBody, setCheckBody] = useState<Record<string, string> | null>();
 
   const handleInputChange = (setter: any) => (event: any) => {
     const newValue = event.target.value;
@@ -47,7 +47,7 @@ const MemberAdd: React.FC = () => {
     setEmail("");
     setAlertForm("not");
     setInputForm(false);
-    setCheckBody("");
+    setCheckBody({});
   }
 
   const handleSubmit = async (event: React.MouseEvent<HTMLElement>) => {
@@ -66,7 +66,7 @@ const MemberAdd: React.FC = () => {
     if (missingFields.length > 0) {
       setAlertForm("warning");
       setInputForm(true);
-      setCheckBody(`กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}`);
+      setCheckBody({ value: `กรอกข้อมูลไม่ครบ: ${missingFields.join(', ')}` });
     } else {
       try {
         setAlertForm("primary"); // set to loading
@@ -105,7 +105,7 @@ const MemberAdd: React.FC = () => {
 
       <div className='member-page'>
         <Card>
-          {/* <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} /> */}
+          <AddModal checkAlertShow={alertForm} setCheckAlertShow={setAlertForm} checkBody={checkBody} />
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
               Member - เพิ่มข้อมูล

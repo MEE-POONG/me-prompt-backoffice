@@ -4,10 +4,10 @@ import { Badge, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FaRegEye, FaSearch, FaUserNinja } from 'react-icons/fa';
-interface PartnerAddPartnerModalProps {
+interface AddPartnerModalProps {
     data: Member; // replace this with the actual type of your data
 }
-const PartnerAddPartnerModal: React.FC<PartnerAddPartnerModalProps> = ({ data }) => {
+const AddPartnerModal: React.FC<AddPartnerModalProps> = ({ data }) => {
     const [show, setShow] = useState<boolean>(false);
 
     const handleClose = () => setShow(false);
@@ -59,4 +59,4 @@ const PartnerAddPartnerModal: React.FC<PartnerAddPartnerModalProps> = ({ data })
     );
 }
 
-export default PartnerAddPartnerModal;
+export default AddPartnerModal;

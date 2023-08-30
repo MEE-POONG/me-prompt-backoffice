@@ -72,7 +72,7 @@ const MemberPage: React.FC = () => {
 
   return (
     <LayOut>
-      <div className='partner-page h-100'>
+      <div className='partner-page h-91'>
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
@@ -116,19 +116,13 @@ const MemberPage: React.FC = () => {
                         {((params.page * 10) - 10) + index + 1}
                       </td>
                       <td className="name">
-                        <div className="space-around ">
-                          <b>{member?.firstname}</b>
-                          <b>{member?.lastname}</b>
-                        </div>
+                        {member?.firstname} {member?.lastname}
                       </td>
                       <td className="bank">
                         {bankObj &&
-                          <div>
-                            <img src={bankObj.image} alt={bankObj.value} style={{ width: '30px' }} />
-                          </div>
+                          <img src={bankObj.image} alt={bankObj.value} style={{ width: '30px' }} />
                         }
-
-                        <div>{member.bankAccount} </div>
+                        <span className="ms-2">{member.bankAccount} </span>
                       </td>
                       <td>
                         <Badge className="mx-1" bg="success">

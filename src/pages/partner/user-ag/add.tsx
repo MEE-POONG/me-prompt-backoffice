@@ -159,7 +159,7 @@ const UserAGAdd: React.FC = () => {
         } else if (response?.status === 203) {
           setAlertForm("danger");
           if (response.data.message === "Username already exists") {
-            setCheckBody({ username: `ยูส ${formData.username} มีแล้ว` });
+            setCheckBody({ value: `ยูส ${formData.username} มีแล้ว` });
             setUsernameExists(false);
           }
         } else {
