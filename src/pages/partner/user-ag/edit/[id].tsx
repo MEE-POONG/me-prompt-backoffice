@@ -225,8 +225,9 @@ const UserAGEdit: React.FC = () => {
   };
 
   const handleGoBack = () => {
-    window.history.back();
+    
   };
+  
   if (userAGIDLoading || !delayCompleted) {
     return (
       <LayOut>
@@ -254,6 +255,7 @@ const UserAGEdit: React.FC = () => {
           checkAlertShow={alertForm}
           setCheckAlertShow={setAlertForm}
           checkBody={checkBody ?? null}
+          pathBack={"/partner/user-ag"}
         />
         <Card>
           <Card.Header className="d-flex space-between">

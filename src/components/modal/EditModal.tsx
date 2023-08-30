@@ -8,9 +8,10 @@ interface EditModalProps {
     checkAlertShow: string;
     setCheckAlertShow: React.Dispatch<React.SetStateAction<string>>;
     checkBody: Record<string, string> | null | undefined;
+    pathBack: string
 }
 
-const EditModal: React.FC<EditModalProps> = ({ checkAlertShow, setCheckAlertShow, checkBody }) => {
+const EditModal: React.FC<EditModalProps> = ({ checkAlertShow, setCheckAlertShow, checkBody, pathBack }) => {
     const handleClose = () => setCheckAlertShow('not');
     const router = useRouter();
 
@@ -61,11 +62,11 @@ const EditModal: React.FC<EditModalProps> = ({ checkAlertShow, setCheckAlertShow
         router.reload();
     };
     const handleClickBack = () => {
-        router.back();
-    
-        setTimeout(() => {
+        const router = useRouter();
+
+        router.push(pathBack).then(() => {
             window.location.reload();
-        }, 100); 
+        });
     };
     return (
         <>

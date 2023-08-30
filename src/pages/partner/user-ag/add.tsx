@@ -26,13 +26,15 @@ const UserAGAdd: React.FC = () => {
   const [checkBody, setCheckBody] = useState<Record<string, string> | null>();
 
   const [searchPosition, setSearchPosition] = useState("");
-  const [{ data: searchData, loading: searchLoadding, error: searchError }, userAGSearch] = useAxios({
-    url: `/api/userAG/search?page=1&pageSize=10&position=${searchPosition}&keyword=${formData["originAG"]}`,
-    method: "GET",
-  }, { autoCancel: false });
+  const [{ data: searchData, loading: searchLoadding, error: searchError }, userAGSearch] = useAxios({}, { autoCancel: false });
   const [{ loading: postLoadding, error: postError }, userAGPost] = useAxios({ url: '/api/userAG', method: 'POST' }, { manual: true });
   const [usernameExists, setUsernameExists] = useState(false);
-
+  useEffect(() => {
+    userAGSearch({
+      url: `/api/member/search?page=1&pageSize=10&position=${searchPosition}&keyword=${formData["originAG"]}`,
+      method: "GET",
+    })
+  }, [searchPosition, formData["originAG"]]);
   useEffect(() => {
     if (formData["position"] === "senior") {
       setSearchPosition("boss");

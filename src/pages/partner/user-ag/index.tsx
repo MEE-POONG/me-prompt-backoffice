@@ -31,18 +31,22 @@ const UserAGPage: React.FC = () => {
     keyword: "",
     totalPages: 1,
   });
-  const [{ data, loading, error }, getUserAG,] = useAxios({
-    url: `/api/userAG/search?page=${params.page}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
-    method: "GET",
+  const [{ data, loading, error }, userAGSearch,] = useAxios({
   }, { autoCancel: false });
 
   const [{ }, executeUserAGDelete,] = useAxios({}, { manual: true });
 
   const [filteredUserAGsData, setFilteredUserAGsData] = useState<UserAG[]>([]);
+  useEffect(() => {
+    userAGSearch({
+      url: `/api/userAG/search?page=${params.page}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
+      method: "GET",
+    })
+  }, [params]);
 
   useEffect(() => {
     console.log(data);
-    
+
     setFilteredUserAGsData(data?.data ?? []);
 
   }, [data]);
@@ -78,8 +82,6 @@ const UserAGPage: React.FC = () => {
       keyword: search,
     }));
   };
-  // if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error!</p>;
   return (
     <LayOut>
 

@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
-import Head from 'next/head';
-import { Button, Card, Col, Dropdown, DropdownButton, FloatingLabel, Form, Image, InputGroup, Modal, Row } from "react-bootstrap";
+import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import useAxios from "axios-hooks";
-import { userAGAddPartner } from "@/data/formData";
-import BasicInput from "@/components/Input/Basic";
 import { FaPencilRuler } from "react-icons/fa";
-import BasicSearchInput from "@/components/Input/BasicSearch";
+import { Member } from "@prisma/client";
+import EditModal from "@/components/modal/EditModal";
 interface AddPartnerProps {
     setID: string;
 }
 const AddPartner: React.FC<AddPartnerProps> = ({ setID }) => {
     const [show, setShow] = useState<boolean>(false);
-    const [isValid, setIsValid] = useState<boolean | null>(null);
-    const [showValidation, setShowValidation] = useState(false);
+    const [checkIsValid, setCheckIsValid] = useState<boolean>(false);
     const [nameKey, setNameKey] = useState<string>("");
     const [{ data: searchData, loading: searchLoadding, error: searchError }, userAGSearch] = useAxios({}, { autoCancel: false });
+    const [filteredMembersData, setFilteredMembersData] = useState<Member[]>([]);
+    const [selectMeber, setSelectMember] = useState<string>("");
+    const [alertForm, setAlertForm] = useState<string>("not");
+    const [checkBody, setCheckBody] = useState<Record<string, string> | null>();
+    const [{ loading: putLoediting, error: putError }, userAGPut] = useAxios({}, { manual: true });
+
     useEffect(() => {
         userAGSearch({
             url: `/api/member/search?page=1&pageSize=10&keyword=${nameKey}`,
@@ -22,11 +25,37 @@ const AddPartner: React.FC<AddPartnerProps> = ({ setID }) => {
         })
     }, [nameKey]);
     useEffect(() => {
-        console.log(searchData);
+        setFilteredMembersData(searchData?.data ?? []);
     }, [searchData]);
 
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
+    const handleSelectPartner = async (event: React.FormEvent) => {
+        event.preventDefault();
+        setCheckIsValid(true);
+        if (selectMeber === "") {
+            setCheckIsValid(true);
+        } else {
+            setCheckIsValid(false);
+            setAlertForm("warning");
+            try {
+                setAlertForm("primary");
+                setShow(false);
+                const response = await userAGPut({
+                    url: "/api/userAG/" + setID,
+                    method: "PUT",
+                    data: { memberId: selectMeber }
+                });
+                if (response && response.status === 200) {
+                    setAlertForm("success");
+                } else {
+                    throw new Error('Failed to send data');
+                }
+            } catch (error) {
+                setAlertForm("danger");
+            }
+        }
+    };
 
     return (
         <>
@@ -34,6 +63,12 @@ const AddPartner: React.FC<AddPartnerProps> = ({ setID }) => {
                 <FaPencilRuler />
                 <span className="h-tooltiptext">เพิ่มพาร์ทเนอร์</span>
             </Button>
+            <EditModal
+                checkAlertShow={alertForm}
+                setCheckAlertShow={setAlertForm}
+                checkBody={checkBody ?? null}
+                pathBack={"/partner/user-ag"}
+            />
             <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header  >
                     <Modal.Title >เลือกพาร์ทเนอร์ </Modal.Title>
@@ -47,33 +82,26 @@ const AddPartner: React.FC<AddPartnerProps> = ({ setID }) => {
                                 <Form.Control
                                     type={'text'}
                                     placeholder={'คีย์ค้นหา'}
-                                    // name={title}
-                                    // value={valueShow}
+                                    name={'memberID'}
+                                    value={nameKey}
                                     onChange={e => setNameKey(e.target.value)}
-                                // isValid={showValidation && isValid === true}
-                                // isInvalid={showValidation && isValid === false}
-                                // autoComplete={"off"} 
-                                // disabled={disabled}
+                                    autoComplete={"off"}
                                 />
-                                {showValidation && isValid === false && <Form.Control.Feedback type="invalid">
-                                    {/* {invalidFeedback} */}
-                                </Form.Control.Feedback>}
+                                <Form.Control.Feedback type="invalid" className={checkIsValid ? "d-block" : "d-none"}>
+                                    กรุณาเลือกพาร์ทเนอร์
+                                </Form.Control.Feedback>
                             </Form.Group>
                         </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Button
-                                bsPrefix="icon" className={`ms-2 btn `}>
-                                จ่าย
-                            </Button>
-                        </Col>
-                        <Col>
-                            <Button
-                                bsPrefix="icon" className={`ms-2 btn ${false ? 'active' : ''}`}>
-                                จ่าย
-                            </Button>
-                        </Col>
+                        {filteredMembersData.map((members: Member, index: number) => {
+                            return (
+                                <Col lg={6} key={index}>
+                                    <Button onClick={() => { setSelectMember(members?.id), setNameKey(members?.firstname + " " + members?.lastname) }} bsPrefix="icon" className={`w-100 btn ${selectMeber === members?.id ? 'active' : ''}`}>
+                                        {members?.firstname + " " + members?.lastname}
+                                    </Button>
+                                </Col>
+                            )
+                        }
+                        )}
                     </Row>
                 </Modal.Body>
                 <Modal.Footer className='d-flex justify-content-around'>
@@ -81,7 +109,7 @@ const AddPartner: React.FC<AddPartnerProps> = ({ setID }) => {
                         Close
                     </Button>
                     <Button variant="primary"
-                    //  onClick={handleAddPartner}
+                        onClick={handleSelectPartner}
                     >
                         ยืนยันพาร์ทเนอร์
                     </Button>
