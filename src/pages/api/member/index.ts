@@ -51,6 +51,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     where: searchName,
                     skip: (page - 1) * pageSize,
                     take: pageSize,
+                    
                 });
 
                 const totalMembersCount: number = await prisma.member.count({

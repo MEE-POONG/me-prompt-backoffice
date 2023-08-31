@@ -15,27 +15,34 @@ import { bankMap } from "@/data/test";
 interface Params {
   page: number;
   pageSize: number;
-  searchKey: string;
+  keyword: string;
   totalPages: number;
 }
 const MemberPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
     page: 1,
     pageSize: 10,
-    searchKey: "",
+    keyword: "",
     totalPages: 1,
   });
   const [{ data: membersData }, getMember,] = useAxios({
-    url: `/api/member?page=${params.page}&pageSize=${params.pageSize}&searchKey=${params.searchKey}`,
-    method: "GET",
   }, { autoCancel: false });
 
   const [{ loading: deleteMemberLoading, error: deleteMemberError }, executeMemberDelete,] = useAxios({}, { manual: true });
 
   const [filteredMembersData, setFilteredMembersData] = useState<Member[]>([]);
-
   useEffect(() => {
-    setFilteredMembersData(membersData?.data ?? []);
+    if (params) {
+      getMember({
+        url: `/api/member/search?page=${params.page}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
+        method: "GET",
+      });
+    }
+  }, [params]);
+  useEffect(() => {
+    if (membersData?.success) {
+      setFilteredMembersData(membersData?.data ?? []);
+    }
   }, [membersData]);
 
   const deleteMember = (id: string): Promise<any> => {
@@ -63,10 +70,10 @@ const MemberPage: React.FC = () => {
     }));
   };
 
-  const handleChangesearchKey = (search: string) => {
+  const handleChangekeyword = (search: string) => {
     setParams(prevParams => ({
       ...prevParams,
-      searchKey: search,
+      keyword: search,
     }));
   };
 
@@ -83,7 +90,7 @@ const MemberPage: React.FC = () => {
                 <FaSearch />
               </InputGroup.Text>
               <Form.Control
-                onChange={e => handleChangesearchKey(e.target.value)}
+                onChange={e => handleChangekeyword(e.target.value)}
                 placeholder="ค้นหาผู้ใช้"
                 aria-label="Fullname"
                 aria-describedby="basic-addon1"

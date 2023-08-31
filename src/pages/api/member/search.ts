@@ -50,6 +50,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     where: searchName,
                     skip: (page - 1) * pageSize,
                     take: pageSize,
+                    include: {
+                        UserAG: {
+                            select: {
+                                username: true,
+                                position: true
+                            }
+                        }
+                    }
                 });
 
                 const totalMembersCount: number = await prisma.member.count({

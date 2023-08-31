@@ -12,7 +12,7 @@ type Data = {
 type Pagination = {
     page: number;
     pageSize: number;
-    total: number;
+    total: number
 }
 interface RequestQuery {
     page?: string;
