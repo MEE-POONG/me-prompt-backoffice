@@ -8,7 +8,7 @@ import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
 import PartnerViewMemberModal from "@/container/Partner/ViewModal";
 import DeleteModal from "@/components/modal/DeleteModal";
-import { Member } from "@prisma/client";
+import { UserAG as PrismaUserAG, Member as PrismaMember } from '@prisma/client';
 import PartnerAddPartnerModal from "@/container/Partner/AddPartnerModal";
 import { bankMap } from "@/data/test";
 
@@ -17,6 +17,12 @@ interface Params {
   pageSize: number;
   keyword: string;
   totalPages: number;
+}
+interface Member extends PrismaMember {
+  userAG: UserAG;
+}
+
+interface UserAG extends PrismaUserAG {
 }
 const MemberPage: React.FC = () => {
   const [params, setParams] = useState<Params>({
@@ -41,6 +47,7 @@ const MemberPage: React.FC = () => {
   }, [params]);
   useEffect(() => {
     if (membersData?.success) {
+      console.log(membersData?.data);
       setFilteredMembersData(membersData?.data ?? []);
     }
   }, [membersData]);
@@ -50,7 +57,7 @@ const MemberPage: React.FC = () => {
       url: "/api/member/" + id,
       method: "DELETE",
     }).then(() => {
-      setFilteredMembersData(prevMembers => prevMembers.filter(member => member.id !== id));
+      setFilteredMembersData(prevMembers => prevMembers.filter(member => member?.id !== id));
     });
   };
 
@@ -75,6 +82,14 @@ const MemberPage: React.FC = () => {
       ...prevParams,
       keyword: search,
     }));
+  };
+
+  const renderBadges = (users: any, bgColor: string) => {
+    return users.map((user: any, index: number) => (
+      <Badge key={index} className={"mx-1"} bg={bgColor}>
+        {user?.username}
+      </Badge>
+    ));
   };
 
   return (
@@ -102,7 +117,7 @@ const MemberPage: React.FC = () => {
             </Link>
           </Card.Header>
           <Card.Body className="p-0">
-            <Table striped bordered hover className="scroll">
+            <Table striped hover bordered className="scroll ">
               <thead>
                 <tr>
                   <th className="first">No.</th>
@@ -118,7 +133,7 @@ const MemberPage: React.FC = () => {
                 {filteredMembersData?.map((member: Member, index: number) => {
                   const bankObj = bankMap.find(bank => bank.value === member?.bank);
                   return (
-                    <tr key={member.id}>
+                    <tr key={member?.id}>
                       <td className="first">
                         {((params.page * 10) - 10) + index + 1}
                       </td>
@@ -129,53 +144,27 @@ const MemberPage: React.FC = () => {
                         {bankObj &&
                           <img src={bankObj.image} alt={bankObj.value} style={{ width: '30px' }} />
                         }
-                        <span className="ms-2">{member.bankAccount} </span>
+                        <span className="ms-2">{member?.bankAccount}</span>
                       </td>
                       <td>
-                        <Badge className="mx-1" bg="success">
-                          Success
-                        </Badge>
-                        <Badge className="mx-1" bg="success">
-                          Success
-                        </Badge>
-                        <Badge className="mx-1" bg="success">
-                          Success
-                        </Badge>
-                        <Badge className="mx-1" bg="success">
-                          Success
-                        </Badge>
-                        <Badge className="mx-1" bg="success">
-                          Success
-                        </Badge>
-                        <Badge className="mx-1" bg="success">
-                          Success
-                        </Badge>
-                        <Badge className="mx-1" bg="success">
-                          Success
-                        </Badge>
-                        <br />
-                        <Badge className="mx-1" bg="info">
-                          Info
-                        </Badge>
-                        <Badge className="mx-1" bg="info">
-                          Info
-                        </Badge>
-                        <Badge className="mx-1" bg="info">
-                          Info
-                        </Badge>
-                        <Badge className="mx-1" bg="info">
-                          Info
-                        </Badge>
+                        <div>
+                          {renderBadges((member as any).UserAG.filter((user: UserAG) => user?.position === 'senior'), "danger")}
+                        </div>
+                        <div>
+                          {renderBadges((member as any).UserAG.filter((user: UserAG) => user?.position === 'master'), "primary")}
+                        </div>
+                        <div>
+                          {renderBadges((member as any).UserAG.filter((user: UserAG) => user?.position === 'agent'), "success")}
+                        </div>
                       </td>
                       <td>
                         <PartnerViewMemberModal data={member} />
-
                         <PartnerAddPartnerModal data={member} />
-                        <Link href={`/partner/edit/${member.id}`} className="mx-1 btn info icon icon-primary">
+                        <Link href={`/partner/edit/${member?.id}`} className="mx-1 btn info icon icon-primary">
                           <FaPen />
                           <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                         </Link>
-                        <DeleteModal data={member} apiDelete={() => deleteMember(member.id)} />
+                        <DeleteModal data={member} apiDelete={() => deleteMember(member?.id)} />
                       </td>
                     </tr>
                   );
@@ -192,4 +181,6 @@ const MemberPage: React.FC = () => {
     </LayOut>
   );
 }
+
+
 export default MemberPage;

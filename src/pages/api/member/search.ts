@@ -55,6 +55,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                             select: {
                                 username: true,
                                 position: true
+                            },
+                            orderBy: {
+                                position: 'desc' // Sort by 'position' in descending order (Z-A)
                             }
                         }
                     }

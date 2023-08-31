@@ -117,9 +117,10 @@ const UserAGPage: React.FC = () => {
               <thead>
                 <tr>
                   <th className="first">No.</th>
-                  <th  >userAG</th>
-                  <th >ผู้ใช้</th>
-                  <th>สู้ฟรี</th>
+                  <th className="w-t-150">userAG</th>
+                  <th className="w-t-100">ตำแหน่ง</th>
+                  <th className="w-t-075">สู้ฟรี</th>
+                  <th className="w-t-300">ผู้ใช้</th>
                   <th>Benefit</th>
                   <th>จัดการ</th>
                 </tr>
@@ -129,14 +130,16 @@ const UserAGPage: React.FC = () => {
                   return (
                     <tr key={userAG?.id}>
                       <td className="text-end">{index + 1}</td>
-                      <td>{userAG?.username}</td>
-                      <td>
+                      <td className="w-t-150">{userAG?.username}</td>
+                      <td className="w-t-100">{userAG?.position}</td>
+                      <td className="w-t-075">{userAG?.percent}%</td>
+                      <td className="w-t-300">
                         <span className="me-3">
                           {userAG?.member ? <>{userAG.member.firstname} {userAG.member.lastname}</> : <> ไม่มีผู้ใช้ </>}
                         </span>
                         <AddPartner setID={userAG?.id} onUpdateSuccess={setMemberUpdate} />
                       </td>
-                      <td>{userAG?.percent}%</td>
+
                       <td>
                         <Button
                           bsPrefix="icon" className={`ms-2 btn ${userAG?.commission ? 'active' : ''}`}>
