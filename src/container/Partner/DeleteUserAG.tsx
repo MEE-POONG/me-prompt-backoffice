@@ -1,43 +1,47 @@
 import React, { useState, useEffect } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import useAxios from "axios-hooks";
-import { FaPencilRuler } from "react-icons/fa";
+import { FaUserSlash } from "react-icons/fa";
 import { Member } from "@prisma/client";
 import EditModal from "@/components/modal/EditModal";
-interface AddPartnerProps {
+interface DeleteUserAGProps {
     setID: string;
     onUpdateSuccess: (success: boolean) => void;  // New prop
 }
-const AddPartner: React.FC<AddPartnerProps> = ({ setID, onUpdateSuccess }) => {
+const DeleteUserAG: React.FC<DeleteUserAGProps> = ({ setID, onUpdateSuccess }) => {
     const [show, setShow] = useState<boolean>(false);
     const [checkIsValid, setCheckIsValid] = useState<boolean>(false);
     const [nameKey, setNameKey] = useState<string>("");
     const [{ data: searchData, loading: searchLoadding, error: searchError }, userAGSearch] = useAxios({}, { autoCancel: false });
-    const [filteredMembersData, setFilteredMembersData] = useState<Member[]>([]);
-    const [selectMember, setSelectMember] = useState<string>("");
+    const [filteredUserAGsData, setFilteredUserAGsData] = useState<Member[]>([]);
+    const [selectUserAG, setSelectUserAG] = useState<string>("");
     const [alertForm, setAlertForm] = useState<string>("not");
     const [checkBody, setCheckBody] = useState<Record<string, string> | null>();
     const [{ loading: putLoediting, error: putError }, userAGPut] = useAxios({}, { manual: true });
 
     useEffect(() => {
-        userAGSearch({
-            url: `/api/member/search?page=1&pageSize=10&keyword=${nameKey}`,
-            method: "GET",
-        })
-    }, [nameKey]);
+        if (show) {
+            userAGSearch({
+                url: `/api/userAG/member?page=1&pageSize=1000&setID=${setID}&keyword=${nameKey}`,
+                method: "GET",
+            });
+        }
+    }, [show, nameKey]);
     useEffect(() => {
-        setFilteredMembersData(searchData?.data ?? []);
+        setFilteredUserAGsData(searchData?.data ?? []);
     }, [searchData]);
 
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setShow(true)
+    };
     const handleClose = () => {
-        setShow(false), setNameKey(""), setSelectMember("")
+        setShow(false), setNameKey(""), setSelectUserAG("")
     };
 
     const handleSelectPartner = async (event: React.FormEvent) => {
         event.preventDefault();
         setCheckIsValid(true);
-        if (selectMember === "") {
+        if (selectUserAG === "") {
             setCheckIsValid(true);
         } else {
             setCheckIsValid(false);
@@ -46,9 +50,9 @@ const AddPartner: React.FC<AddPartnerProps> = ({ setID, onUpdateSuccess }) => {
                 setAlertForm("primary");
                 setShow(false);
                 const response = await userAGPut({
-                    url: "/api/userAG/" + setID,
+                    url: "/api/userAG/" + selectUserAG,
                     method: "PUT",
-                    data: { memberId: selectMember }
+                    data: { memberId: null }
                 });
                 if (response && response.status === 200) {
                     setAlertForm("success");
@@ -66,9 +70,9 @@ const AddPartner: React.FC<AddPartnerProps> = ({ setID, onUpdateSuccess }) => {
 
     return (
         <>
-            <Button className={`btn ${show ? 'active' : ''}`} bsPrefix="icon" onClick={handleShow}>
-                <FaPencilRuler />
-                <span className="h-tooltiptext">เพิ่มพาร์ทเนอร์</span>
+            <Button className={`btn danger ${show ? 'active' : ''}`} bsPrefix="icon" onClick={handleShow}>
+                <FaUserSlash />
+                <span className="h-tooltiptext">ลบพาร์ทเนอร์ UserAG</span>
             </Button>
             <EditModal
                 checkAlertShow={alertForm}
@@ -78,14 +82,14 @@ const AddPartner: React.FC<AddPartnerProps> = ({ setID, onUpdateSuccess }) => {
             />
             <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header  >
-                    <Modal.Title >เลือกพาร์ทเนอร์ </Modal.Title>
+                    <Modal.Title >ลบ UserAG </Modal.Title>
                     <Button variant="close" onClick={handleClose} />
                 </Modal.Header>
                 <Modal.Body>
                     <Row>
                         <Col md={12} lg={12} >
                             <Form.Group className="mb-3 position-relative" controlId={`memberID`}>
-                                <Form.Label>เลือกพาร์ทเนอร์</Form.Label>
+                                <Form.Label>เลือก UserAG</Form.Label>
                                 <Form.Control
                                     type={'text'}
                                     placeholder={'คีย์ค้นหา'}
@@ -102,31 +106,30 @@ const AddPartner: React.FC<AddPartnerProps> = ({ setID, onUpdateSuccess }) => {
                     </Row>
                     <div className="select-search">
                         <Row>
-                            {filteredMembersData.map((members: Member, index: number) => {
+                            {filteredUserAGsData.map((UserAGs: Member, index: number) => {
                                 return (
                                     <Col lg={6} key={index}>
-                                        <Button onClick={() => { setSelectMember(members?.id), setNameKey(`${members?.firstname || ""} ${members?.lastname || ""}`.trim()) }} bsPrefix="icon" className={`w-100 my-2 btn ${selectMember === members?.id ? 'active' : ''}`}>
-                                            {`${members?.firstname || ""} ${members?.lastname || ""}`.trim()}
+                                        <Button onClick={() => { setSelectUserAG(UserAGs?.id), setNameKey(`${UserAGs?.username}`) }} bsPrefix="icon" className={`w-100 my-2 btn ${selectUserAG === UserAGs?.id ? 'active' : ''}`}>
+                                            {UserAGs?.username}
                                         </Button>
                                     </Col>
                                 )
-                            }
-                            )}
+                            })}
                         </Row>
                     </div>
                 </Modal.Body>
                 <Modal.Footer className='d-flex justify-content-around'>
                     <Button variant="secondary" onClick={handleClose}>
-                        Close
+                        ปิด
                     </Button>
                     <Button variant="primary"
                         onClick={handleSelectPartner}
                     >
-                        ยืนยันพาร์ทเนอร์
+                        ยืนยันการลบ
                     </Button>
                 </Modal.Footer>
             </Modal>
         </ >
     );
 }
-export default AddPartner;
+export default DeleteUserAG;

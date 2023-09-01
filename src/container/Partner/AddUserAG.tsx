@@ -52,6 +52,7 @@ const AddUserAG: React.FC<AddUserAGProps> = ({ setID, onUpdateSuccess }) => {
                 });
                 if (response && response.status === 200) {
                     setAlertForm("success");
+                    setNameKey("");
                     onUpdateSuccess(true);  // Call the callback function with true
                 } else {
                     throw new Error('Failed to send data');

@@ -17,40 +17,40 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 res.status(200).json(userAG);
 
                 break;
-                case 'PUT':
-                    const { username, originAG, position, percent, commission, overdue, adjustPercentage, pay, customerCommission, recommender, memberId } = req.body;
-                
-                    // Initialize an empty object to hold the fields to update
-                    const updateData: any = {};
-                
-                    // Conditionally add fields to updateData
-                    if (username !== undefined) updateData.username = username;
-                    if (originAG !== undefined) updateData.originAG = originAG;
-                    if (position !== undefined) updateData.position = position;
-                    if (percent !== undefined) {
-                        const numericPercent = Number(percent); // Convert percent to number
-                        if (isNaN(numericPercent)) {
-                            res.status(400).json({ success: false, message: "Invalid percent value" });
-                            return; // Exit the function to prevent further execution
-                        }
-                        updateData.percent = numericPercent;
+            case 'PUT':
+                const { username, originAG, position, percent, commission, overdue, adjustPercentage, pay, customerCommission, recommender, memberId } = req.body;
+
+                // Initialize an empty object to hold the fields to update
+                const updateData: any = {};
+
+                // Conditionally add fields to updateData
+                if (username !== undefined) updateData.username = username;
+                if (originAG !== undefined) updateData.originAG = originAG;
+                if (position !== undefined) updateData.position = position;
+                if (percent !== undefined) {
+                    const numericPercent = Number(percent); // Convert percent to number
+                    if (isNaN(numericPercent)) {
+                        res.status(400).json({ success: false, message: "Invalid percent value" });
+                        return; // Exit the function to prevent further execution
                     }
-                    if (commission !== undefined) updateData.commission = commission;
-                    if (overdue !== undefined) updateData.overdue = overdue;
-                    if (adjustPercentage !== undefined) updateData.adjustPercentage = adjustPercentage;
-                    if (pay !== undefined) updateData.pay = pay;
-                    if (customerCommission !== undefined) updateData.customerCommission = customerCommission;
-                    if (recommender !== undefined) updateData.recommender = recommender;
-                    if (memberId !== undefined) updateData.memberId = memberId;
-                
-                    // Perform the update
-                    const updatedUserAG = await prisma.userAG.update({
-                        where: { id: String(id) },
-                        data: updateData,
-                    });
-                    res.status(200).json(updatedUserAG);
-                
-                    break;
+                    updateData.percent = numericPercent;
+                }
+                if (commission !== undefined) updateData.commission = commission;
+                if (overdue !== undefined) updateData.overdue = overdue;
+                if (adjustPercentage !== undefined) updateData.adjustPercentage = adjustPercentage;
+                if (pay !== undefined) updateData.pay = pay;
+                if (customerCommission !== undefined) updateData.customerCommission = customerCommission;
+                if (recommender !== undefined) updateData.recommender = recommender;
+                if (memberId !== undefined) updateData.memberId = memberId;
+
+                // Perform the update
+                const updatedUserAG = await prisma.userAG.update({
+                    where: { id: String(id) },
+                    data: updateData,
+                });
+                res.status(200).json(updatedUserAG);
+
+                break;
             case 'DELETE':
                 const deletedUserAG = await prisma.userAG.delete({
                     where: { id: String(id) },

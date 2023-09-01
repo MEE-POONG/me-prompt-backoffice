@@ -9,8 +9,8 @@ import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
 import PartnerViewMemberModal from "@/container/Partner/ViewModal";
 import DeleteModal from "@/components/modal/DeleteModal";
-import PartnerAddPartnerModal from "@/container/Partner/AddPartnerModal";
 import AddUserAG from "@/container/Partner/AddUserAG";
+import DeleteUserAG from "@/container/Partner/DeleteUserAG";
 
 interface Params {
   page: number;
@@ -163,6 +163,9 @@ const MemberPage: React.FC = () => {
                           </div>
                           <div>
                             <AddUserAG setID={member?.id} onUpdateSuccess={setMemberUpdate} />
+                          </div>
+                          <div className="ms-2">
+                            <DeleteUserAG setID={member?.id} onUpdateSuccess={setMemberUpdate} />
                           </div>
                         </div>
                       </td>
