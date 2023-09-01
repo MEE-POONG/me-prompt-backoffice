@@ -12,6 +12,7 @@ import { UserAG as PrismaUserAG, Member as PrismaMember } from '@prisma/client';
 // import UserAGViewUserAGModal from "@/container/UserAG/ViewModal";
 import DeleteModal from "@/components/modal/DeleteModal";
 import AddPartner from "@/container/userAG/AddPartner";
+import DeletePartner from "@/container/userAG/DeletPartner";
 interface Member extends PrismaMember {
 }
 
@@ -135,11 +136,19 @@ const UserAGPage: React.FC = () => {
                       <td className="w-t-075">{userAG?.percent}%</td>
                       <td className="w-t-300">
                         <span className="me-3">
-                          {userAG?.member ? <>{userAG.member.firstname} {userAG.member.lastname}</> : <> ไม่มีผู้ใช้ </>}
+                          {userAG?.member ?
+                            <>
+                              {userAG?.member?.firstname} {userAG?.member?.lastname}
+                            </>
+                            :
+                            <>
+                              ไม่มีผู้ใช้
+                            </>
+                          }
                         </span>
                         <AddPartner setID={userAG?.id} onUpdateSuccess={setMemberUpdate} />
+                        {userAG?.member ? <DeletePartner setID={userAG?.id} onUpdateSuccess={setMemberUpdate} fullname={`${userAG?.member?.firstname || ''} ${userAG?.member?.lastname || ''}`} /> : <>  </>}
                       </td>
-
                       <td>
                         <Button
                           bsPrefix="icon" className={`ms-2 btn ${userAG?.commission ? 'active' : ''}`}>
@@ -168,7 +177,7 @@ const UserAGPage: React.FC = () => {
                           <FaPen />
                           <span className="h-tooltiptext">แก้ไขข้อมูล</span>
                         </Link>
-                        <DeleteModal data={userAG} apiDelete={() => deleteUserAG(userAG.id)} />
+                        <DeleteModal data={userAG} apiDelete={() => deleteUserAG(userAG?.id)} />
                       </td>
                     </tr>
                   )
