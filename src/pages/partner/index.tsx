@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Head from 'next/head';
 import LayOut from "@/components/RootPage/TheLayOut";
 import { Badge, Card, Form, InputGroup, Table } from "react-bootstrap";
 import { FaPen, FaSearch } from "react-icons/fa";
+import { bankMap } from "@/data/test";
+import { UserAG as PrismaUserAG, Member as PrismaMember } from '@prisma/client';
 import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
 import PartnerViewMemberModal from "@/container/Partner/ViewModal";
 import DeleteModal from "@/components/modal/DeleteModal";
-import { UserAG as PrismaUserAG, Member as PrismaMember } from '@prisma/client';
 import PartnerAddPartnerModal from "@/container/Partner/AddPartnerModal";
-import { bankMap } from "@/data/test";
+import AddUserAG from "@/container/Partner/AddUserAG";
 
 interface Params {
   page: number;
@@ -33,21 +33,24 @@ const MemberPage: React.FC = () => {
   });
   const [{ data: membersData }, getMember,] = useAxios({
   }, { autoCancel: false });
-
   const [{ loading: deleteMemberLoading, error: deleteMemberError }, executeMemberDelete,] = useAxios({}, { manual: true });
-
   const [filteredMembersData, setFilteredMembersData] = useState<Member[]>([]);
+  const [memberUpdate, setMemberUpdate] = useState(false);
+
   useEffect(() => {
-    if (params) {
+    if (params || memberUpdate) {
       getMember({
         url: `/api/member/search?page=${params.page}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
         method: "GET",
       });
     }
-  }, [params]);
+    if (memberUpdate) {
+      setMemberUpdate(false);
+    }
+  }, [params, memberUpdate]);
+
   useEffect(() => {
     if (membersData?.success) {
-      console.log(membersData?.data);
       setFilteredMembersData(membersData?.data ?? []);
     }
   }, [membersData]);
@@ -60,7 +63,6 @@ const MemberPage: React.FC = () => {
       setFilteredMembersData(prevMembers => prevMembers.filter(member => member?.id !== id));
     });
   };
-
 
   const handleChangePage = (page: number) => {
     setParams(prevParams => ({
@@ -147,19 +149,25 @@ const MemberPage: React.FC = () => {
                         <span className="ms-2">{member?.bankAccount}</span>
                       </td>
                       <td>
-                        <div>
-                          {renderBadges((member as any).UserAG.filter((user: UserAG) => user?.position === 'senior'), "danger")}
-                        </div>
-                        <div>
-                          {renderBadges((member as any).UserAG.filter((user: UserAG) => user?.position === 'master'), "primary")}
-                        </div>
-                        <div>
-                          {renderBadges((member as any).UserAG.filter((user: UserAG) => user?.position === 'agent'), "success")}
+                        <div className="d-flex align-items-center">
+                          <div className="w-100">
+                            <div>
+                              {renderBadges((member as any).UserAG.filter((user: UserAG) => user?.position === 'senior'), "danger")}
+                            </div>
+                            <div>
+                              {renderBadges((member as any).UserAG.filter((user: UserAG) => user?.position === 'master'), "primary")}
+                            </div>
+                            <div>
+                              {renderBadges((member as any).UserAG.filter((user: UserAG) => user?.position === 'agent'), "success")}
+                            </div>
+                          </div>
+                          <div>
+                            <AddUserAG setID={member?.id} onUpdateSuccess={setMemberUpdate} />
+                          </div>
                         </div>
                       </td>
                       <td>
                         <PartnerViewMemberModal data={member} />
-                        <PartnerAddPartnerModal data={member} />
                         <Link href={`/partner/edit/${member?.id}`} className="mx-1 btn info icon icon-primary">
                           <FaPen />
                           <span className="h-tooltiptext">แก้ไขข้อมูล</span>
