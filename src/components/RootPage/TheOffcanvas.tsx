@@ -4,6 +4,8 @@ import { FaBars, FaRegEnvelope, FaShoppingBag, FaTachometerAlt, FaUserEdit } fro
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { navMenu } from '@/data/navbar';
+import TheNavigation from './TheNavigation';
 
 interface TheOffcanvasProps {
     show: boolean;
@@ -18,64 +20,89 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
         setCheckClickPath(asPath);
     }, [asPath])
     const handlePath = (valPath: string): void => { checkClickPath === valPath ? setCheckClickPath('') : setCheckClickPath(valPath) };
-    const navItems = [
-        {
-            id: "partner",
-            label: "Partner",
-            icon: <FaTachometerAlt />,
-            path: "/partner",
-            subItems: [
-                { label: "พันธมิตร", path: "/partner" },
-                { label: "UserAg", path: "/partner/user-ag" }
-            ]
-        },
-        {
-            id: "bot-auto",
-            label: "Bot Auto",
-            icon: <FaTachometerAlt />,
-            path: "/bot",
-            subItems: [
-                { label: "คำสั่งบอท", path: "/bot" },
-                { label: "ลูกค้า", path: "/bot/customer" },
-                { label: "เอเย่น", path: "/bot/agent" },
-                { label: "มาสเตอร์", path: "/bot/master" }
-            ]
-        },
-    ];
+    console.log(navMenu);
+
     return (
         <>
             <Offcanvas show={show} onHide={handleClose} placement="start" backdrop={false} scroll={true} >
                 <Offcanvas.Body className='ps-0 pe-2'>
-                    <Link href="/" className={asPath === "/" ? "nav-link active" : "nav-link"}>
+                    {navMenu.map((item) => {
+                        if (item.type === 'nav' && item.head === "") {
+                            return (
+                                <Link key={item.id} href={item.path} className={`nav-link ${asPath === item.path ? "active" : ""}`}>
+                                    <span>{item.title}</span>
+                                </Link>
+                            );
+                        } else if (item.type === 'dropdown') {
+                            return (
+                                <div id={item.title} className='' key={item.id}>
+                                    <Dropdown.Toggle className={`nav-item nav-link ${asPath === item.path ? "active" : ""}`} onClick={() => handlePath(item.path)}>
+                                        <span>{item.title}</span>
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === item.path} >
+                                        {navMenu.map((list) => {
+                                            if (item.id === list.head) {
+                                                return (
+                                                    <Link key={list.id} href={item.path + list.path} className={`nav-link ${asPath === (item.path + list.path) ? "active" : ""}`}>
+                                                        <span>{list.title}</span>
+                                                    </Link>
+                                                );
+                                            }
+                                        })}
+                                    </Dropdown.Menu>
+
+                                </div>
+                            );
+
+                        }
+                    })}
+                    ห
+                    {/* <TheNavigation /> */}
+                    {/* head === "" */}
+                    {/* <Link href={path} className={`nav-link ${asPath === path ? "active" : ""}`}>
+                        <span className="ms-2">{title}</span>
+                    </Link> */}
+                    {/* type === "dropdown" */}
+                    {/* <Dropdown.Toggle onClick={() => handlePath(path)} className={`nav-item nav-link ${asPath === path ? "active" : ""} `} id="dropdown-custom-components" >
+                        <span className="ms-2">{title}</span>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === path} >
+                        <Link href="/partner" className={`nav-link ${asPath === path ? "active" : ""}`}>
+                            <span>{title}</span>
+                        </Link>
+                        <Link href="/partner/user-ag" className={`nav-link ${asPath === path ? "active" : ""}`}>
+                            <span>{title}</span>
+                        </Link>
+                    </Dropdown.Menu> */}
+                    {/* </div> */}
+
+                    {/* <Link href="/" className={asPath === "/" ? "nav-link active" : "nav-link"}>
+                        <i ><FaTachometerAlt /></i>
+                        <span className="ms-2">Home</span>
+                    </Link> */}
+                    {/* <div id="partner" className='select-page'> */}
+                    {/* <Dropdown.Toggle onClick={() => handlePath('/partner')} className={asPath === "/partner" || asPath === "/partner/add" || asPath === "/partner/user-ag" || asPath.startsWith("/partner/edit/") ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
                         <i >
                             <FaTachometerAlt />
                         </i>
-                        <span className="ms-2">Home</span>
-                    </Link>
-                    <div id="partner" className='select-page'>
-                        <Dropdown.Toggle onClick={() => handlePath('/partner')} className={asPath === "/partner" || asPath === "/partner/add" || asPath === "/partner/user-ag" || asPath.startsWith("/partner/edit/") ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
-                            <i >
-                                <FaTachometerAlt />
-                            </i>
-                            <span className="ms-2">Partner</span>
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/partner" || checkClickPath === "/partner/user-ag" || checkClickPath === "/partner" || asPath === "/partner/add" || asPath.startsWith("/partner/edit/")} >
-                            <Link href="/partner" className={asPath === "/partner" || asPath === "/partner/add" || asPath.startsWith("/partner/edit/") ? "nav-link active" : "nav-link"}>
-                                <span>พันธมิตร</span>
-                            </Link>
-                            <Link href="/partner/user-ag" className={asPath === "/partner/user-ag" ? "nav-link active" : "nav-link"}>
-                                <span>UserAg</span>
-                            </Link>
-                        </Dropdown.Menu>
-                    </div>
-                    <div id="bot-auto" className='select-page'>
+                        <span className="ms-2">Partner</span>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/partner" || checkClickPath === "/partner/user-ag" || checkClickPath === "/partner" || asPath === "/partner/add" || asPath.startsWith("/partner/edit/")} >
+                        <Link href="/partner" className={asPath === "/partner" || asPath === "/partner/add" || asPath.startsWith("/partner/edit/") ? "nav-link active" : "nav-link"}>
+                            <span>พันธมิตร</span>
+                        </Link>
+                        <Link href="/partner/user-ag" className={asPath === "/partner/user-ag" ? "nav-link active" : "nav-link"}>
+                            <span>UserAg</span>
+                        </Link>
+                    </Dropdown.Menu> */}
+                    {/* </div> */}
+                    {/* <div id="bot-auto" className='select-page'>
                         <Dropdown.Toggle onClick={() => handlePath('/bot')} className={asPath === "/bot" || asPath === "/bot/agent" ? "nav-item nav-link active" : "nav-item nav-link"} id="dropdown-custom-components" >
                             <i >
                                 <FaTachometerAlt />
                             </i>
                             <span className="ms-2">Bot Auto</span>
                         </Dropdown.Toggle>
-
                         <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/bot" || checkClickPath === "/bot/agent" || checkClickPath === "/bot/listname"} >
                             <Link href="/bot" className={asPath === "/bot" ? "nav-link active" : "nav-link"}>
                                 <span>คำสั่งบอท</span>
@@ -126,7 +153,7 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                             </Link>
 
                         </Dropdown.Menu>
-                    </div>
+                    </div> */}
                 </Offcanvas.Body>
             </Offcanvas>
 
