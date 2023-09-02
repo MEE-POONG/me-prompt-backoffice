@@ -53,7 +53,6 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                                     </Dropdown.Menu>
                                 </div>
                             );
-
                         }
                     })}
                 </Offcanvas.Body>
