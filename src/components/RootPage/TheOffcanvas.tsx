@@ -41,7 +41,6 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                 { label: "มาสเตอร์", path: "/bot/master" }
             ]
         },
-        // ... Add other sections similarly
     ];
     return (
         <>
@@ -60,7 +59,6 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
                             </i>
                             <span className="ms-2">Partner</span>
                         </Dropdown.Toggle>
-
                         <Dropdown.Menu className="bg-transparent border-0" show={checkClickPath === "/partner" || checkClickPath === "/partner/user-ag" || checkClickPath === "/partner" || asPath === "/partner/add" || asPath.startsWith("/partner/edit/")} >
                             <Link href="/partner" className={asPath === "/partner" || asPath === "/partner/add" || asPath.startsWith("/partner/edit/") ? "nav-link active" : "nav-link"}>
                                 <span>พันธมิตร</span>
