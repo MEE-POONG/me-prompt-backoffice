@@ -23,7 +23,7 @@ interface Params {
   keyword: string;
   totalPages: number;
 }
-const UserAGPage: React.FC = () => {
+const BotAGPage: React.FC = () => {
   const [memberUpdate, setMemberUpdate] = useState(false);
   const [params, setParams] = useState<Params>({
     page: 1,
@@ -93,7 +93,7 @@ const UserAGPage: React.FC = () => {
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              UserAG - Master
+              บอท AG
             </h4>
             <InputGroup className="w-auto" bsPrefix="input-icon">
               <InputGroup.Text id="basic-addon1">
@@ -112,7 +112,7 @@ const UserAGPage: React.FC = () => {
             </Link>
           </Card.Header>
           <Card.Body className="p-0">
-            <Table striped bordered hover className="scroll">
+            {/* <Table striped bordered hover className="scroll">
               <thead>
                 <tr>
                   <th className="first">No.</th>
@@ -120,7 +120,7 @@ const UserAGPage: React.FC = () => {
                   <th className="w-t-100">ตำแหน่ง</th>
                   <th className="w-t-075">สู้ฟรี</th>
                   <th className="w-t-300">ผู้ใช้</th>
-                  <th className="w-t-400">Benefit</th>
+                  <th>Benefit</th>
                   <th>จัดการ</th>
                 </tr>
               </thead>
@@ -147,7 +147,7 @@ const UserAGPage: React.FC = () => {
                         <AddPartner setID={userAG?.id} onUpdateSuccess={setMemberUpdate} />
                         {userAG?.member ? <DeletePartner setID={userAG?.id} onUpdateSuccess={setMemberUpdate} fullname={`${userAG?.member?.firstname || ''} ${userAG?.member?.lastname || ''}`} /> : <>  </>}
                       </td>
-                      <td className="w-t-400">
+                      <td>
                         <Button
                           bsPrefix="icon" className={`ms-2 btn ${userAG?.commission ? 'active' : ''}`}>
                           ค่าคอม
@@ -182,7 +182,7 @@ const UserAGPage: React.FC = () => {
                 }
                 )}
               </tbody>
-            </Table>
+            </Table> */}
           </Card.Body>
           <Card.Footer>
             <PageSelect page={params.page} totalPages={data?.pagination?.total} onChangePage={handleChangePage} onChangePageSize={handleChangePageSize} />
@@ -193,4 +193,4 @@ const UserAGPage: React.FC = () => {
     </LayOut>
   );
 }
-export default UserAGPage;
+export default BotAGPage;

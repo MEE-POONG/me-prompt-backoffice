@@ -23,7 +23,7 @@ interface Params {
   keyword: string;
   totalPages: number;
 }
-const UserAGPage: React.FC = () => {
+const IncomePage: React.FC = () => {
   const [memberUpdate, setMemberUpdate] = useState(false);
   const [params, setParams] = useState<Params>({
     page: 1,
@@ -120,7 +120,7 @@ const UserAGPage: React.FC = () => {
                   <th className="w-t-100">ตำแหน่ง</th>
                   <th className="w-t-075">สู้ฟรี</th>
                   <th className="w-t-300">ผู้ใช้</th>
-                  <th className="w-t-400">Benefit</th>
+                  <th>Benefit</th>
                   <th>จัดการ</th>
                 </tr>
               </thead>
@@ -147,7 +147,7 @@ const UserAGPage: React.FC = () => {
                         <AddPartner setID={userAG?.id} onUpdateSuccess={setMemberUpdate} />
                         {userAG?.member ? <DeletePartner setID={userAG?.id} onUpdateSuccess={setMemberUpdate} fullname={`${userAG?.member?.firstname || ''} ${userAG?.member?.lastname || ''}`} /> : <>  </>}
                       </td>
-                      <td className="w-t-400">
+                      <td>
                         <Button
                           bsPrefix="icon" className={`ms-2 btn ${userAG?.commission ? 'active' : ''}`}>
                           ค่าคอม
@@ -193,4 +193,4 @@ const UserAGPage: React.FC = () => {
     </LayOut>
   );
 }
-export default UserAGPage;
+export default IncomePage;
