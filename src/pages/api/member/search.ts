@@ -51,7 +51,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     skip: (page - 1) * pageSize,
                     take: pageSize,
                     include: {
-                        UserAG: {
+                        userAG: {
                             select: {
                                 username: true,
                                 position: true

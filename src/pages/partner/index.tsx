@@ -152,13 +152,13 @@ const MemberPage: React.FC = () => {
                         <div className="d-flex align-items-center">
                           <div className="w-100">
                             <div>
-                              {renderBadges((member as any).UserAG.filter((user: UserAG) => user?.position === 'senior'), "danger")}
+                              {renderBadges((member as any).userAG.filter((user: UserAG) => user?.position === 'senior'), "danger")}
                             </div>
                             <div>
-                              {renderBadges((member as any).UserAG.filter((user: UserAG) => user?.position === 'master'), "primary")}
+                              {renderBadges((member as any).userAG.filter((user: UserAG) => user?.position === 'master'), "primary")}
                             </div>
                             <div>
-                              {renderBadges((member as any).UserAG.filter((user: UserAG) => user?.position === 'agent'), "success")}
+                              {renderBadges((member as any).userAG.filter((user: UserAG) => user?.position === 'agent'), "success")}
                             </div>
                           </div>
                           <div>
