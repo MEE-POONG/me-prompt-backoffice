@@ -34,41 +34,41 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 const pageSize: number = parseInt(query.pageSize || '10', 10);
                 let keyword: string = decodeURIComponent(query.keyword || '');
                 let position: string = decodeURIComponent(query.position || '');
-        
+
                 const searchCriteria: Prisma.QueueBotWhereInput = {};
-                
+
                 if (keyword) {
                     searchCriteria.username = {
                         contains: keyword,
                         mode: 'insensitive'
                     };
                 }
-        
+
                 if (position) {
                     searchCriteria.position = {
                         contains: position,
                         mode: 'insensitive'
                     };
                 }
-        
+
                 const queueBots = await prisma.queueBot.findMany({
                     where: searchCriteria,
                     skip: (page - 1) * pageSize,
                     take: pageSize,
-                    orderBy: {
-                        username: 'asc'  // Order by userAG in ascending order (A-Z)
-                    }
+                    // orderBy: {
+                    //   createdAt: 'desc'
+                    // }
                 });
-        
+
                 const totalPartnersCount: number = await prisma.queueBot.count({
                     where: searchCriteria,
                 });
-        
+
                 const totalPages: number = Math.ceil(totalPartnersCount / pageSize);
-        
+
                 res.status(200).json({ success: true, data: queueBots, pagination: { total: totalPages, page: page, pageSize: pageSize } });
             } catch (error) {
-                res.status(500).json({ success: false, message: "An error occurred while fetching the userAGs" });
+                res.status(500).json({ success: false, message: "An error occurred while fetching the QueueBots" });
             }
             break;
         default:

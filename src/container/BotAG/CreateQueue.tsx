@@ -7,7 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import { FaPen, FaTrashAlt } from 'react-icons/fa';
 
 
-const CreateQueueModal: React.FC = () => {
+const CreateQueueModal: React.FC<{ checkUpdate: (state: boolean) => void }> = ({ checkUpdate }) =>{
     const [show, setShow] = useState<boolean>(false);
     const [checkEdit, setCheckEdit] = useState<string>("not");
 
@@ -24,11 +24,9 @@ const CreateQueueModal: React.FC = () => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const [{ error: errorMessage, loading: queueAGLoading }, executeQueueAG] = useAxios({ url: '/api/botAG', method: 'POST' }, { manual: true });
+    const [{ error: errorMessage, loading: queueAGLoading }, executeQueueAG] = useAxios({ url: '/api/QueueBot', method: 'POST' }, { manual: true });
 
     useEffect(() => {
-        console.log("startDate : ", startDate);
-        console.log("endDate : ", endDate);
     }, [startDate, endDate]);
 
 
@@ -55,7 +53,10 @@ const CreateQueueModal: React.FC = () => {
     };
                                 
     const handleCreate = () => {
-        setCheckEdit("primary");                                                                                    
+        setCheckEdit("primary");    
+        console.log(startDate);
+        console.log(endDate);
+                                                                                        
         executeQueueAG({
             data: {
                 title: "Path ยอดแพ้ชนะ",
@@ -64,6 +65,7 @@ const CreateQueueModal: React.FC = () => {
             }
         }).then(() => {
             setCheckEdit("success");
+            checkUpdate(true);  
             setTimeout(() => {
                 setCheckEdit("not");
                 handleCloseAndReset();

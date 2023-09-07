@@ -19,19 +19,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         case 'POST':
             try {
                 const { title, username, position, formDate, toDate } = req.body;
+                console.log(formDate);
+                console.log(toDate);
+
                 const newQueueBot = await prisma.queueBot.create({
                     data: {
-                        title,  // make sure this corresponds to your Prisma model
+                        title,
                         username,
                         position,
-                        formDate: new Date(formDate) ?? null, // Converting to Date object
-                        toDate: new Date(toDate) ?? null,  
+                        formDate,
+                        toDate,
                     },
                 });
-
                 res.status(201).json({ success: true, data: newQueueBot });
             } catch (error) {
-                res.status(500).json({ success: true, message: "An error occurred while creating the member" });
+                res.status(500).json({ success: true, message: error });
             }
             break;
 

@@ -27,6 +27,7 @@ model Member {
   deleted_at    DateTime? @map("deleted_at")
   userAG        UserAG[]
 }
+
 model UserAG {
   id                 String    @id @default(auto()) @map("_id") @db.ObjectId
   username           String?
@@ -48,14 +49,18 @@ model UserAG {
 }
 
 model QueueBot {
-  id       String    @id @default(auto()) @map("_id") @db.ObjectId
-  title    String?
-  username String?
-  position String?
-  formDate DateTime?
-  toDate   DateTime?
-  pastAG   PastAG[]
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  title      String?
+  username   String?
+  position   String?
+  formDate   String?
+  toDate     String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+  deleted_at DateTime? @map("deleted_at")
+  pastAG     PastAG[]
 }
+
 model PastAG {
   id               String    @id @default(auto()) @map("_id") @db.ObjectId
   Account          String?

@@ -35,7 +35,7 @@ const BotAGPage: React.FC = () => {
   useEffect(() => {
     if (params || queueBotUpdate) {
       quereBotSearch({
-        url: `/api/QuereBot/search?page=${params.page}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
+        url: `/api/QueueBot/search?page=${params.page}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
         method: "GET",
       });
       if (queueBotUpdate) {
@@ -59,7 +59,7 @@ const BotAGPage: React.FC = () => {
 
   const deleteQueueBot = (id: string): Promise<any> => {
     return executeQueueBotUpdateDelete({
-      url: "/api/queueBot/" + id,
+      url: "/api/QueueBot/" + id,
       method: "DELETE",
     }).then(() => {
       setFilteredQueueBotUpdatesData(prevQueueBotUpdates => prevQueueBotUpdates.filter(queueBotUpdate => queueBotUpdate?.id !== id));
@@ -108,7 +108,7 @@ const BotAGPage: React.FC = () => {
                 aria-describedby="basic-addon1"
               />
             </InputGroup>
-            <CreateQueueModal />
+            <CreateQueueModal checkUpdate={setQueueBotUpdate}/>
 
           </Card.Header>
           <Card.Body className="p-0">
