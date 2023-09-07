@@ -15,12 +15,12 @@ const TheOffcanvas: React.FC<TheOffcanvasProps> = ({ show, onToggleShow }) => {
     const handleClose = () => onToggleShow();
     const { asPath } = useRouter();
     const [checkClickPath, setCheckClickPath] = useState<string>('/');
-    useEffect(() => {
-        setCheckClickPath(asPath);
-    }, [asPath])
-    useEffect(() => {
-        console.log(checkClickPath);
-    }, [checkClickPath])
+    // useEffect(() => {
+    //     setCheckClickPath(asPath);
+    // }, [asPath])
+    // useEffect(() => {
+    //     console.log(checkClickPath);
+    // }, [checkClickPath])
 
     return (
         <>

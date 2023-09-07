@@ -11,6 +11,7 @@ import { UserAG as PrismaUserAG, Member as PrismaMember } from '@prisma/client';
 import DeleteModal from "@/components/modal/DeleteModal";
 import AddPartner from "@/container/userAG/AddPartner";
 import DeletePartner from "@/container/userAG/DeletPartner";
+import CreateQueueModal from "@/container/BotAG/CreateQueue";
 interface Member extends PrismaMember {
 }
 
@@ -31,38 +32,38 @@ const BotAGPage: React.FC = () => {
     keyword: "",
     totalPages: 1,
   });
-  const [{ data, loading, error }, userAGSearch,] = useAxios({
+  const [{ data, loading, error }, quereSearch,] = useAxios({
   }, { autoCancel: false });
 
-  const [{ }, executeUserAGDelete,] = useAxios({}, { manual: true });
+  // const [{ }, executeUserAGDelete,] = useAxios({}, { manual: true });
 
-  const [filteredUserAGsData, setFilteredUserAGsData] = useState<UserAG[]>([]);
+  // const [filteredUserAGsData, setFilteredUserAGsData] = useState<UserAG[]>([]);
 
-  useEffect(() => {
-    if (params || memberUpdate) {
-      userAGSearch({
-        url: `/api/userAG/search?page=${params.page}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
-        method: "GET",
-      });
-      if (memberUpdate) {
-        setMemberUpdate(false);
-      }
-    }
-  }, [params, memberUpdate]);
-  useEffect(() => {
-    if (data?.success) {
-      setFilteredUserAGsData(data?.data ?? []);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (params || memberUpdate) {
+  //     userAGSearch({
+  //       url: `/api/userAG/search?page=${params.page}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
+  //       method: "GET",
+  //     });
+  //     if (memberUpdate) {
+  //       setMemberUpdate(false);
+  //     }
+  //   }
+  // }, [params, memberUpdate]);
+  // useEffect(() => {
+  //   if (data?.success) {
+  //     setFilteredUserAGsData(data?.data ?? []);
+  //   }
+  // }, [data]);
 
-  const deleteUserAG = (id: string): Promise<any> => {
-    return executeUserAGDelete({
-      url: "/api/userAG/" + id,
-      method: "DELETE",
-    }).then(() => {
-      setFilteredUserAGsData(prevUserAGs => prevUserAGs.filter(userAG => userAG?.id !== id));
-    });
-  };
+  // const deleteUserAG = (id: string): Promise<any> => {
+  //   return executeUserAGDelete({
+  //     url: "/api/userAG/" + id,
+  //     method: "DELETE",
+  //   }).then(() => {
+  //     setFilteredUserAGsData(prevUserAGs => prevUserAGs.filter(userAG => userAG?.id !== id));
+  //   });
+  // };
 
 
   const handleChangePage = (page: number) => {
@@ -107,9 +108,11 @@ const BotAGPage: React.FC = () => {
               />
             </InputGroup>
             {/* <AddListName /> */}
-            <Link href="/partner/user-ag/add" className="ms-2 btn icon icofn-primary">
-              เพิ่มพาร์ทเนอร์
-            </Link>
+            {/* <Link href="/partner/user-ag/add" className="ms-2 btn icon icofn-primary">
+              สร้างงานบอร์ท
+            </Link> */}
+            <CreateQueueModal />
+            
           </Card.Header>
           <Card.Body className="p-0">
             {/* <Table striped bordered hover className="scroll">
