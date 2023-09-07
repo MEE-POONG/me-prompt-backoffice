@@ -27,7 +27,6 @@ model Member {
   deleted_at    DateTime? @map("deleted_at")
   userAG        UserAG[]
 }
-
 model UserAG {
   id                 String    @id @default(auto()) @map("_id") @db.ObjectId
   username           String?
@@ -57,7 +56,6 @@ model QueueBot {
   toDate   DateTime?
   pastAG   PastAG[]
 }
-
 model PastAG {
   id               String    @id @default(auto()) @map("_id") @db.ObjectId
   Account          String?
