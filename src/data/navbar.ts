@@ -5,8 +5,9 @@ export const navMenu = [
     { id: "4", title: 'userAG', type: 'nav', path: '/userAG', head: "/partner" },
 
     { id: "5", title: 'Bot AUTO', type: 'dropdown', path: '/botAG', head: "" },
-    { id: "6", title: 'ยอด AG', type: 'nav', path: '', head: "/botAG" },
-    { id: "7", title: 'Work Order', type: 'nav', path: '/workoder', head: "/botAG" },
+    { id: "6", title: 'คิวบอท', type: 'nav', path: '', head: "/botAG" },
+    { id: "7", title: 'ยอด AG', type: 'nav', path: '/interest', head: "/botAG" },
+    { id: "8", title: 'Work Order', type: 'nav', path: '/workoder', head: "/botAG" },
 
     { id: "8", title: 'Income', type: 'dropdown', path: '/income', head: "" },
     { id: "10", title: 'agent', type: 'nav', path: '', head: "/income" },

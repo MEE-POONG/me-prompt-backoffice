@@ -29,8 +29,8 @@ const BotAGPage: React.FC = () => {
   }, { autoCancel: false });
 
 
-  const [filteredQueueBotUpdatesData, setFilteredQueueBotUpdatesData] = useState<QueueBot[]>([]);
-  const [{ }, executeQueueBotUpdateDelete,] = useAxios({}, { manual: true });
+  const [filteredUserAGsData, setFilteredUserAGsData] = useState<QueueBot[]>([]);
+  const [{ }, executeUserAGDelete,] = useAxios({}, { manual: true });
 
   useEffect(() => {
     if (params || queueBotUpdate) {
@@ -44,8 +44,9 @@ const BotAGPage: React.FC = () => {
     }
   }, [params, queueBotUpdate]);
   useEffect(() => {
+
     if (data?.success) {
-      setFilteredQueueBotUpdatesData(data?.data ?? []);
+      setFilteredUserAGsData(data?.data ?? []);
     }
   }, [data]);
 
@@ -58,11 +59,11 @@ const BotAGPage: React.FC = () => {
   }
 
   const deleteQueueBot = (id: string): Promise<any> => {
-    return executeQueueBotUpdateDelete({
-      url: "/api/queueBot/" + id,
+    return executeUserAGDelete({
+      url: "/api/queueBotUpdate/" + id,
       method: "DELETE",
     }).then(() => {
-      setFilteredQueueBotUpdatesData(prevQueueBotUpdates => prevQueueBotUpdates.filter(queueBotUpdate => queueBotUpdate?.id !== id));
+      setFilteredUserAGsData(prevUserAGs => prevUserAGs.filter(queueBotUpdate => queueBotUpdate?.id !== id));
     });
   };
 
@@ -124,7 +125,7 @@ const BotAGPage: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="text-center">
-                {filteredQueueBotUpdatesData.map((queueBot: QueueBot, index: number) => {
+                {filteredUserAGsData.map((queueBot: QueueBot, index: number) => {
                   return (
                     <tr key={queueBot?.id}>
                       <td className="text-end">{index + 1}</td>

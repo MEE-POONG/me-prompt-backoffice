@@ -14,7 +14,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ data, apiDelete }) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    let heading = `ลบข้อมูล : ${data?.firstname !== undefined ? data?.firstname : ""} ${data?.lastname !== undefined ? data?.lastname : ""} ${data?.userAG !== undefined ? data?.userAG : ""}`;
+    let heading = `ลบข้อมูล : ${data?.firstname !== undefined ? data?.firstname : ""} ${data?.lastname !== undefined ? data?.lastname : ""} ${data?.userAG !== undefined ? data?.userAG : ""} ${data?.title !== undefined || data?.title !== null ? data?.title : ""}`;
     let detail = `ต้องการลบข้อมูลใช่หรือไม่`;
     let variant = "";
 
