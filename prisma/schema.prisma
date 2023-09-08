@@ -53,8 +53,9 @@ model QueueBot {
   title      String?
   username   String?
   position   String?
-  formDate   String?
-  toDate     String?
+  startDate  String?
+  endDate    String?
+  status     String?
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")

@@ -7,7 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import { FaPen, FaTrashAlt } from 'react-icons/fa';
 
 
-const CreateQueueModal: React.FC<{ checkUpdate: (state: boolean) => void }> = ({ checkUpdate }) =>{
+const CreateQueueModal: React.FC<{ checkUpdate: (state: boolean) => void }> = ({ checkUpdate }) => {
     const [show, setShow] = useState<boolean>(false);
     const [checkEdit, setCheckEdit] = useState<string>("not");
 
@@ -19,6 +19,7 @@ const CreateQueueModal: React.FC<{ checkUpdate: (state: boolean) => void }> = ({
 
         return `${year}-${month}-${day}`;
     };
+    const [title, setTitle] = useState<string>('PathWL');
     const [startDate, setStartDate] = useState<string>(getCurrentDate());
     const [endDate, setEndDate] = useState<string>(getCurrentDate());
 
@@ -51,21 +52,21 @@ const CreateQueueModal: React.FC<{ checkUpdate: (state: boolean) => void }> = ({
         handleClose();
         setCheckEdit("not");
     };
-                                
+
     const handleCreate = () => {
-        setCheckEdit("primary");    
+        setCheckEdit("primary");
         console.log(startDate);
         console.log(endDate);
-                                                                                        
+
         executeQueueAG({
             data: {
-                title: "Path ยอดแพ้ชนะ",
-                startDate,  // This will be a string, in the format "YYYY-MM-DD"
-                endDate,    // This will also be a string, in the same format
+                title,
+                startDate,
+                endDate,
             }
         }).then(() => {
             setCheckEdit("success");
-            checkUpdate(true);  
+            checkUpdate(true);
             setTimeout(() => {
                 setCheckEdit("not");
                 handleCloseAndReset();

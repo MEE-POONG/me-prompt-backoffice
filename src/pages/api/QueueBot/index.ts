@@ -18,17 +18,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         case 'POST':
             try {
-                const { title, username, position, formDate, toDate } = req.body;
-                console.log(formDate);
-                console.log(toDate);
-
+                const { title, username, position, startDate, endDate } = req.body;
                 const newQueueBot = await prisma.queueBot.create({
                     data: {
                         title,
                         username,
                         position,
-                        formDate,
-                        toDate,
+                        startDate,
+                        endDate,
                     },
                 });
                 res.status(201).json({ success: true, data: newQueueBot });

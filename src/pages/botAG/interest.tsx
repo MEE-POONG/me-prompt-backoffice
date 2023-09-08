@@ -17,7 +17,7 @@ interface Params {
   keyword: string;
   totalPages: number;
 }
-const BotAGPage: React.FC = () => {
+const InterestPage: React.FC = () => {
   const [queueBotUpdate, setQueueBotUpdate] = useState(false);
   const [params, setParams] = useState<Params>({
     page: 1,
@@ -29,13 +29,13 @@ const BotAGPage: React.FC = () => {
   }, { autoCancel: false });
 
 
-  const [filteredUserAGsData, setFilteredUserAGsData] = useState<QueueBot[]>([]);
-  const [{ }, executeUserAGDelete,] = useAxios({}, { manual: true });
+  const [filteredQueueBotUpdatesData, setFilteredQueueBotUpdatesData] = useState<QueueBot[]>([]);
+  const [{ }, executeQueueBotUpdateDelete,] = useAxios({}, { manual: true });
 
   useEffect(() => {
     if (params || queueBotUpdate) {
       quereBotSearch({
-        url: `/api/QuereBot/search?page=${params.page}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
+        url: `/api/QueueBot/search?page=${params.page}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
         method: "GET",
       });
       if (queueBotUpdate) {
@@ -44,13 +44,15 @@ const BotAGPage: React.FC = () => {
     }
   }, [params, queueBotUpdate]);
   useEffect(() => {
-
     if (data?.success) {
-      setFilteredUserAGsData(data?.data ?? []);
+      setFilteredQueueBotUpdatesData(data?.data ?? []);
     }
   }, [data]);
 
   const formatDate = (dateString: any) => {
+    if (!dateString) {
+      return "";
+    }
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, '0');
     const month = monthArray[date.getMonth()];  // Using the monthArray to get the month name
@@ -59,11 +61,11 @@ const BotAGPage: React.FC = () => {
   }
 
   const deleteQueueBot = (id: string): Promise<any> => {
-    return executeUserAGDelete({
-      url: "/api/queueBotUpdate/" + id,
+    return executeQueueBotUpdateDelete({
+      url: "/api/QueueBot/" + id,
       method: "DELETE",
     }).then(() => {
-      setFilteredUserAGsData(prevUserAGs => prevUserAGs.filter(queueBotUpdate => queueBotUpdate?.id !== id));
+      setFilteredQueueBotUpdatesData(prevQueueBotUpdates => prevQueueBotUpdates.filter(queueBotUpdate => queueBotUpdate?.id !== id));
     });
   };
 
@@ -109,8 +111,7 @@ const BotAGPage: React.FC = () => {
                 aria-describedby="basic-addon1"
               />
             </InputGroup>
-            <CreateQueueModal />
-
+            <CreateQueueModal checkUpdate={setQueueBotUpdate} />
           </Card.Header>
           <Card.Body className="p-0">
             <Table striped bordered hover className="scroll">
@@ -118,27 +119,29 @@ const BotAGPage: React.FC = () => {
                 <tr>
                   <th className="first">No.</th>
                   <th className="">หัวข้อบอท</th>
+                  <th className="">สถานะงาน</th>
                   <th className="">ยูส</th>
                   <th className="">ตำแหน่ง</th>
                   <th className="">ยอดช่วง</th>
-                  <th>จัดการ</th>
+                  {/* <th>จัดการ</th> */}
                 </tr>
               </thead>
               <tbody className="text-center">
-                {filteredUserAGsData.map((queueBot: QueueBot, index: number) => {
+                {filteredQueueBotUpdatesData.map((queueBot: QueueBot, index: number) => {
                   return (
                     <tr key={queueBot?.id}>
                       <td className="text-end">{index + 1}</td>
                       <td className="">{queueBot?.title}</td>
+                      <td className="">{!queueBot?.status ? "รอคิวงาน" : queueBot?.status}</td>
                       <td className="">{queueBot?.username}</td>
                       <td className="">{queueBot?.position}</td>
                       <td className="">
-                        {formatDate(queueBot?.formDate)}<br />
-                        {formatDate(queueBot?.toDate)}
+                        {formatDate(queueBot?.startDate)}<br />
+                        {formatDate(queueBot?.endDate)}
                       </td>
-                      <td>
+                      {/* <td>
                         <DeleteModal data={queueBot} apiDelete={() => deleteQueueBot(queueBot?.id)} />
-                      </td>
+                      </td> */}
                     </tr>
                   )
                 }
@@ -155,4 +158,4 @@ const BotAGPage: React.FC = () => {
     </LayOut>
   );
 }
-export default BotAGPage;
+export default InterestPage;
