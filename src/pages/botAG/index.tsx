@@ -50,6 +50,9 @@ const BotAGPage: React.FC = () => {
   }, [data]);
 
   const formatDate = (dateString: any) => {
+    if (!dateString) {
+      return "";
+    }
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, '0');
     const month = monthArray[date.getMonth()];  // Using the monthArray to get the month name
@@ -108,8 +111,8 @@ const BotAGPage: React.FC = () => {
                 aria-describedby="basic-addon1"
               />
             </InputGroup>
-            <CreateQueueModal checkUpdate={setQueueBotUpdate}/>
-
+            {/* <CreateQueueModal checkUpdate={setQueueBotUpdate} /> */}
+            <h4></h4>
           </Card.Header>
           <Card.Body className="p-0">
             <Table striped bordered hover className="scroll">
@@ -117,6 +120,7 @@ const BotAGPage: React.FC = () => {
                 <tr>
                   <th className="first">No.</th>
                   <th className="">หัวข้อบอท</th>
+                  <th className="">สถานะงาน</th>
                   <th className="">ยูส</th>
                   <th className="">ตำแหน่ง</th>
                   <th className="">ยอดช่วง</th>
@@ -129,14 +133,16 @@ const BotAGPage: React.FC = () => {
                     <tr key={queueBot?.id}>
                       <td className="text-end">{index + 1}</td>
                       <td className="">{queueBot?.title}</td>
+                      <td className="">{!queueBot?.status ? "รอคิวงาน" : queueBot?.status}</td>
                       <td className="">{queueBot?.username}</td>
                       <td className="">{queueBot?.position}</td>
                       <td className="">
-                        {formatDate(queueBot?.formDate)}<br />
-                        {formatDate(queueBot?.toDate)}
+                        {formatDate(queueBot?.startDate)}<br />
+                        {formatDate(queueBot?.endDate)}
                       </td>
                       <td>
-                        <DeleteModal data={queueBot} apiDelete={() => deleteQueueBot(queueBot?.id)} />
+                        {/* <DeleteModal data={queueBot} apiDelete={() => deleteQueueBot(queueBot?.id)} /> */}
+                        
                       </td>
                     </tr>
                   )
