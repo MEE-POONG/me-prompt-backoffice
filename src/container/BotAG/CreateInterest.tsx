@@ -7,7 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import { FaPen, FaTrashAlt } from 'react-icons/fa';
 
 
-const CreateQueueModal: React.FC<{ checkUpdate: (state: boolean) => void }> = ({ checkUpdate }) => {
+const CreateInterestModal: React.FC<{ checkUpdate: (state: boolean) => void }> = ({ checkUpdate }) => {
     const [show, setShow] = useState<boolean>(false);
     const [checkEdit, setCheckEdit] = useState<string>("not");
 
@@ -143,4 +143,4 @@ const CreateQueueModal: React.FC<{ checkUpdate: (state: boolean) => void }> = ({
     );
 }
 
-export default CreateQueueModal;
+export default CreateInterestModal;

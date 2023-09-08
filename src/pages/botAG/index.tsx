@@ -2,20 +2,22 @@ import React, { useEffect, useState } from "react";
 import Head from 'next/head';
 import LayOut from "@/components/RootPage/TheLayOut";
 import { Badge, Button, Card, Col, Form, InputGroup, Row, Table } from "react-bootstrap";
-import { FaPen, FaPencilRuler, FaRegEye, FaSearch } from "react-icons/fa";
+import { FaPen, FaPencilRuler, FaRegEye, FaSearch, FaUndo } from "react-icons/fa";
 import Link from "next/link";
 import useAxios from "axios-hooks";
 import PageSelect from "@/components/PageSelect";
 
 import { QueueBot } from '@prisma/client';
 import DeleteModal from "@/components/modal/DeleteModal";
-import CreateQueueModal from "@/container/BotAG/CreateQueue";
+import CreateQueueModal from "@/container/BotAG/CreateInterest";
 import { monthArray } from "@/data/month";
 interface Params {
   page: number;
   pageSize: number;
   keyword: string;
   totalPages: number;
+  position: string;
+  status: string;
 }
 const BotAGPage: React.FC = () => {
   const [queueBotUpdate, setQueueBotUpdate] = useState(false);
@@ -24,6 +26,8 @@ const BotAGPage: React.FC = () => {
     pageSize: 10,
     keyword: "",
     totalPages: 1,
+    position: "",
+    status: "",
   });
   const [{ data, loading, error }, quereBotSearch,] = useAxios({
   }, { autoCancel: false });
@@ -35,7 +39,7 @@ const BotAGPage: React.FC = () => {
   useEffect(() => {
     if (params || queueBotUpdate) {
       quereBotSearch({
-        url: `/api/QueueBot/search?page=${params.page}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
+        url: `/api/QueueBot/search?page=${params.page}&pageSize=${params.pageSize}&position=${params.position}&keyword=${params.keyword}`,
         method: "GET",
       });
       if (queueBotUpdate) {
@@ -92,6 +96,20 @@ const BotAGPage: React.FC = () => {
     }));
   };
 
+  const handlePositionChange = (positionValue: string) => {
+    setParams(prevParams => ({
+      ...prevParams,
+      position: positionValue
+    }));
+  };
+
+  const handleStatusChange = (positionValue: string) => {
+    setParams(prevParams => ({
+      ...prevParams,
+      position: positionValue
+    }));
+  };
+
   return (
     <LayOut>
       <div className='queueBotUpdate-page h-91'>
@@ -100,19 +118,23 @@ const BotAGPage: React.FC = () => {
             <h4 className="mb-0 py-1">
               บอท AG
             </h4>
-            <InputGroup className="w-auto" bsPrefix="input-icon">
-              <InputGroup.Text id="basic-addon1">
-                <FaSearch />
-              </InputGroup.Text>
+            <InputGroup className="w-auto">
+              <Button variant="outline-secondary" onClick={() => handlePositionChange("")}>ALL</Button>
+              <Button variant="outline-secondary" onClick={() => handlePositionChange("WL")}>WL</Button>
+              <Button variant="outline-secondary" onClick={() => handlePositionChange("WO")}>WO</Button>
               <Form.Control
+              className="w-t-400"
                 onChange={e => handleChangekeyword(e.target.value)}
-                placeholder="ค้นหาผู้ใช้"
-                aria-label="Fullname"
-                aria-describedby="basic-addon1"
+                placeholder="ค้นหาคิวงาน"
+                aria-label="Recipient's username with two button addons"
               />
+              <Button variant="outline-secondary" onClick={() => handleStatusChange("")}>ALL</Button>
+              <Button variant="outline-secondary" onClick={() => handleStatusChange("PANDDING}")}></Button>
+              <Button variant="outline-secondary" onClick={() => handleStatusChange("FAILED")}>ไม่สำเร็จ</Button>
+              <Button variant="outline-secondary" onClick={() => handleStatusChange("DONE")}>สำเร็จ</Button>
+              <Button variant="outline-secondary" onClick={() => handleStatusChange("WAIT")}>รอคิวงาน</Button>
+
             </InputGroup>
-            {/* <CreateQueueModal checkUpdate={setQueueBotUpdate} /> */}
-            <h4></h4>
           </Card.Header>
           <Card.Body className="p-0">
             <Table striped bordered hover className="scroll">
@@ -142,7 +164,15 @@ const BotAGPage: React.FC = () => {
                       </td>
                       <td>
                         {/* <DeleteModal data={queueBot} apiDelete={() => deleteQueueBot(queueBot?.id)} /> */}
-                        
+                        {/* <Link href={`/partner/user-ag/edit/${queueBot?.id}`} className="ms-2 btn icon success">
+                          <FaUndo />
+                          <span className="h-tooltiptext">สั่งทำงาน</span>
+                        </Link> */}
+                        <Button className="mx-1 btn warning" bsPrefix="icon" >
+                          <FaUndo />
+                          <span className="h-tooltiptext">สั่งทำงาน</span>
+                        </Button>
+                        <DeleteModal data={queueBot} apiDelete={() => deleteQueueBot(queueBot?.id)} />
                       </td>
                     </tr>
                   )

@@ -55,7 +55,7 @@ model QueueBot {
   position   String?
   startDate  String?
   endDate    String?
-  status     String?
+  status     String?   @default("WAIT")
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
   deleted_at DateTime? @map("deleted_at")

@@ -9,7 +9,7 @@ import PageSelect from "@/components/PageSelect";
 
 import { QueueBot } from '@prisma/client';
 import DeleteModal from "@/components/modal/DeleteModal";
-import CreateQueueModal from "@/container/BotAG/CreateQueue";
+import CreateQueueModal from "@/container/BotAG/CreateInterest";
 import { monthArray } from "@/data/month";
 interface Params {
   page: number;
