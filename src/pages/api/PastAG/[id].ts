@@ -19,9 +19,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                     where: {
                         id: String(id),
                     },
-                    include: {
-                        pastAG: true
-                    }
                 });
 
                 if (!queueBot) {
@@ -30,11 +27,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
                 res.status(200).json({ success: true, data: queueBot });
             } catch (error) {
-                console.error("Error fetching data:", error); // Log the error for debugging
+
                 res.status(500).json({ success: false, message: "An error occurred while fetching the queueBot" });
             }
             break;
-
         // case 'PUT':
         //     const { username, password, firstname, lastname, bankAccount, bank, phone, line, email } = req.body;
         //     try {

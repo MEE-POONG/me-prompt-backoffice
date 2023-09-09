@@ -19,7 +19,7 @@ const CreateInterestModal: React.FC<{ checkUpdate: (state: boolean) => void }> =
 
         return `${year}-${month}-${day}`;
     };
-    const [title, setTitle] = useState<string>('PathWL');
+    const [title, setTitle] = useState<string>('');
     const [startDate, setStartDate] = useState<string>(getCurrentDate());
     const [endDate, setEndDate] = useState<string>(getCurrentDate());
 
@@ -55,9 +55,9 @@ const CreateInterestModal: React.FC<{ checkUpdate: (state: boolean) => void }> =
 
     const handleCreate = () => {
         setCheckEdit("primary");
-        console.log(startDate);
-        console.log(endDate);
-
+        if (title.length <= 5) {
+            setCheckEdit("danger");
+        }
         executeQueueAG({
             data: {
                 title,
@@ -95,7 +95,23 @@ const CreateInterestModal: React.FC<{ checkUpdate: (state: boolean) => void }> =
                         <Modal.Body>
                             <Row>
                                 <Col lg={12}>
-                                    <Form.Group className="mb-3 position-relative" controlId={`memberID`}>
+                                <Form.Group className="mb-3 position-relative" >
+                                        <Form.Label>เลือกวันเริ่มต้น</Form.Label>
+                                        <Form.Control
+                                            type={'text'}
+                                            placeholder={'เลือกวันเริ่ม'}
+                                            name={'title'}
+                                            value={title}
+                                            onChange={e => setTitle(e.target.value)}
+                                            autoComplete={"off"}
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            กรุณาเลือกวันที่เริ่มต้น
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+                                </Col>
+                                <Col lg={12}>
+                                    <Form.Group className="mb-3 position-relative" >
                                         <Form.Label>เลือกวันเริ่มต้น</Form.Label>
                                         <Form.Control
                                             type={'date'}
@@ -111,7 +127,7 @@ const CreateInterestModal: React.FC<{ checkUpdate: (state: boolean) => void }> =
                                     </Form.Group>
                                 </Col>
                                 <Col lg={12}>
-                                    <Form.Group className="mb-3 position-relative" controlId={`memberID`}>
+                                    <Form.Group className="mb-3 position-relative" >
                                         <Form.Label>ถึงวันที่</Form.Label>
                                         <Form.Control
                                             type={'date'}

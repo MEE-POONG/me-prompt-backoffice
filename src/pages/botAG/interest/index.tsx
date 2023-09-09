@@ -98,7 +98,7 @@ const InterestPage: React.FC = () => {
         <Card className="h-100">
           <Card.Header className="d-flex space-between">
             <h4 className="mb-0 py-1">
-              บอท AG
+              รายการแพ้ชนะ
             </h4>
             <InputGroup className="w-auto" bsPrefix="input-icon">
               <InputGroup.Text id="basic-addon1">
@@ -118,12 +118,10 @@ const InterestPage: React.FC = () => {
               <thead>
                 <tr>
                   <th className="first">No.</th>
-                  <th className="">หัวข้อบอท</th>
+                  <th className="">รายการ</th>
+                  <th className="">ช่วง</th>
                   <th className="">สถานะงาน</th>
-                  <th className="">ยูส</th>
-                  <th className="">ตำแหน่ง</th>
-                  <th className="">ยอดช่วง</th>
-                  {/* <th>จัดการ</th> */}
+                  <th>จัดการ</th>
                 </tr>
               </thead>
               <tbody className="text-center">
@@ -131,17 +129,15 @@ const InterestPage: React.FC = () => {
                   return (
                     <tr key={queueBot?.id}>
                       <td className="text-end">{index + 1}</td>
-                      <td className="">{queueBot?.title}</td>
-                      <td className="">{!queueBot?.status ? "รอคิวงาน" : queueBot?.status}</td>
-                      <td className="">{queueBot?.username}</td>
-                      <td className="">{queueBot?.position}</td>
-                      <td className="">
-                        {formatDate(queueBot?.startDate)}<br />
-                        {formatDate(queueBot?.endDate)}
+                      <td className="">  <Link href={`interest/${queueBot?.id}`}>{queueBot?.title}</Link>
                       </td>
-                      {/* <td>
+                      <td className="">
+                        {formatDate(queueBot?.startDate)} - {formatDate(queueBot?.endDate)}
+                      </td>
+                      <td className="">{!queueBot?.status ? "รอคิวงาน" : queueBot?.status}</td>
+                      <td>
                         <DeleteModal data={queueBot} apiDelete={() => deleteQueueBot(queueBot?.id)} />
-                      </td> */}
+                      </td>
                     </tr>
                   )
                 }

@@ -67,22 +67,22 @@ model PastAG {
   Account          String?
   Contact          String?
   Cur              String?
-  Amount           Int?
-  ValidAmount      Int?
-  online           Int?
-  StakeCount       Int?
-  GrossComm        Int?
-  MemberWL         Int?
-  MemberCom        Int?
-  MemberWLCom      Int?
-  SuperProfitValid Int?
-  SuperProfitWL    Int?
-  SuperProfitCom   Int?
-  SuperProfitWLCom Int?
-  CompanyValid     Int?
-  CompanyWL        Int?
-  CompanyCom       Int?
-  CompanyWLCom     Int?
+  Amount           Float?
+  ValidAmount      Float?
+  MemberCount      Float?
+  StakeCount       Float?
+  GrossCom        Float?
+  MemberWL         Float?
+  MemberCom        Float?
+  MemberWLCom      Float?
+  SuperProfitValid Float?
+  SuperProfitWL    Float?
+  SuperProfitCom   Float?
+  SuperProfitWLCom Float?
+  CompanyValid     Float?
+  CompanyWL        Float?
+  CompanyCom       Float?
+  CompanyWLCom     Float?
   position         String?
   pastAGID         String?
   createdAt        DateTime? @default(now())

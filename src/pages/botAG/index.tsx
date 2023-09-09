@@ -129,7 +129,7 @@ const BotAGPage: React.FC = () => {
                 aria-label="Recipient's username with two button addons"
               />
               <Button variant="outline-secondary" onClick={() => handleStatusChange("")}>ALL</Button>
-              <Button variant="outline-secondary" onClick={() => handleStatusChange("PANDDING}")}></Button>
+              <Button variant="outline-secondary" onClick={() => handleStatusChange("PANDDING}")}>กำลังทำ</Button>
               <Button variant="outline-secondary" onClick={() => handleStatusChange("FAILED")}>ไม่สำเร็จ</Button>
               <Button variant="outline-secondary" onClick={() => handleStatusChange("DONE")}>สำเร็จ</Button>
               <Button variant="outline-secondary" onClick={() => handleStatusChange("WAIT")}>รอคิวงาน</Button>

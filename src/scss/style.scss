@@ -65,6 +65,26 @@
 .w-t-400 {
     width: 400px;
 }
+.w-6rem {
+    tr {
+        th,
+        td {
+            width: 6rem !important;
+        }
+    }
+}
+.f-s-0-25 {
+    font-size: 0.25rem;
+}
+.f-s-0-5 {
+    font-size: 0.5rem;
+}
+.f-s-0-75 {
+    font-size: 0.75rem;
+}
+.f-s-1 {
+    font-size: 1rem;
+}
 .modal-body {
     .select-search {
         height: 450px;
