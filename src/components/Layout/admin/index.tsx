@@ -19,7 +19,7 @@ export const LayOut: React.FC<LayoutProps> = ({ children }) => {
   return (
     <>
       <main >
-      {/* <TheNavBar onToggleShow={handleToggleShow} show={show} /> */}
+        {/* <TheNavBar onToggleShow={handleToggleShow} show={show} /> */}
 
         <TheSlidbar />
         {/* <div className='bg-white paper'>
