@@ -1,10 +1,7 @@
 // Navbar.tsx
 import React from 'react';
 import Head from 'next/head';
-import { Navbar, Container, Nav, NavDropdown, Image, Button, Breadcrumb } from 'react-bootstrap';
 import Link from 'next/link';
-import { FaBars, FaBell, FaRegEnvelope, FaUserEdit } from 'react-icons/fa';
-import { TheButtonOffcanvas } from './TheOffcanvas';
 import TheBreadcrumb from './TheBreadcrumb';
 
 interface TheSEOProps {
