@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import TheNavBar from './TheNavBar';
+import TheNavbar from './ATheNavbar';
 import TheFooter from './TheFooter';
 import { TheSlidbar } from './TheSlidbar';
 
@@ -19,16 +19,14 @@ export const LayOut: React.FC<LayoutProps> = ({ children }) => {
   return (
     <>
       <main >
-        {/* <TheNavBar onToggleShow={handleToggleShow} show={show} /> */}
-
         <TheSlidbar />
-        {/* <div className='bg-white paper'>
-          // {children}
-          <TheFooter />
+        <div className="relative md:ml-64 bg-blueGray-100">
+          <TheNavbar />
+          {children}
+          {/* <TheFooter /> */}
+
         </div>
-        <button onClick={handleToggleShow} className="px-4 py-2 bg-blue-500 rounded">
-          {show ? 'Hide Sidebar' : 'Show Sidebar'}
-        </button> */}
+
       </main>
     </>
   );
