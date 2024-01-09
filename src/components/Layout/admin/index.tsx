@@ -22,9 +22,11 @@ export const LayOut: React.FC<LayoutProps> = ({ children }) => {
         <TheSlidbar />
         <div className="relative md:ml-64 bg-blueGray-100">
           <TheNavbar />
-          {children}
-          {/* <TheFooter /> */}
+          <div className="pt-20 bg-amber-500">
+            {children}
+            {/* <TheFooter /> */}
 
+          </div>
         </div>
 
       </main>
