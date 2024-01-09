@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import TheNavbar from './ATheNavbar';
+import TheNavbar from './TheNavbar';
 import TheFooter from './TheFooter';
 import { TheSlidbar } from './TheSlidbar';
 
