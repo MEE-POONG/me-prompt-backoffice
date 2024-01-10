@@ -18,11 +18,11 @@ export const LayOut: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <>
-      <main >
+      <main className='bg-blue-gray-50/50'>
         <TheSlidbar />
-        <div className="relative md:ml-64 bg-blueGray-100">
+        <div className="xl:ml-72 xl:mr-3">
           <TheNavbar />
-          <div className="pt-20 bg-amber-500">
+          <div className=" ">
             {children}
             {/* <TheFooter /> */}
 
