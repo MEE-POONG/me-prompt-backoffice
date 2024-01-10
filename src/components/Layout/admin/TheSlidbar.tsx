@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { FaAngleDown, FaBars, FaTimes } from 'react-icons/fa';
+import { FaAngleDown, FaBars, FaChartBar, FaTimes } from 'react-icons/fa';
 import { Accordion, AccordionBody, AccordionHeader, Alert, Card, Chip, List, ListItem, ListItemPrefix, ListItemSuffix, Typography } from '@material-tailwind/react';
 
 
@@ -13,7 +13,7 @@ export const TheSlidbar: React.FC = () => {
         setOpen(open === value ? 0 : value);
     };
     return (
-        <Card className=" w-full max-w-[16rem] p-4 shadow-blue-gray-900/5 bg-white shadow-sm -translate-x-80 fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] rounded-xl transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100" placeholder="">
+        <Card className=" w-full max-w-[15rem] shadow-blue-gray-900/5 bg-white shadow-sm -translate-x-80 fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] rounded-xl transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100" placeholder="">
             <div className="mb-2 p-4">
                 <Typography variant="h5" color="blue-gray" placeholder="">
                     Sidebar
@@ -32,8 +32,7 @@ export const TheSlidbar: React.FC = () => {
                     <ListItem className="p-0" selected={open === 1} placeholder="">
                         <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-3" placeholder="">
                             <ListItemPrefix placeholder="">
-                                s
-                                {/* <PresentationChartBarIcon className="h-5 w-5" /> */}
+                                <FaChartBar className="h-5 w-5" />
                             </ListItemPrefix>
                             <Typography color="blue-gray" className="mr-auto font-normal" placeholder="">
                                 Dashboard
