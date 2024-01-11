@@ -1,11 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { FaAngleDown, FaBars, FaChartBar, FaChevronRight, FaCog, FaInbox, FaPowerOff, FaRegUserCircle, FaShoppingBasket } from 'react-icons/fa';
+import { FaAngleDown, FaBars, FaChartBar, FaChevronRight, FaCog, FaInbox, FaPowerOff, FaRegUserCircle, FaShoppingBasket, FaTimes } from 'react-icons/fa';
 import { Accordion, AccordionBody, AccordionHeader, Card, Chip, List, ListItem, ListItemPrefix, ListItemSuffix, Typography } from '@material-tailwind/react';
 
 const TheSlidebar: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [open, setOpen] = useState(0);
     // const [openAlert, setOpenAlert] = useState(true);
+
+    useEffect(() => {
+        const handleResize = () => {
+            console.log("window.innerWidth : ", window.innerWidth);
+            console.log("check : ", innerWidth < 1140);
+
+            if (window.innerWidth < 1140) {
+                setIsSidebarOpen(false);
+            } else {
+                setIsSidebarOpen(true);
+            }
+        };
+        // Set the sidebar state based on the initial window size
+        handleResize();
+        // Add event listener
+        window.addEventListener('resize', handleResize);
+        // Clean up
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
 
     const handleOpen = (value: any) => {
@@ -21,14 +40,19 @@ const TheSlidebar: React.FC = () => {
 
     return (
         <>
-            <button onClick={toggleSidebar} className={isSidebarOpen ? `b` : `a`}>
-                <FaBars />
+            <button onClick={toggleSidebar} className={`rounded border-2 p-1 ${isSidebarOpen ? `border-indigo-600 bg-indigo-100` : `border-gray-50`}`}>
+                <FaBars className={`${isSidebarOpen ? `text-indigo-600` : ``}`} />
             </button>
             <Card className={`w-full max-w-[15rem] fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] rounded-xl transition-transform duration-300 border border-blue-gray-100 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-80'}`} placeholder="">
-                <div className="mb-2 p-4">
+                <div className="mb-2 p-4 flex justify-between">
                     <Typography variant="h5" color="blue-gray" placeholder="">
                         Sidebar
                     </Typography>
+                    <button
+                        onClick={toggleSidebar}
+                        className={`border-white rounded border-2 p-1 hover:border-indigo-600 hover:bg-indigo-100 xl:hidden`}>
+                        <FaTimes className={`hover:text-indigo-600`} />
+                    </button>
                 </div>
                 <List placeholder="">
                     <Accordion placeholder=""
