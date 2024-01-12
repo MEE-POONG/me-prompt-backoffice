@@ -5,7 +5,6 @@ import { Accordion, AccordionBody, AccordionHeader, Card, Chip, List, ListItem, 
 const TheSlidebar: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [open, setOpen] = useState(0);
-    // const [openAlert, setOpenAlert] = useState(true);
 
     useEffect(() => {
         const handleResize = () => {
