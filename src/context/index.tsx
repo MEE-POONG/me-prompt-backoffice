@@ -1,10 +1,10 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-import { AppContextDefaultProps, Language, NightMode } from "./type";
+import { AppContextDefaultProps, Language } from "./type";
 
 const AppContext = createContext<AppContextDefaultProps>({
   language: 'EN',
   toggleSidebar: false,
-  nightMode: 'day',
+  nightMode: false,
   setLanguage: () => { },
   setToggleSidebar: () => { },
   setNightMode: () => { },
@@ -17,7 +17,7 @@ interface ContextProviderProps {
 export const AppProvider: React.FC<ContextProviderProps> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('EN');
   const [toggleSidebar, setToggleSidebar] = useState<boolean>(false);
-  const [nightMode, setNightMode] = useState<NightMode>('day');
+  const [nightMode, setNightMode] = useState<boolean>(false);
 
   const toggleSidebarHandler = () => {
     setToggleSidebar(!toggleSidebar);
