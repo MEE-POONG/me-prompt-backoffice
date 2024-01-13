@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import TheNavbar from './TheNavbar';
 import { useAppContext } from '@/context';
 import { Card } from '@material-tailwind/react';
+import TheNavbar from './TheNavbar';
+import TheFooter from './TheFooter';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -41,7 +42,7 @@ export const LayOut: React.FC<LayoutProps> = ({ children }) => {
           <Card placeholder={""} className='p-4 border'>
             {children}
           </Card>
-          {/* <TheFooter /> */}
+          <TheFooter />
 
 
         </div>
