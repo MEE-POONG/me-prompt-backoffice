@@ -36,17 +36,16 @@ export const LayOut: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <>
-      <main className='bg-blue-gray-50/50 pt-4 px-4 min-h-screen'>
+      <main className='flex flex-col justify-between bg-blue-gray-50/50 pt-4 px-4 min-h-screen'>
         <div className={`transition-transform duration-700 ${toggleSidebar ? 'xl:ml-64' : 'xl:ml-0'}`}>
           <TheNavbar />
           <Card placeholder={""} className='p-4 border'>
             {children}
           </Card>
-          <TheFooter />
-
-
         </div>
-
+        <div className={`transition-transform duration-700 ${toggleSidebar ? 'xl:ml-64' : 'xl:ml-0'}`}>
+          <TheFooter />
+        </div>
       </main>
     </>
   );
