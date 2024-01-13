@@ -12,8 +12,6 @@ export const LayOut: React.FC<LayoutProps> = ({ children }) => {
   const { toggleSidebar, setToggleSidebar } = useAppContext();
   useEffect(() => {
     const handleResize = () => {
-      console.log("window.innerWidth : ", window.innerWidth);
-      console.log("check : ", innerWidth < 1140);
 
       if (window.innerWidth < 1140) {
         setToggleSidebar(false);
@@ -28,10 +26,6 @@ export const LayOut: React.FC<LayoutProps> = ({ children }) => {
     // Clean up
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  useEffect(() => {
-    console.log("toggleSssidebar : ", toggleSidebar);
-
-  }, [toggleSidebar]);
 
 
   return (

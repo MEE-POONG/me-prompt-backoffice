@@ -1,7 +1,8 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import LocationPath from '@/container/Navbar/LocationPath';
 import TheSlidebar from './TheSlidebar';
+import BreadcrumbsPath from '@/container/Navbar/BreadcrumbsPath';
+import MenuPath from '@/container/Navbar/MenuPath';
 
 
 function classNames(...classes: any[]) {
@@ -10,6 +11,22 @@ function classNames(...classes: any[]) {
 
 
 const TheNavBar: React.FC = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // Adjust the breakpoint as needed
+    };
+
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+
+    // Call the handler immediately so state gets updated with the initial window size
+    handleResize();
+
+    // Remove event listener on cleanup
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
 
   return (
@@ -20,11 +37,13 @@ const TheNavBar: React.FC = () => {
             <div className="flex flex-shrink-0 items-center">
 
               <TheSlidebar />
+
             </div>
           </div>
 
-          <LocationPath />
-          
+          {isMobile ? <MenuPath /> : <BreadcrumbsPath />}
+
+
           <div className="">
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
