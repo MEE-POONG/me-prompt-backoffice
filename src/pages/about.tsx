@@ -2,12 +2,14 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { LayOut } from '@/components/Layout/admin'
 
-const HomePage: React.FC = () => {
+const inter = Inter({ subsets: ['latin'] })
+
+const AboutPage: React.FC = () => {
   return (
     <LayOut>
-      Home
+      About
     </LayOut>
   )
 }
 
-export default HomePage;
+export default AboutPage;

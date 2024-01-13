@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Form } from "react-bootstrap";
 
 type ListItem = {
     id: string;
@@ -54,7 +53,7 @@ const BasicSelectInput: React.FC<BasicSelectInputProps> = ({
                 onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                     valueSet(event.target.value);
                 }}
-                value={valueShow} 
+                value={valueShow.toString()} 
                 disabled={disabled}
             >
                 {listArray?.map((item, index) => (
