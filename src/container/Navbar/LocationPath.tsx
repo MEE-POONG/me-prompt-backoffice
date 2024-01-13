@@ -8,7 +8,7 @@ const LocationPath: React.FC = () => {
 
     return (
         <>
-            <Menu>
+            {/* <Menu>
                 <MenuHandler>
                     <Button placeholder="">Menu</Button>
                 </MenuHandler>
@@ -17,7 +17,7 @@ const LocationPath: React.FC = () => {
                     <MenuItem placeholder="" >Menu Item 2</MenuItem >
                     <MenuItem placeholder="" >Menu Item 3</MenuItem >
                 </MenuList>
-            </Menu>
+            </Menu> */}
             <Breadcrumbs placeholder={""}>
                 <Link href="/" className="opacity-60">
                     <FaHome />

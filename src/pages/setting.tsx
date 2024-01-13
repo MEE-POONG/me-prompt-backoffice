@@ -4,12 +4,12 @@ import { LayOut } from '@/components/Layout/admin'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const HomePage: React.FC = () => {
+const SettingPage: React.FC = () => {
   return (
     <LayOut>
-      Home
+      Setting
     </LayOut>
   )
 }
 
-export default HomePage;
+export default SettingPage;

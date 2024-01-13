@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import TheNavbar from './TheNavbar';
 import { useAppContext } from '@/context';
+import { Card } from '@material-tailwind/react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -37,7 +38,9 @@ export const LayOut: React.FC<LayoutProps> = ({ children }) => {
       <main className='bg-blue-gray-50/50 pt-4 px-4 min-h-screen'>
         <div className={`transition-transform duration-700 ${toggleSidebar ? 'xl:ml-64' : 'xl:ml-0'}`}>
           <TheNavbar />
-          {children}
+          <Card placeholder={""} className='p-4 border'>
+            {children}
+          </Card>
           {/* <TheFooter /> */}
 
 
