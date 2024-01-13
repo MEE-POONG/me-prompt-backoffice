@@ -3,7 +3,7 @@ import { AppContextDefaultProps, Language } from "./type";
 
 const AppContext = createContext<AppContextDefaultProps>({
   language: 'EN',
-  toggleSidebar: false,
+  toggleSidebar: true,
   nightMode: false,
   setLanguage: () => { },
   setToggleSidebar: () => { },
@@ -19,12 +19,9 @@ export const AppProvider: React.FC<ContextProviderProps> = ({ children }) => {
   const [toggleSidebar, setToggleSidebar] = useState<boolean>(false);
   const [nightMode, setNightMode] = useState<boolean>(false);
 
-  const toggleSidebarHandler = () => {
-    setToggleSidebar(!toggleSidebar);
-  };
 
   return (
-    <AppContext.Provider value={{ language, toggleSidebar, nightMode, setLanguage, setToggleSidebar: toggleSidebarHandler, setNightMode }}>
+    <AppContext.Provider value={{ language, toggleSidebar, nightMode, setLanguage, setToggleSidebar, setNightMode }}>
       {children}
     </AppContext.Provider>
   );

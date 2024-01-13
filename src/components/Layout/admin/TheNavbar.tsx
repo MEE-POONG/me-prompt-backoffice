@@ -24,6 +24,7 @@ const TheNavBar: React.FC = () => {
           </div>
 
           <LocationPath />
+          
           <div className="">
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">

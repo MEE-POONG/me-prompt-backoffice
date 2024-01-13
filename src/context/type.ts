@@ -5,6 +5,6 @@ export interface AppContextDefaultProps {
     toggleSidebar: boolean;
     nightMode: boolean;
     setLanguage: (language: Language) => void;
-    setToggleSidebar: () => void;
+    setToggleSidebar: (toggleSidebar: boolean) => void;
     setNightMode: (nightMode: boolean) => void;
 }

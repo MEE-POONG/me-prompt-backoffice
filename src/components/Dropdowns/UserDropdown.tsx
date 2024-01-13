@@ -1,6 +1,7 @@
 import React, { useState, RefObject, Fragment } from 'react';
-import { Menu, Transition } from '@headlessui/react';
+import { Transition } from '@headlessui/react';
 import { FaAngleDown } from 'react-icons/fa';
+import { Button, Menu, MenuHandler, MenuItem, MenuList } from '@material-tailwind/react';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -11,24 +12,25 @@ const UserDropdown: React.FC = () => {
 
     return (
         <>
-
-
-
             {/* ... Rest of the component ... */}
-            <Menu as="div" className="relative inline-block text-left">
-                <Menu.Button className="w-12 h-12 text-sm bg-blueGray-200 inline-flex items-center justify-center rounded-full relative drop-shadow-xl shadow-lg shadow-cyan-500/50">
-                    <img
-                        alt="..."
-                        className="w-full h-full object-cover rounded-full align-middle border-none shadow-lg"
-                        src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
-                    />
-                    <span className='bg-white text-black rounded-full absolute bottom-0 right-0 '>
-                        <FaAngleDown />
-                    </span>
-                </Menu.Button>
-
-
-                <Transition
+            <Menu >
+                <MenuHandler>
+                    <Button placeholder="" className="w-12 h-12 text-sm bg-blueGray-200 inline-flex items-center justify-center rounded-full relative drop-shadow-xl shadow-lg shadow-cyan-500/50">
+                        <img
+                            alt="..."
+                            className="w-full h-full object-cover rounded-full align-middle border-none shadow-lg"
+                            src={`https://imagedelivery.net/QZ6TuL-3r02W7wQjQrv5DA/4500f404-dbac-40f3-6696-ae768a38e800/500`}
+                        />
+                        <span className='bg-white text-black rounded-full absolute bottom-0 right-0 '>
+                            <FaAngleDown />
+                        </span>
+                    </Button>
+                </MenuHandler>
+                <MenuList placeholder="">
+                    <MenuItem placeholder="">Menu Item 1</MenuItem>
+                    <MenuItem placeholder="">Menu Item 2</MenuItem>
+                </MenuList>
+                {/* <Transition
                     as={Fragment}
                     enter="transition ease-out duration-100"
                     enterFrom="transform opacity-0 scale-95"
@@ -37,7 +39,7 @@ const UserDropdown: React.FC = () => {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <MenuItem className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1">
                             <Menu.Item>
                                 {({ active }) => (
@@ -94,8 +96,8 @@ const UserDropdown: React.FC = () => {
                                 </Menu.Item>
                             </form>
                         </div>
-                    </Menu.Items>
-                </Transition>
+                    </MenuItem>
+                </Transition> */}
             </Menu>
         </>
     );
