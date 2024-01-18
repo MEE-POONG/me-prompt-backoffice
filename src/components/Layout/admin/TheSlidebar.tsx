@@ -25,7 +25,7 @@ const TheSlidebar: React.FC = () => {
             <Card className={`w-full max-w-[15rem] fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] rounded-xl transition-transform duration-700 border border-blue-gray-100 ${toggleSidebar ? 'translate-x-0' : '-translate-x-80'}`} placeholder="">
                 <div className="mb-2 p-4 flex justify-between">
                     <Typography variant="h5" color="blue-gray" placeholder="">
-                        Sidebar
+                        Manager
                     </Typography>
                     <button
                         onClick={switchSidebar}
