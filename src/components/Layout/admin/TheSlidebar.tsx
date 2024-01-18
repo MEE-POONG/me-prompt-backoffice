@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { FaAngleDown, FaBars, FaChartBar, FaChevronRight, FaCog, FaInbox, FaPowerOff, FaRegUserCircle, FaShoppingBasket, FaTimes } from 'react-icons/fa';
 import { Accordion, AccordionBody, AccordionHeader, Card, Chip, List, ListItem, ListItemPrefix, ListItemSuffix, Typography } from '@material-tailwind/react';
 import { useAppContext } from '@/context';
+import Link from 'next/link';
+import { slidebarMenu } from '@/data/navbar';
 
 const TheSlidebar: React.FC = () => {
     const { toggleSidebar, setToggleSidebar } = useAppContext();
@@ -34,7 +36,59 @@ const TheSlidebar: React.FC = () => {
                     </button>
                 </div>
                 <List placeholder="">
-                    <Accordion placeholder=""
+                    {slidebarMenu.map((item, index) => (
+                        <div key={index}>
+                            {item.head && (
+                                <Accordion placeholder=""
+                                    open={open === index + 1}
+                                    icon={
+                                        <FaAngleDown
+                                            strokeWidth={2.5}
+                                            className={`mx-auto h-4 w-4 transition-transform ${open === index + 1 ? "rotate-180" : ""}`}
+                                        />
+                                    }
+                                >
+                                    <ListItem className="p-0" selected={open === index} placeholder="">
+                                        <AccordionHeader onClick={() => handleOpen(index + 1)} className="border-b-0 p-3" placeholder="">
+                                            <ListItemPrefix placeholder="">
+                                                {item?.icon}
+                                            </ListItemPrefix>
+                                            <Typography color="blue-gray" className="mr-auto font-normal" placeholder="">
+                                                {item?.nameTH}
+                                            </Typography>
+                                        </AccordionHeader>
+                                    </ListItem>
+                                    {item.array && (
+                                        <AccordionBody className="py-1" placeholder="">
+                                            <List className="p-0" placeholder="">
+                                                {item.array.map((subItem, subIndex) => (
+                                                    <Link key={subIndex} href={subItem?.href}>
+                                                        <ListItem placeholder="">
+                                                            <ListItemPrefix placeholder="">
+                                                                {subItem?.icon}
+                                                            </ListItemPrefix>
+                                                            {subItem?.nameTH}
+                                                        </ListItem>
+                                                    </Link>
+                                                ))}
+                                            </List>
+                                        </AccordionBody>
+                                    )}
+                                </Accordion>
+                            )}
+                            {!item.head && (
+                                <Link href={item.href}>
+                                    <ListItem placeholder={item.nameEN}>
+                                        <ListItemPrefix placeholder={`icon-` + item?.nameEN}>
+                                            {item?.icon}
+                                        </ListItemPrefix>
+                                        {item.nameEN}
+                                    </ListItem>
+                                </Link>
+                            )}
+                        </div>
+                    ))}
+                    {/* <Accordion placeholder=""
                         open={open === 1}
                         icon={
                             <FaAngleDown
@@ -55,24 +109,30 @@ const TheSlidebar: React.FC = () => {
                         </ListItem>
                         <AccordionBody className="py-1" placeholder="">
                             <List className="p-0" placeholder="">
-                                <ListItem placeholder="">
-                                    <ListItemPrefix placeholder="">
-                                        <FaChevronRight strokeWidth={3} className="h-3 w-5" />
-                                    </ListItemPrefix>
-                                    Analytics
-                                </ListItem>
-                                <ListItem placeholder="">
-                                    <ListItemPrefix placeholder="">
-                                        <FaChevronRight strokeWidth={3} className="h-3 w-5" />
-                                    </ListItemPrefix>
-                                    Reporting
-                                </ListItem>
-                                <ListItem placeholder="">
-                                    <ListItemPrefix placeholder="">
-                                        <FaChevronRight strokeWidth={3} className="h-3 w-5" />
-                                    </ListItemPrefix>
-                                    Projects
-                                </ListItem>
+                                <Link href={'/'}>
+                                    <ListItem placeholder="">
+                                        <ListItemPrefix placeholder="">
+                                            <FaChevronRight strokeWidth={3} className="h-3 w-5" />
+                                        </ListItemPrefix>
+                                        Analytics
+                                    </ListItem>
+                                </Link>
+                                <Link href={'/'}>
+                                    <ListItem placeholder="">
+                                        <ListItemPrefix placeholder="">
+                                            <FaChevronRight strokeWidth={3} className="h-3 w-5" />
+                                        </ListItemPrefix>
+                                        Reporting
+                                    </ListItem>
+                                </Link>
+                                <Link href={'/'}>
+                                    <ListItem placeholder="">
+                                        <ListItemPrefix placeholder="">
+                                            <FaChevronRight strokeWidth={3} className="h-3 w-5" />
+                                        </ListItemPrefix>
+                                        Projects
+                                    </ListItem>
+                                </Link>
                             </List>
                         </AccordionBody>
                     </Accordion>
@@ -113,6 +173,17 @@ const TheSlidebar: React.FC = () => {
                         </AccordionBody>
                     </Accordion>
                     <hr className="my-2 border-blue-gray-50" />
+                    <Link href='/about'>
+                        <ListItem placeholder="">
+                            <ListItemPrefix placeholder="">
+                                <FaInbox className="h-5 w-5" />
+                            </ListItemPrefix>
+                            Inbox
+                            <ListItemSuffix placeholder="">
+                                <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
+                            </ListItemSuffix>
+                        </ListItem>
+                    </Link>
                     <ListItem placeholder="">
                         <ListItemPrefix placeholder="">
                             <FaInbox className="h-5 w-5" />
@@ -139,7 +210,7 @@ const TheSlidebar: React.FC = () => {
                             <FaPowerOff className="h-5 w-5" />
                         </ListItemPrefix>
                         Log Out
-                    </ListItem>
+                    </ListItem> */}
                 </List>
                 {/* <Alert open={openAlert} className="mt-auto" onClose={() => setOpenAlert(false)}>
                 <FaCube  className="mb-4 h-12 w-12" />
