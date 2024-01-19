@@ -31,6 +31,12 @@ export const slidebarMenu = [
             { nameTH: 'คิวงานบอท', nameEN: 'Bot work', href: '/botwork', icon: <FaRobot className="h-5 w-5" />, head: false },
         ]
     },
+    {
+        nameTH: 'เทส', nameEN: 'test', href: '/test', head: true, icon: <FaUsersCog className="h-5 w-5" />, array: [
+            { nameTH: 'เทส1', nameEN: 'test1', href: '/test/1', icon: <FaUserSecret className="h-5 w-5" />, head: false },
+            { nameTH: 'เทส2', nameEN: 'test2', href: '/test/2', icon: <FaRobot className="h-5 w-5" />, head: false },
+        ]
+    },
     { nameTH: 'แอดมิน', nameEN: 'Admin', href: '/admin', head: false, icon: <FaUserShield className="h-5 w-5" /> },
 
 ];

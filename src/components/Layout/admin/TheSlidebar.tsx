@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { FaAngleDown, FaBars, FaChartBar, FaChevronRight, FaCog, FaInbox, FaPowerOff, FaRegUserCircle, FaShoppingBasket, FaTimes } from 'react-icons/fa';
+import { FaAngleDown, FaBars, FaTimes } from 'react-icons/fa';
 import { Accordion, AccordionBody, AccordionHeader, Card, Chip, List, ListItem, ListItemPrefix, ListItemSuffix, Typography } from '@material-tailwind/react';
 import { useAppContext } from '@/context';
 import Link from 'next/link';
-import { slidebarMenu } from '@/data/navbar';
+import { slidebarMenu } from '@/data/navData';
+import { useRouter } from 'next/router';
 
 const TheSlidebar: React.FC = () => {
     const { toggleSidebar, setToggleSidebar } = useAppContext();
     const [open, setOpen] = useState(0);
+    const router = useRouter();
 
-
+    const checkPathLink = router.pathname;
 
     const handleOpen = (value: any) => {
         setOpen(open === value ? 0 : value);
@@ -18,6 +20,19 @@ const TheSlidebar: React.FC = () => {
     const switchSidebar = () => {
         setToggleSidebar(!toggleSidebar);
     };
+
+    useEffect(() => {
+        const currentPath = router.pathname;
+
+        const matchedIndex = slidebarMenu.findIndex((item, index) =>
+            item.head && item.array?.some(subItem => subItem.href === currentPath)
+        );
+
+        if (matchedIndex !== -1) {
+            // Add 1 because your logic uses index + 1 for accordion open state
+            setOpen(matchedIndex + 1);
+        }
+    }, [router.pathname]);
 
     return (
         <>
@@ -35,183 +50,56 @@ const TheSlidebar: React.FC = () => {
                         <FaTimes className={`hover:text-indigo-600`} />
                     </button>
                 </div>
-                <List placeholder="">
-                    {slidebarMenu.map((item, index) => (
-                        <div key={index}>
-                            {item.head && (
-                                <Accordion placeholder=""
-                                    open={open === index + 1}
-                                    icon={
-                                        <FaAngleDown
-                                            strokeWidth={2.5}
-                                            className={`mx-auto h-4 w-4 transition-transform ${open === index + 1 ? "rotate-180" : ""}`}
-                                        />
-                                    }
-                                >
-                                    <ListItem className="p-0" selected={open === index} placeholder="">
-                                        <AccordionHeader onClick={() => handleOpen(index + 1)} className="border-b-0 p-3" placeholder="">
-                                            <ListItemPrefix placeholder="">
-                                                {item?.icon}
-                                            </ListItemPrefix>
-                                            <Typography color="blue-gray" className="mr-auto font-normal" placeholder="">
-                                                {item?.nameTH}
-                                            </Typography>
-                                        </AccordionHeader>
-                                    </ListItem>
-                                    {item.array && (
-                                        <AccordionBody className="py-1" placeholder="">
-                                            <List className="p-0" placeholder="">
-                                                {item.array.map((subItem, subIndex) => (
-                                                    <Link key={subIndex} href={subItem?.href}>
-                                                        <ListItem placeholder="">
-                                                            <ListItemPrefix placeholder="">
-                                                                {subItem?.icon}
-                                                            </ListItemPrefix>
-                                                            {subItem?.nameTH}
-                                                        </ListItem>
-                                                    </Link>
-                                                ))}
-                                            </List>
-                                        </AccordionBody>
-                                    )}
-                                </Accordion>
-                            )}
-                            {!item.head && (
-                                <Link href={item.href}>
-                                    <ListItem placeholder={item.nameEN}>
-                                        <ListItemPrefix placeholder={`icon-` + item?.nameEN}>
+                {slidebarMenu.map((item, index) => (
+                    <List placeholder="54" key={index}>
+                        {item.head && (
+                            <Accordion placeholder=""
+                                open={open === index + 1}
+                                icon={
+                                    <FaAngleDown
+                                        strokeWidth={2.5}
+                                        className={`mx-auto h-4 w-4 transition-transform  ${open === index + 1 ? "rotate-180" : ""}`}
+                                    />
+                                }
+                            >
+                                <ListItem className={`p-0 border-2 border-white hover:border-indigo-600 ${open === index + 1 ? 'border-indigo-600' : ''}`} selected={open === index} placeholder="">
+                                    <AccordionHeader onClick={() => handleOpen(index + 1)} className={`border-0 p-3 hover:text-indigo-600 ${open === index + 1 ? 'text-indigo-600' : ''}`} placeholder="">
+                                        <ListItemPrefix placeholder="">
                                             {item?.icon}
                                         </ListItemPrefix>
-                                        {item.nameEN}
-                                    </ListItem>
-                                </Link>
-                            )}
-                        </div>
-                    ))}
-                    {/* <Accordion placeholder=""
-                        open={open === 1}
-                        icon={
-                            <FaAngleDown
-                                strokeWidth={2.5}
-                                className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`}
-                            />
-                        }
-                    >
-                        <ListItem className="p-0" selected={open === 1} placeholder="">
-                            <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-3" placeholder="">
-                                <ListItemPrefix placeholder="">
-                                    <FaChartBar className="h-5 w-5" />
-                                </ListItemPrefix>
-                                <Typography color="blue-gray" className="mr-auto font-normal" placeholder="">
-                                    Dashboard
-                                </Typography>
-                            </AccordionHeader>
-                        </ListItem>
-                        <AccordionBody className="py-1" placeholder="">
-                            <List className="p-0" placeholder="">
-                                <Link href={'/'}>
-                                    <ListItem placeholder="">
-                                        <ListItemPrefix placeholder="">
-                                            <FaChevronRight strokeWidth={3} className="h-3 w-5" />
-                                        </ListItemPrefix>
-                                        Analytics
-                                    </ListItem>
-                                </Link>
-                                <Link href={'/'}>
-                                    <ListItem placeholder="">
-                                        <ListItemPrefix placeholder="">
-                                            <FaChevronRight strokeWidth={3} className="h-3 w-5" />
-                                        </ListItemPrefix>
-                                        Reporting
-                                    </ListItem>
-                                </Link>
-                                <Link href={'/'}>
-                                    <ListItem placeholder="">
-                                        <ListItemPrefix placeholder="">
-                                            <FaChevronRight strokeWidth={3} className="h-3 w-5" />
-                                        </ListItemPrefix>
-                                        Projects
-                                    </ListItem>
-                                </Link>
-                            </List>
-                        </AccordionBody>
-                    </Accordion>
-                    <Accordion placeholder=""
-                        open={open === 2}
-                        icon={
-                            <FaAngleDown
-                                strokeWidth={2.5}
-                                className={`mx-auto h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`}
-                            />
-                        }
-                    >
-                        <ListItem className="p-0" selected={open === 2} placeholder="">
-                            <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3" placeholder="">
-                                <ListItemPrefix placeholder="">
-                                    <FaShoppingBasket className="h-5 w-5" />
-                                </ListItemPrefix>
-                                <Typography color="blue-gray" className="mr-auto font-normal" placeholder="">
-                                    E-Commerce
-                                </Typography>
-                            </AccordionHeader>
-                        </ListItem>
-                        <AccordionBody className="py-1">
-                            <List className="p-0" placeholder="">
-                                <ListItem placeholder="">
-                                    <ListItemPrefix placeholder="">
-                                        <FaChevronRight strokeWidth={3} className="h-3 w-5" />
-                                    </ListItemPrefix>
-                                    Orders
+                                        <Typography className="mr-auto font-normal" placeholder="">
+                                            {item?.nameTH}
+                                        </Typography>
+                                    </AccordionHeader>
                                 </ListItem>
-                                <ListItem placeholder="">
-                                    <ListItemPrefix placeholder="">
-                                        <FaChevronRight strokeWidth={3} className="h-3 w-5" />
+                                {item.array && (
+                                    <AccordionBody className="py-1 rounded border-2 bg-indigo-100/25 mt-2" placeholder="">
+                                        {item.array.map((subItem, subIndex) => (
+                                            <Link key={subIndex} href={subItem?.href} >
+                                                <ListItem placeholder="" className={`hover:text-indigo-600 active:text-indigo-600 focus:text-indigo-600 ${checkPathLink === subItem?.href ? 'text-indigo-600' : ''}`}>
+                                                    <ListItemPrefix placeholder="" >
+                                                        {subItem?.icon}
+                                                    </ListItemPrefix>
+                                                    {subItem?.nameTH}
+                                                </ListItem>
+                                            </Link>
+                                        ))}
+                                    </AccordionBody>
+                                )}
+                            </Accordion>
+                        )}
+                        {!item.head && (
+                            <Link href={item.href}>
+                                <ListItem placeholder={item.nameEN} className={`hover:text-indigo-600 `}>
+                                    <ListItemPrefix placeholder={`icon-` + item?.nameEN}>
+                                        {item?.icon}
                                     </ListItemPrefix>
-                                    Products
+                                    {item.nameEN}
                                 </ListItem>
-                            </List>
-                        </AccordionBody>
-                    </Accordion>
-                    <hr className="my-2 border-blue-gray-50" />
-                    <Link href='/about'>
-                        <ListItem placeholder="">
-                            <ListItemPrefix placeholder="">
-                                <FaInbox className="h-5 w-5" />
-                            </ListItemPrefix>
-                            Inbox
-                            <ListItemSuffix placeholder="">
-                                <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
-                            </ListItemSuffix>
-                        </ListItem>
-                    </Link>
-                    <ListItem placeholder="">
-                        <ListItemPrefix placeholder="">
-                            <FaInbox className="h-5 w-5" />
-                        </ListItemPrefix>
-                        Inbox
-                        <ListItemSuffix placeholder="">
-                            <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
-                        </ListItemSuffix>
-                    </ListItem>
-                    <ListItem placeholder="">
-                        <ListItemPrefix placeholder="">
-                            <FaRegUserCircle className="h-5 w-5" />
-                        </ListItemPrefix>
-                        Profile
-                    </ListItem>
-                    <ListItem placeholder="">
-                        <ListItemPrefix placeholder="">
-                            <FaCog className="h-5 w-5" />
-                        </ListItemPrefix>
-                        Settings
-                    </ListItem>
-                    <ListItem placeholder="">
-                        <ListItemPrefix placeholder="">
-                            <FaPowerOff className="h-5 w-5" />
-                        </ListItemPrefix>
-                        Log Out
-                    </ListItem> */}
-                </List>
+                            </Link>
+                        )}
+                    </List>
+                ))}
                 {/* <Alert open={openAlert} className="mt-auto" onClose={() => setOpenAlert(false)}>
                 <FaCube  className="mb-4 h-12 w-12" />
                 <Typography variant="h6" className="mb-1" placeholder="">
