@@ -6,14 +6,13 @@ import { Button, ButtonGroup, Input } from '@material-tailwind/react';
 import { FaSearch } from 'react-icons/fa';
 import Pagination from '@/container/Pagination';
 
+
 const inter = Inter({ subsets: ['latin'] })
 
-const AgentListPage: React.FC = () => {
+const AdminPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [category, setCategory] = useState('all');
   const [pageSize, setPageSize] = useState(10);
-  // สมมุติว่าคุณมีข้อมูล partners ใน state หรือ context
-
   const handleSearchChange = (e: any) => {
     setSearchTerm(e.target.value);
   };
@@ -22,22 +21,18 @@ const AgentListPage: React.FC = () => {
     setCategory(e.target.value);
   };
 
-
+  const handlePageSizeChange = (e: any) => {
+    setPageSize(Number(e.target.value));
+  };
   return (
     <LayOut>
       <div className="flex flex-wrap">
         <h1 className="flex-auto text-lg font-semibold text-slate-900">
-          Partner
+          Admin
         </h1>
-        <ButtonGroup placeholder={""} size="sm">
-          <Button placeholder={""}>All</Button>
-          <Button placeholder={""}>Senior</Button>
-          <Button placeholder={""}>Master</Button>
-          <Button placeholder={""}>Agent</Button>
-        </ButtonGroup>
         <div className="relative flex w-full max-w-[24rem]">
           <Input
-            label="ค้นหายูส"
+            label="ค้นหาชื่อเล่น"
             className="pr-20"
             crossOrigin={undefined as any}
             containerProps={{
@@ -56,14 +51,9 @@ const AgentListPage: React.FC = () => {
       <table>
         {/* สร้างตารางข้อมูลที่นี่ */}
       </table>
-
-      <div>
-        <Pagination />
-      
-        {/* แสดง Pagination ที่นี่ */}
-      </div>
+      <Pagination />
     </LayOut>
   )
 }
 
-export default AgentListPage;
+export default AdminPage;
