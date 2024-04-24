@@ -9,13 +9,13 @@ import Pagination from '@/container/Pagination';
 const inter = Inter({ subsets: ['latin'] })
 
 const AgentListPage: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTeam, setSearchTeam] = useState('');
   const [category, setCategory] = useState('all');
   const [pageSize, setPageSize] = useState(10);
   // สมมุติว่าคุณมีข้อมูล partners ใน state หรือ context
 
   const handleSearchChange = (e: any) => {
-    setSearchTerm(e.target.value);
+    setSearchTeam(e.target.value);
   };
 
   const handleCategoryChange = (e: any) => {

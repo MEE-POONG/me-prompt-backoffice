@@ -1,4 +1,3 @@
-import { button } from '@material-tailwind/react';
 import React, { useState } from 'react';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
@@ -11,15 +10,6 @@ const Pagination: React.FC = () => {
 
     return (
         <div className='flex justify-between'>
-            <select value={pageSize} onChange={handlePageSizeChange} className='rounded border-black border-2'>
-                <option value={10}>10</option>
-                <option value={20}>20</option>
-                <option value={50}>50</option>
-                <option value={100}>100</option>
-                <option value={500}>500</option>
-                <option value={1000}>1000</option>
-            </select>
-
             <div className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
                 <button
                     className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
@@ -50,6 +40,15 @@ const Pagination: React.FC = () => {
                     <FaArrowRight className="h-5 w-5" aria-hidden="true" />
                 </button>
             </div>
+
+            <select value={pageSize} onChange={handlePageSizeChange} className='rounded border-black border-2'>
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+                <option value={500}>500</option>
+                <option value={1000}>1000</option>
+            </select>
         </div>
     );
 };
