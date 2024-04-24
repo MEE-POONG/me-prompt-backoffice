@@ -59,7 +59,6 @@ const AgentListPage: React.FC = () => {
 
       <div>
         <Pagination />
-      
         {/* แสดง Pagination ที่นี่ */}
       </div>
     </LayOut>
