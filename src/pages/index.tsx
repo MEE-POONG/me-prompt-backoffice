@@ -1,6 +1,6 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import React from 'react';
 import { LayOut } from '@/components/Layout/admin'
+
 
 const HomePage: React.FC = () => {
   return (

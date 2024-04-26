@@ -1,197 +1,68 @@
-import React, { useEffect, useState } from "react";
-import LayOut from "@/components/RootPage/TheLayOut";
-import { Badge, Card, Form, InputGroup, Table } from "react-bootstrap";
-import { FaPen, FaSearch } from "react-icons/fa";
-import { bankMap } from "@/data/test";
-import { UserAG as PrismaUserAG, Member as PrismaMember } from '@prisma/client';
-import Link from "next/link";
-import useAxios from "axios-hooks";
-import PageSelect from "@/components/PageSelect";
-import PartnerViewMemberModal from "@/container/Partner/ViewModal";
-import DeleteModal from "@/components/modal/DeleteModal";
-import AddUserAG from "@/container/Partner/AddUserAG";
-import DeleteUserAG from "@/container/Partner/DeleteUserAG";
+import React, { useState } from 'react';
+import Image from 'next/image'
+import { Inter } from 'next/font/google'
+import { LayOut } from '@/components/Layout/admin'
+import { Button, ButtonGroup, Input } from '@material-tailwind/react';
+import { FaSearch } from 'react-icons/fa';
+import Pagination from '@/container/Pagination';
 
-interface Params {
-  page: number;
-  pageSize: number;
-  keyword: string;
-  totalPages: number;
-}
-interface Member extends PrismaMember {
-  userAG: UserAG;
-}
+const inter = Inter({ subsets: ['latin'] })
 
-interface UserAG extends PrismaUserAG {
-}
-const MemberPage: React.FC = () => {
-  const [params, setParams] = useState<Params>({
-    page: 1,
-    pageSize: 10,
-    keyword: "",
-    totalPages: 1,
-  });
-  const [{ data: membersData }, getMember,] = useAxios({
-  }, { autoCancel: false });
-  const [{ loading: deleteMemberLoading, error: deleteMemberError }, executeMemberDelete,] = useAxios({}, { manual: true });
-  const [filteredMembersData, setFilteredMembersData] = useState<Member[]>([]);
-  const [memberUpdate, setMemberUpdate] = useState(false);
+const AgentListPage: React.FC = () => {
+  const [searchTeam, setSearchTeam] = useState('');
+  const [category, setCategory] = useState('all');
+  const [pageSize, setPageSize] = useState(10);
+  // สมมุติว่าคุณมีข้อมูล partners ใน state หรือ context
 
-  useEffect(() => {
-    if (params || memberUpdate) {
-      getMember({
-        url: `/api/member/search?page=${params.page}&pageSize=${params.pageSize}&keyword=${params.keyword}`,
-        method: "GET",
-      });
-    }
-    if (memberUpdate) {
-      setMemberUpdate(false);
-    }
-  }, [params, memberUpdate]);
-
-  useEffect(() => {
-    if (membersData?.success) {
-      setFilteredMembersData(membersData?.data ?? []);
-    }
-  }, [membersData]);
-
-  const deleteMember = (id: string): Promise<any> => {
-    return executeMemberDelete({
-      url: "/api/member/" + id,
-      method: "DELETE",
-    }).then(() => {
-      setFilteredMembersData(prevMembers => prevMembers.filter(member => member?.id !== id));
-    });
+  const handleSearchChange = (e: any) => {
+    setSearchTeam(e.target.value);
   };
 
-  const handleChangePage = (page: number) => {
-    setParams(prevParams => ({
-      ...prevParams,
-      page: page,
-    }));
+  const handleCategoryChange = (e: any) => {
+    setCategory(e.target.value);
   };
 
-  const handleChangePageSize = (size: number) => {
-    setParams(prevParams => ({
-      ...prevParams,
-      page: 1,
-      pageSize: size,
-    }));
-  };
-
-  const handleChangekeyword = (search: string) => {
-    setParams(prevParams => ({
-      ...prevParams,
-      keyword: search,
-    }));
-  };
-
-  const renderBadges = (users: any, bgColor: string) => {
-    return users.map((user: any, index: number) => (
-      <Badge key={index} className={"mx-1"} bg={bgColor}>
-        {user?.username}
-      </Badge>
-    ));
-  };
 
   return (
     <LayOut>
-      <div className='partner-page h-91'>
-        <Card className="h-100">
-          <Card.Header className="d-flex space-between">
-            <h4 className="mb-0 py-1">
-              Partner - Member
-            </h4>
-            <InputGroup className="w-auto" bsPrefix="input-icon">
-              <InputGroup.Text id="basic-addon1">
-                <FaSearch />
-              </InputGroup.Text>
-              <Form.Control
-                onChange={e => handleChangekeyword(e.target.value)}
-                placeholder="ค้นหาผู้ใช้"
-                aria-label="Fullname"
-                aria-describedby="basic-addon1"
-              />
-            </InputGroup>
-            {/* <AddListName /> */}
-            <Link href="/partner/add" className="ms-2 btn icon icofn-primary">
-              เพิ่มพาร์ทเนอร์
-            </Link>
-          </Card.Header>
-          <Card.Body className="p-0">
-            <Table striped hover bordered className="scroll ">
-              <thead>
-                <tr>
-                  <th className="first">No.</th>
-                  <th className="name">ชื่อ-สกุล</th>
-                  <th className="bank">ธนาคาร</th>
-                  <th>
-                    AG User
-                  </th>
-                  <th>จัดการ</th>
-                </tr>
-              </thead>
-              <tbody className="text-center">
-                {filteredMembersData?.map((member: Member, index: number) => {
-                  const bankObj = bankMap.find(bank => bank.value === member?.bank);
-                  return (
-                    <tr key={member?.id}>
-                      <td className="first">
-                        {((params.page * 10) - 10) + index + 1}
-                      </td>
-                      <td className="name">
-                        {member?.firstname} {member?.lastname}
-                      </td>
-                      <td className="bank">
-                        {bankObj &&
-                          <img src={bankObj.image} alt={bankObj.value} style={{ width: '30px' }} />
-                        }
-                        <span className="ms-2">{member?.bankAccount}</span>
-                      </td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <div className="w-100">
-                            <div>
-                              {renderBadges((member as any).userAG.filter((user: UserAG) => user?.position === 'senior'), "danger")}
-                            </div>
-                            <div>
-                              {renderBadges((member as any).userAG.filter((user: UserAG) => user?.position === 'master'), "primary")}
-                            </div>
-                            <div>
-                              {renderBadges((member as any).userAG.filter((user: UserAG) => user?.position === 'agent'), "success")}
-                            </div>
-                          </div>
-                          <div>
-                            <AddUserAG setID={member?.id} onUpdateSuccess={setMemberUpdate} />
-                          </div>
-                          <div className="ms-2">
-                            <DeleteUserAG setID={member?.id} onUpdateSuccess={setMemberUpdate} />
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <PartnerViewMemberModal data={member} />
-                        <Link href={`/partner/edit/${member?.id}`} className="mx-1 btn info icon icon-primary">
-                          <FaPen />
-                          <span className="h-tooltiptext">แก้ไขข้อมูล</span>
-                        </Link>
-                        <DeleteModal data={member} apiDelete={() => deleteMember(member?.id)} />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-          </Card.Body>
-          <Card.Footer>
-            <PageSelect page={params.page} totalPages={membersData?.pagination?.total} onChangePage={handleChangePage} onChangePageSize={handleChangePageSize} />
-          </Card.Footer>
-        </Card>
+      <div className="flex flex-wrap">
+        <h1 className="flex-auto text-lg font-semibold text-slate-900">
+          Partner
+        </h1>
+        <ButtonGroup placeholder={""} size="sm">
+          <Button placeholder={""}>All</Button>
+          <Button placeholder={""}>Senior</Button>
+          <Button placeholder={""}>Master</Button>
+          <Button placeholder={""}>Agent</Button>
+        </ButtonGroup>
+        <div className="relative flex w-full max-w-[24rem]">
+          <Input
+            label="ค้นหายูส"
+            className="pr-20"
+            crossOrigin={undefined as any}
+            containerProps={{
+              className: "min-w-0",
+            }}
+          />
+          <Button
+            placeholder={""}
+            size="sm"
+            className="!absolute right-1 top-1 rounded"
+          >
+            ค้นหา
+          </Button>
+        </div>
+      </div>
+      <table>
+        {/* สร้างตารางข้อมูลที่นี่ */}
+      </table>
 
+      <div>
+        <Pagination />
+        {/* แสดง Pagination ที่นี่ */}
       </div>
     </LayOut>
-  );
+  )
 }
 
-
-export default MemberPage;
+export default AgentListPage;

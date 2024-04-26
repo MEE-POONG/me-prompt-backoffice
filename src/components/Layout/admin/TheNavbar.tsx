@@ -31,19 +31,14 @@ const TheNavBar: React.FC = () => {
 
   return (
     <Disclosure as="nav" className="shadow-blue-gray-900/5 bg-white shadow-sm border border-blue-gray-100 rounded-lg mb-4">
-      <div className="mx-auto px-2 sm:px-6 lg:px-8">
-        <div className="relative flex h-16 items-center justify-between">
+      <div className="mx-auto px-2 py-2 sm:px-6 lg:px-8">
+        <div className="relative flex items-center justify-between">
           <div className="flex items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
-
               <TheSlidebar />
-
             </div>
           </div>
-
           {isMobile ? <MenuPath /> : <BreadcrumbsPath />}
-
-
           <div className="">
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
